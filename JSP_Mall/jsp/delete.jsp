@@ -5,7 +5,7 @@
 <%
 	String id = request.getParameter("id");
 	int result = CartDao.getInstance().delete(id);
-	if (result == 0)
+	if (result != 0)
 		response.sendRedirect("cartForm.jsp");
 %>
 <html>

@@ -29,8 +29,8 @@
 <body>
 	<%@include file="menu.jsp" %>
 	<div id=title><h1 class=center>장바구니</h1></div>
-	<button id=del class=btn>삭제하기</button>
-	<button id=order class=btn>주문하기</button>
+	<button id=del class=btn onclick=del()>삭제하기</button>
+	<button id=order class=btn onclick="location.href='orderForm.jsp'">주문하기</button>
 	<table>
 		<tr>
 			<th width=400px>상품
@@ -55,4 +55,12 @@
 	<button id=con class=btn onclick="location.href='products.jsp'">&laquo;쇼핑 계속하기</button>
 	<%@include file="footer.jsp" %>
 </body>
+<script>
+	function del() {
+		if(confirm("전부 삭제할까요?"))
+			location.href="deleteAll.jsp";
+		else
+			return;
+	}
+</script>
 </html>

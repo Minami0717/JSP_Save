@@ -10,5 +10,6 @@
 		<li><a href=home.jsp>Home</a>
 		<li><a href=products.jsp>Product</a>
 		<li><a href=addForm.jsp>Add Product</a>
+		<li><a href=noticeForm.jsp>Notice</a>
 	</ul>
 </div>

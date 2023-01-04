@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +112,17 @@ public class CartDao {
 		try {
 			pstmt = conn.prepareStatement("delete from cart where id = ?");
 			pstmt.setString(1, id);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int deleteAll() {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("delete from cart");
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
