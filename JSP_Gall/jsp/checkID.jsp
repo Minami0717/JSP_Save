@@ -1,5 +1,5 @@
-<%@page import="friend.Friend"%>
-<%@page import="friend.FriendDao"%>
+<%@page import="gall.User"%>
+<%@page import="gall.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,12 +24,12 @@
 		return;
 	}
 	
-	Friend friend = FriendDao.getInstance().select(inputCode);
+	User user = UserDao.getInstance().select(inputCode);
 	
-	String code = friend.getCode();
-	String pw = friend.getPw();
-	String nick = friend.getNick();
-	String email = friend.getEmail();
+	String code = user.getCode();
+	String pw = user.getPw();
+	String nick = user.getNick();
+	String email = user.getEmail();
 	
 	if(inputCode.equals(code) && inputPw.equals(pw)) {
 		session.setAttribute("id", code);

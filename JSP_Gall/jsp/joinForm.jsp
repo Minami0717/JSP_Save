@@ -23,7 +23,7 @@
 		<form action="join.jsp" method=post>
 			<table>
 				<tr>
-					<td>개인 식별 코드<input type=text placeholder="개인 식별 코드" class=input name=id></td>
+					<td>개인 식별 코드<input type=text placeholder="개인 식별 코드" class=input name=code></td>
 				</tr>
 				<tr>
 					<td>비밀번호 입력<input type=password placeholder="비밀번호를 입력해 주세요." class=input name=pw></td>
@@ -33,7 +33,7 @@
 				</tr>
 				<tr>
 					<td>
-						닉네임 만들기<input type=text placeholder="닉네임을 입력해 주세요." class=input name=name>
+						닉네임 만들기<input type=text placeholder="닉네임을 입력해 주세요." class=input name=nick>
 						<select>
 							<option>비고정닉
 							<option>고정닉
@@ -42,17 +42,14 @@
 				</tr>
 				<tr>
 					<td>
-						보안 코드 발급 이메일<input type="text" class=input name=email> @
-						<input type="text" class=input name=email>
+						보안 코드 발급 이메일<input type="text" class=input name=email1> @
+						<input type="text" class=input name=email2>
 						<select>
 							<option>이메일 선택
 							<option>naver.com
 							<option>직접 입력
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td><input type=text placeholder="직업" class=input name=job></td>
 				</tr>
 				<tr>
 					<td><input type=submit value=회원가입 id=join></td>

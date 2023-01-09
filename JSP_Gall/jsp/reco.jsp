@@ -1,4 +1,4 @@
-<%@page import="friend.PostDao"%>
+<%@page import="gall.PostDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>

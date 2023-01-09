@@ -1,7 +1,7 @@
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.LocalDateTime"%>
-<%@page import="friend.PostDao"%>
-<%@page import="friend.Post"%>
+<%@page import="gall.PostDao"%>
+<%@page import="gall.Post"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

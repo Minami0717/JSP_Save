@@ -1,5 +1,5 @@
-<%@page import="friend.Friend"%>
-<%@page import="friend.FriendDao"%>
+<%@page import="gall.User"%>
+<%@page import="gall.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -25,14 +25,12 @@
 		return;
 	}
 	
-	Friend friend = new Friend();
+	/* Friend friend = new Friend();
 	friend.setId(id);
 	friend.setPw(pw);
-	friend.setName(name);
-	friend.setAge(age);
-	friend.setJob(job);
+	friend.setName(name); */
 	
-	int result = FriendDao.getInstance().update(friend);
+	/* int result = FriendDao.getInstance().update(friend);
 	if(result != 0) {
 		response.addCookie(new Cookie("pw", pw));
 		response.addCookie(new Cookie("age", age));
@@ -40,5 +38,5 @@
 		response.sendRedirect("updateSucc.jsp");
 	}
 	else
-		response.sendRedirect("updateFail.jsp");
+		response.sendRedirect("updateFail.jsp"); */
 %>

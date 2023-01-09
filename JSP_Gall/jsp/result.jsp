@@ -1,10 +1,10 @@
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
-<%@page import="friend.ReplyDao"%>
-<%@page import="friend.Reply"%>
-<%@page import="friend.PostDao"%>
-<%@page import="friend.Post"%>
+<%@page import="gall.ReplyDao"%>
+<%@page import="gall.Reply"%>
+<%@page import="gall.PostDao"%>
+<%@page import="gall.Post"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -96,7 +96,7 @@
 	.right {float: right;}
 	#edit,#delete {background: #666; border-color: #444;}
 	#delete {margin: 10px;}
-	#del {width: 13px; height: 13px; margin: 0; background: url(image/x.png); background-size: cover; border: none;}
+	#del {width: 13px; height: 13px; margin: 0; background: url(image/x2.png); background-size: cover; border: none;}
 	#table {border-bottom: 1px solid gainsboro;}
 	#tiv {margin-bottom: 30px;}
 	span {color: #d31900;}

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gall
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.30
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,30 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `gall_list`
+--
+
+DROP TABLE IF EXISTS `gall_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gall_list` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gall_list`
+--
+
+LOCK TABLES `gall_list` WRITE;
+/*!40000 ALTER TABLE `gall_list` DISABLE KEYS */;
+INSERT INTO `gall_list` VALUES (1,'프로그래밍'),(2,'야구'),(3,'축구'),(4,'만화'),(5,'리그 오브 레전드');
+/*!40000 ALTER TABLE `gall_list` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `post`
@@ -42,7 +66,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (9,'test','tset','홍길동','2022-12-27 11:27:22',87,0,'',2),(10,'tset','test','홍길동','2022-12-27 11:29:08',67,3,'',0),(11,'hi','hi','a','2022-12-27 11:39:51',17,0,'',0),(12,'11','11','홍길동','2022-12-27 12:25:21',121,0,'',5),(13,'dd','dd','홍길동','2022-12-27 12:26:01',106,0,'',0),(14,'tset','ste','홍길동','2022-12-27 12:27:54',5,0,'',0),(16,'3','ㅁㅁ','홍길동','2022-12-27 16:54:16',1,0,'',0),(17,'asdf','abce','홍길동','2022-12-28 14:18:48',0,0,'',0),(18,'테스트','테스트','홍길동','2022-12-28 16:18:29',12,0,'',0),(19,'dd','zz','ㅇㅇ','2022-12-29 15:07:23',1,0,'dddd',0),(20,'dd','test','ㅇㅇ','2022-12-29 15:30:54',1,0,'1',0);
+INSERT INTO `post` VALUES (9,'자바','tset','홍길동','2022-12-27 11:27:22',91,0,'',2),(10,'파이썬','test','홍길동','2022-12-27 11:29:08',67,3,'',0),(11,'안드로이드','hi','a','2022-12-27 11:39:51',17,0,'',0),(12,'아이폰','11','홍길동','2022-12-27 12:25:21',121,0,'',5),(13,'데이터베이스','dd','홍길동','2022-12-27 12:26:01',106,0,'',0),(14,'자바스크립트','ste','홍길동','2022-12-27 12:27:54',6,0,'',0),(16,'HTML','ㅁㅁ','홍길동','2022-12-27 16:54:16',1,0,'',0),(17,'CSS','abce','홍길동','2022-12-28 14:18:48',0,0,'',0),(18,'Oracle','테스트','홍길동','2022-12-28 16:18:29',12,0,'',0),(19,'DB','zz','ㅇㅇ','2022-12-29 15:07:23',1,0,'dddd',0),(20,'JSP','test','ㅇㅇ','2022-12-29 15:30:54',2,0,'1',0);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-07 20:31:40
+-- Dump completed on 2023-01-09 17:31:08
