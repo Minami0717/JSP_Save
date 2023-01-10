@@ -36,7 +36,11 @@
 	
 	#mid button {width: 82px; height: 32px; background: #3b4890; color: white; border: 1px solid #29367c; margin: 15px 0 5px;
 	font-weight: bold; border-radius: 2px; cursor: pointer;}	
-	#mid .white {background: white; color: black; border: 1px solid gainsboro;}	
+	#mid .white {background: white; color: black; border: 1px solid gainsboro;}
+	#mid .right div {border: 1px solid #29367c; font-size: 13px; color: #29367c; font-weight: bold; padding: 0 5px; cursor: pointer;}
+	#mid img {width: 13px;}
+	#mid > .right {margin-top: 27px;}
+	#mid select {margin-right: 2px;}
 	
 	#bot button {width: 82px; height: 35px; background: #3b4890; color: white; border: 1px solid #29367c; border-bottom-width: 3px;
 	margin-top: 10px; margin-bottom: 40px; font-weight: bold; border-radius: 2px; cursor: pointer;}	
@@ -90,11 +94,16 @@
 			<button onclick="location.href='gallMain.jsp?gallName=<%=gallName%>'">전체글</button>
 			<button class=white>개념글</button>
 			<button class=white>공지</button>
-			<select class=right>
-				<option>30개
-				<option selected="selected">50개
-				<option>100개
-			</select>
+			<div class=right>
+				<div class=right>
+					<img src=image/pencil.png>글쓰기
+				</div>
+				<select class=right>
+					<option>30개
+					<option selected="selected">50개
+					<option>100개
+				</select>
+			</div>
 		</div>
 		<table>
 			<thead>
