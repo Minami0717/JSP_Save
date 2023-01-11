@@ -25,7 +25,7 @@
 </head>
 <body>
 	<%@include file="menu.jsp" %>
-	<div id=title><h1 class=center>상품 목록</h1></div>
+	<div id=title><h1 class=center>상품 삭제</h1></div>
 	<div id=ps>
 		<%
 			for (Product p : products) {
@@ -34,11 +34,17 @@
 					<img src="image/<%=p.getImage()%>">
 					<p><%=p.getDescription() %>
 					<p><%=p.getPrice() %>원
-					<p id=info><a href=productInfo.jsp?id=<%= p.getId() %>>상세 정보 >></a>
+					<p id=info><a href=# onclick=del(<%=p.getId() %>)>삭제 >></a>
 				</div><%
 			}
 		%>
 	</div>
 	<%@include file="footer.jsp" %>
 </body>
+<script>
+	function del(id) {
+		if (confirm("상품을 삭제하시겠습니까?"))
+			location.href="delProduct.jsp?id="+id
+	}
+</script>
 </html>

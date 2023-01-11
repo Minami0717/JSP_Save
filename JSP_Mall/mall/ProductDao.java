@@ -56,7 +56,7 @@ public class ProductDao {
 				product.setDescription(rs.getString("description"));
 				product.setMaker(rs.getString("maker"));
 				product.setCategory(rs.getString("category"));
-				product.setCondition(rs.getString("condition"));
+				product.setCondition(rs.getString("state"));
 				product.setImage(rs.getString("image"));
 				product.setStock(rs.getInt("stock"));
 				list.add(product);
@@ -80,7 +80,7 @@ public class ProductDao {
 				product.setDescription(rs.getString("description"));
 				product.setMaker(rs.getString("maker"));
 				product.setCategory(rs.getString("category"));
-				product.setCondition(rs.getString("condition"));
+				product.setCondition(rs.getString("state"));
 				product.setImage(rs.getString("image"));
 				product.setStock(rs.getInt("stock"));
 			}
@@ -103,6 +103,37 @@ public class ProductDao {
 			pstmt.setInt(7, product.getStock());
 			pstmt.setString(8, product.getCondition());
 			pstmt.setString(9, product.getImage());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int update(Product product) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("update products set name=?,price=?,description=?,maker=?,category=?,stock=?,state=? where id = ?");
+			pstmt.setString(1, product.getName());
+			pstmt.setInt(2, product.getPrice());
+			pstmt.setString(3, product.getDescription());
+			pstmt.setString(4, product.getMaker());
+			pstmt.setString(5, product.getCategory());
+			pstmt.setInt(6, product.getStock());
+			pstmt.setString(7, product.getCondition());
+			pstmt.setString(8, product.getId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int delete(String id) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("delete from products where id = ?");
+			pstmt.setString(1, id);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

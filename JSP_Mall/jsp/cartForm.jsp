@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Minami Mall</title>
 <style>
 	#title {background: #C3B091; height: 70px; padding: 100px;}
 	.center {text-align: center;}

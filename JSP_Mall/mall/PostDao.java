@@ -17,7 +17,7 @@ public class PostDao {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String user = "root";
 	String pass = "1111";
-	String dbURL = "jdbc:mysql://localhost:3306/friend";
+	String dbURL = "jdbc:mysql://localhost:3306/mall";
 	
 	private PostDao() {
 		try {
@@ -56,8 +56,6 @@ public class PostDao {
 				post.setWriter(rs.getString("writer"));
 				post.setDate(rs.getString("date"));
 				post.setHits(rs.getInt("hits"));
-				post.setRecommend(rs.getInt("recommend"));
-				post.setPw(rs.getString("pw"));
 				list.add(post);
 			}
 		} catch (SQLException e) {
@@ -79,9 +77,6 @@ public class PostDao {
 				post.setWriter(rs.getString("writer"));
 				post.setDate(rs.getString("date"));
 				post.setHits(rs.getInt("hits"));
-				post.setRecommend(rs.getInt("recommend"));
-				post.setReplyNum(rs.getInt("replyNum"));
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,12 +99,11 @@ public class PostDao {
 	public int insert(Post post) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw) values(?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into post(title,content,writer,date) values(?,?,?,?)");
 			pstmt.setString(1, post.getTitle());
 			pstmt.setString(2, post.getContent());
 			pstmt.setString(3, post.getWriter());
 			pstmt.setString(4, post.getDate());
-			pstmt.setString(5, post.getPw());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,9 +114,8 @@ public class PostDao {
 	public int update(Post post) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("update post set hits = ? where idx = ?");
-			pstmt.setInt(1, post.getHits());
-			pstmt.setInt(2, post.getIdx());
+			pstmt = conn.prepareStatement("update post set hits=hits+1 where idx = ?");
+			pstmt.setInt(1, post.getIdx());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

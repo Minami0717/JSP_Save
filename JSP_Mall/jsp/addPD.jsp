@@ -1,3 +1,6 @@
+<%@page import="java.util.Enumeration"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="mall.ProductDao"%>
 <%@page import="java.util.List"%>
 <%@page import="mall.Product"%>
@@ -6,15 +9,33 @@
 <!DOCTYPE html>
 <%
 	request.setCharacterEncoding("utf-8");
-	String id = request.getParameter("id");
-	String name = request.getParameter("name");
-	String des = request.getParameter("des");
-	String maker = request.getParameter("maker");
-	String category = request.getParameter("category");
-	String condition = request.getParameter("condition");
-	String image = request.getParameter("image");
-	int price = Integer.parseInt(request.getParameter("price"));
-	int stock = Integer.parseInt(request.getParameter("stock"));
+	String uploadPath = request.getRealPath("jsp/image");
+	int size = 10*1024*1024;
+	
+	MultipartRequest multi = new MultipartRequest(request, uploadPath, size,
+			"utf-8", new DefaultFileRenamePolicy());
+			
+	Enumeration files = multi.getFileNames();
+	String file = (String)files.nextElement();
+	String image = multi.getFilesystemName(file);
+			
+	String id = multi.getParameter("id");
+	String name = multi.getParameter("name");
+	String des = multi.getParameter("des");
+	String maker = multi.getParameter("maker");
+	String category = multi.getParameter("category");
+	String condition = multi.getParameter("condition");
+	
+	int price,stock;
+	if (multi.getParameter("price").isEmpty())
+		price = 0;
+	else
+		price = Integer.parseInt(multi.getParameter("price"));
+		
+	if (multi.getParameter("stock").isEmpty())
+		stock = 0;
+	else
+		stock = Integer.parseInt(multi.getParameter("stock"));
 	
 	Product product = new Product();
 	product.setId(id);

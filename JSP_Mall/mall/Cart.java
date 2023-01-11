@@ -5,7 +5,14 @@ public class Cart {
 	private String product;
 	private int price;
 	private int count;
+	private String member_id;
 	
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
 	public String getId() {
 		return id;
 	}

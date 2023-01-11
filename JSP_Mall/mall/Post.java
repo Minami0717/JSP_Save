@@ -7,33 +7,12 @@ public class Post {
 	private String writer;
 	private String date;
 	private int hits;
-	private int recommend;
-	private String pw;
-	private int replyNum;
 	
-	public int getReplyNum() {
-		return replyNum;
-	}
-	public void setReplyNum(int replyNum) {
-		this.replyNum = replyNum;
-	}
-	public String getPw() {
-		return pw;
-	}
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
 	public int getHits() {
 		return hits;
 	}
 	public void setHits(int hits) {
 		this.hits = hits;
-	}
-	public int getRecommend() {
-		return recommend;
-	}
-	public void setRecommend(int recommend) {
-		this.recommend = recommend;
 	}
 	public String getDate() {
 		return date;

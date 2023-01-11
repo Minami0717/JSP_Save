@@ -1,5 +1,3 @@
-<%@page import="java.time.LocalTime"%>
-<%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,11 +12,6 @@
 </head>
 <body>
 	<%@include file="menu.jsp" %>
-	<div id=title><h1 class=center>Minami Mall</h1></div>
-	<div class=center>
-		현재 접속 시각 : <%=LocalTime.now().format(
-				DateTimeFormatter.ofPattern("HH:mm:ss")) %>
-	</div>
-	<%@include file="footer.jsp" %>
+	<div id=title><h1 class=center>회원정보 수정 성공</h1></div>
 </body>
 </html>

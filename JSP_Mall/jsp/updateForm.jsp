@@ -25,7 +25,7 @@
 </head>
 <body>
 	<%@include file="menu.jsp" %>
-	<div id=title><h1 class=center>상품 목록</h1></div>
+	<div id=title><h1 class=center>상품 수정</h1></div>
 	<div id=ps>
 		<%
 			for (Product p : products) {
@@ -34,7 +34,7 @@
 					<img src="image/<%=p.getImage()%>">
 					<p><%=p.getDescription() %>
 					<p><%=p.getPrice() %>원
-					<p id=info><a href=productInfo.jsp?id=<%= p.getId() %>>상세 정보 >></a>
+					<p id=info><a href=productUpdateForm.jsp?id=<%= p.getId() %>>수정 >></a>
 				</div><%
 			}
 		%>

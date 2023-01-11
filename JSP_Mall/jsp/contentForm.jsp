@@ -7,14 +7,13 @@
 <%
 	int idx = Integer.parseInt(request.getParameter("idx"));
 	Post post = PostDao.getInstance().select(idx);
-	post.setHits(post.getHits()+1);
 	PostDao.getInstance().update(post);
 	List<Post> list = PostDao.getInstance().selectAll();
 %>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Minami Mall</title>
 <style>
 	#title {background: #C3B091; height: 70px; padding: 100px;}
 	.center {text-align: center;}
@@ -35,7 +34,7 @@
 			<div align=left><h2><%=post.getTitle() %></h2></div>
 			<div align=left>
 				<p><%=post.getWriter() %> | <%=post.getDate() %>
-				<p align=right>조회 <%=post.getHits() %>
+				<p align=right>조회 <%=post.getHits()+1 %>
 			</div>
 		</div>
 		<div align=left id=con><p><%=post.getContent() %></div>
