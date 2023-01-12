@@ -5,7 +5,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	List<Cart> list = CartDao.getInstance().selectAll();
+	List<Cart> list = CartDao.getInstance().selectAll(session.getAttribute("id").toString());
 	int total = 0;
 %>
 <html>
@@ -29,8 +29,8 @@
 <body>
 	<%@include file="menu.jsp" %>
 	<div id=title><h1 class=center>장바구니</h1></div>
-	<button id=del class=btn onclick=del()>삭제하기</button>
-	<button id=order class=btn onclick="location.href='orderForm.jsp'">주문하기</button>
+	<button id=del class=btn onclick=del(<%=list.size() %>)>삭제하기</button>
+	<button id=order class=btn onclick=order(<%=list.size() %>)>주문하기</button>
 	<table>
 		<tr>
 			<th width=400px>상품
@@ -56,11 +56,21 @@
 	<%@include file="footer.jsp" %>
 </body>
 <script>
-	function del() {
-		if(confirm("전부 삭제할까요?"))
-			location.href="deleteAll.jsp";
-		else
-			return;
+	function del(n) {
+		if (n == 0)
+			alert("상품이 존재하지 않습니다.")
+		else {
+			if(confirm("전부 삭제할까요?"))
+				location.href="deleteAll.jsp";
+		}
+	}
+	function order(n) {
+		if (n == 0)
+			alert("상품이 존재하지 않습니다.")
+		else {
+			if(confirm("주문을 진행하시겠습니까?"))
+				location.href="orderForm.jsp";
+		}
 	}
 </script>
 </html>

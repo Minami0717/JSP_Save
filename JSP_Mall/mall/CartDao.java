@@ -41,11 +41,12 @@ public class CartDao {
 		return instance;
 	}
 	
-	public List<Cart> selectAll() {
+	public List<Cart> selectAll(String m_id) {
 		List<Cart> list = new ArrayList<Cart>();
 		
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM cart");
+			pstmt = conn.prepareStatement("SELECT * FROM cart where member_id=?");
+			pstmt.setString(1, m_id);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -65,11 +66,12 @@ public class CartDao {
 	public int insert(Cart cart) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into cart(id,product,price,count) values(?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into cart(id,product,price,count,member_id) values(?,?,?,?,?)");
 			pstmt.setString(1, cart.getId());
 			pstmt.setString(2, cart.getProduct());
 			pstmt.setInt(3, cart.getPrice());
 			pstmt.setInt(4, cart.getCount());
+			pstmt.setString(5, cart.getMember_id());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			//e.printStackTrace();
@@ -77,11 +79,12 @@ public class CartDao {
 		return result;
 	}
 	
-	public Cart selectOne(String id) {
+	public Cart selectOne(String id, String m_id) {
 		Cart cart = new Cart();
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM cart where id=?");
+			pstmt = conn.prepareStatement("SELECT * FROM cart where id=? and member_id=?");
 			pstmt.setString(1, id);
+			pstmt.setString(2, m_id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				cart.setId(rs.getString("id"));
@@ -95,11 +98,12 @@ public class CartDao {
 		return cart;
 	}
 	
-	public int update(String id) {
+	public int update(String id, String m_id) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("update cart set count=count+1 where id = ?");
+			pstmt = conn.prepareStatement("update cart set count=count+1 where id=? and member_id=?");
 			pstmt.setString(1, id);
+			pstmt.setString(2, m_id);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,11 +111,12 @@ public class CartDao {
 		return result;
 	}
 	
-	public int delete(String id) {
+	public int delete(String id, String m_id) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("delete from cart where id = ?");
+			pstmt = conn.prepareStatement("delete from cart where id=? and member_id=?");
 			pstmt.setString(1, id);
+			pstmt.setString(2, m_id);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,14 +124,32 @@ public class CartDao {
 		return result;
 	}
 	
-	public int deleteAll() {
+	public int deleteAll(String m_id) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("delete from cart");
+			pstmt = conn.prepareStatement("delete from cart where member_id=?");
+			pstmt.setString(1, m_id);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public boolean isSame(String id, String m_id) {
+		boolean same = false;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM cart where id=? and member_id=?");
+			pstmt.setString(1, id);
+			pstmt.setString(2, m_id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				same = true;
+				return same;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return same;
 	}
 }

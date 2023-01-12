@@ -4,17 +4,8 @@
 <!DOCTYPE html>
 <%
 	String id = request.getParameter("id");
-	int result = CartDao.getInstance().delete(id);
+	String m_id = session.getAttribute("id").toString();
+	int result = CartDao.getInstance().delete(id, m_id);
 	if (result != 0)
 		response.sendRedirect("cartForm.jsp");
 %>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-
-</html>

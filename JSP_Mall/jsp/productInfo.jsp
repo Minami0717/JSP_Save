@@ -20,8 +20,6 @@
 	p {margin: 10px 0;}
 	span {background: red; color: white; border-radius: 5px;
 		padding: 2px;}
-	.button {border-radius: 5px; padding : 10px;
-		width: 100px; display: inline-block; margin: 3px;}
 	button {background: dodgerblue; cursor: pointer; border: none; color: white;
 		font-size: 16px; width: 120px; border-radius: 5px; padding : 10px;}
 	#list {background: maroon;}
@@ -41,19 +39,31 @@
 			<p>분류 : <%=product.getCategory() %>
 			<p>재고 수 : <%=product.getStock() %>
 			<h2><%=product.getPrice() %>원</h2>
-			<button onclick=order()>상품 주문 >></button>
-			<p class=button id=cart><a href=cartForm.jsp>장바구니 >></a>
-			<p class=button id=list><a href=products.jsp>상품 목록 >></a>
+			<p><button onclick=order(<%=session.getAttribute("id") %>)>상품 주문 >></button>
+			<button id=cart onclick=cart(<%=session.getAttribute("id") %>)>장바구니 >></button>
+			<button id=list onclick="location.href='products.jsp'">상품 목록 >></button>
 		</div>
 	</div>
 	<%@include file="footer.jsp" %>
 </body>
 <script>
-	function order() {
-		if (confirm("상품을 장바구니에 추가할까요?"))
-			location.href="addCart.jsp?id=<%=product.getId()%>";
+	function order(id) {
+		if (id == null) {
+			alert("로그인이 필요합니다.");
+			location.href="loginForm.jsp";
+		}
+		else {
+			if (confirm("상품을 장바구니에 추가할까요?"))
+				location.href="addCart.jsp?id=<%=product.getId()%>";
+		}
+	}
+	function cart(id) {
+		if (id == null) {
+			alert("로그인이 필요합니다.");
+			location.href="loginForm.jsp";
+		}
 		else
-			return;
+			location.href="cartForm.jsp";
 	}
 </script>
 </html>

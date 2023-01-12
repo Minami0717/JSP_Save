@@ -12,7 +12,7 @@
 	String date = request.getParameter("date");
 	int total = 0;
 	
-	List<Cart> list = CartDao.getInstance().selectAll();
+	List<Cart> list = CartDao.getInstance().selectAll(session.getAttribute("id").toString());
 %>
 <html>
 <head>
@@ -27,10 +27,10 @@
 	#receipt {background: darkturquoise; margin: 50px 30%; padding: 20px;}
 	table {clear: both;}
 	#h {clear: both;}
-	input[type=submit],input[type=button],input[type=reset] {height: 35px; width: 55px; background: darkslateblue; border: none;
+	button {height: 35px; width: 55px; background: darkslateblue; border: none;
 		border-radius: 5px; color: white; cursor: pointer;}
-	input[type=button],input[type=reset] {background: gray;}
-	input[type=submit] {width: 80px;}
+	.left button:first-child,.left button:last-child {background: gray;}
+	.left button:nth-child(2) {width: 80px;}
 </style>
 </head>
 <body>
@@ -65,9 +65,9 @@
 				<td><td><td><b>총액 : </b><td><b style="color: red"><%=total %></b>
 		</table>
 		<div class=left>
-			<input type=button value=이전 onclick=back()>
-			<input type=submit value="주문 완료">
-			<input type=reset value=취소>
+			<button onclick=back()>이전</button>
+			<button onclick=order()>주문 완료</button>
+			<button onclick=cancel()>취소</button>
 		</div>
 		<div id=h></div>
 	</div>
@@ -75,6 +75,14 @@
 <script>
 	function back() {
 		history.back();
+	}
+	function order() {
+		alert("주문이 완료되었습니다.");
+		location.href="order.jsp";
+	}
+	function cancel() {
+		if (confirm("주문을 취소할까요?"))
+			location.href="cartForm.jsp"
 	}
 </script>
 </html>

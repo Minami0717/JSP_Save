@@ -23,13 +23,14 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
+  `idx` int NOT NULL AUTO_INCREMENT,
   `id` varchar(10) NOT NULL,
   `product` varchar(20) NOT NULL,
   `price` int NOT NULL,
   `count` int NOT NULL,
   `member_id` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES ('P1235','LG PC 그램',1500000,1,'');
+INSERT INTO `cart` VALUES (7,'P1234','iPhone 6s',800000,2,'admin'),(10,'P1237','Galaxy Watch 5',400000,2,'1'),(11,'P1234','iPhone 6s',800000,1,'1');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,8 +70,36 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES ('admin','1','관리자','남','1999-09-12','admin@admin.com','010-0000-0000','대구','2023-01-11'),('test1','1','테스트12','여','2023-02-10','tes12t@gmail.com','012-2952-4839','대구12','2023-01-10');
+INSERT INTO `member` VALUES ('1','1','홍길동','여','2023-02-10','test@gmail.com','012-2952-4839','대구','2023-01-10'),('admin','1','관리자','남','1999-09-12','admin@admin.com','010-0000-0000','대구','2023-01-11');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_list`
+--
+
+DROP TABLE IF EXISTS `order_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_list` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `product` varchar(30) NOT NULL,
+  `price` int NOT NULL,
+  `count` int NOT NULL,
+  `member_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_list`
+--
+
+LOCK TABLES `order_list` WRITE;
+/*!40000 ALTER TABLE `order_list` DISABLE KEYS */;
+INSERT INTO `order_list` VALUES (1,'2023-01-12 05:00:54','P1237 - Galaxy Watch 5',400000,2,'1'),(2,'2023-01-12 05:00:54','P1234 - iPhone 6s',800000,1,'1');
+/*!40000 ALTER TABLE `order_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -97,7 +126,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'공지','* 무료 배송 혜택을 받으신 후 부분 반품을 원하실 경우, 반품 배송비 6,000원 (제주 및 기타 도서산간지역 11,000원)이 부과됩니다.','관리자','2023-01-11 17:09:03',1);
+INSERT INTO `post` VALUES (1,'공지','* 무료 배송 혜택을 받으신 후 부분 반품을 원하실 경우, 반품 배송비 6,000원 (제주 및 기타 도서산간지역 11,000원)이 부과됩니다.','관리자','2023-01-11 17:09:03',2);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-11 17:30:08
+-- Dump completed on 2023-01-12 17:30:19

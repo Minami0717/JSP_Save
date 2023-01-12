@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	int result = CartDao.getInstance().deleteAll();
+	int result = CartDao.getInstance().deleteAll(session.getAttribute("id").toString());
 	if (result != 0)
 		response.sendRedirect("cartForm.jsp");
 %>

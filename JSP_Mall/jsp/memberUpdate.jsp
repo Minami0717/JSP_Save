@@ -63,8 +63,9 @@
 	member.setAddress(address);
 	
 	int result = MemberDao.getInstance().update(member);
-	if(result != 0)
-		response.sendRedirect("updateSucc.jsp");
+	if (result != 0) {
+		%><script>alert("수정되었습니다."); location.href="home.jsp";</script><%
+	}
 %>
 <html>
 <head>

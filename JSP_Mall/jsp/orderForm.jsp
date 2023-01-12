@@ -9,14 +9,13 @@
 	#title {background: #C3B091; height: 70px; padding: 100px;}
 	.center {text-align: center;}
 	#form {margin-left: 40%;}
-	input[type=text],input[type=number],input[type=date] {height: 35px; margin: 0 100px;}
-	textarea {margin-left: 100px; width: 300px; height: 30px;}
-	input[name=date],input[name=country] {margin-left: 85px;}
-	input[name=code] {margin-left: 70px;}
+	input {height: 35px;}
+	input[type=date] {width: 170px;}
 	form div {margin: 10px;}
-	input[type=submit],input[type=button],input[type=reset] {height: 35px; width: 55px; background: darkslateblue; border: none;
+	input[type=submit],input[type=button],input[type=reset] {width: 55px; background: darkslateblue; border: none;
 		border-radius: 5px; color: white; cursor: pointer;}
 	input[type=button],input[type=reset] {background: gray;}
+	label {width: 100px; display: inline-block;}
 </style>
 </head>
 <body>
@@ -32,7 +31,7 @@
 			<div>
 				<input type=button value=이전 onclick=back()>
 				<input type=submit value=등록>
-				<input type=reset value=취소>
+				<input type=reset value=초기화>
 			</div>
 		</form>
 	</div>

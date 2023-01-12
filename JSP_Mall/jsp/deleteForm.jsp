@@ -5,6 +5,11 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+	if (session.getAttribute("id") == null || !session.getAttribute("id").equals("admin")) {
+		%><script>alert("접근 권한이 없습니다."); history.back()</script><%
+		return;
+	}
+	
 	List<Product> products = ProductDao.getInstance().selectAll();
 %>
 <html>
