@@ -24,6 +24,7 @@
 		return;
 	}
 	
+	int idx = Integer.parseInt(request.getParameter("idx"));
 	String writer = request.getParameter("nick");
 	String pw = request.getParameter("pw");
 	String title = request.getParameter("title");
@@ -37,10 +38,11 @@
 	post.setWriter(writer);
 	post.setDate(date);
 	post.setPw(pw);
+	post.setGall_idx(idx);
 	
 	int result = PostDao.getInstance().insert(post);
 	if (result != 0)
-		response.sendRedirect("loginSucc.jsp");
+		response.sendRedirect("gallMain.jsp?idx="+idx);
 %>
 <html>
 <head>

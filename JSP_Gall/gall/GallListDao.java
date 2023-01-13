@@ -59,4 +59,32 @@ public class GallListDao {
 		}
 		return list;
 	}
+	
+	public String selectGallName(Integer idx) {
+		String name = "";
+		try {
+			pstmt = conn.prepareStatement("SELECT name FROM gall_list where idx=?");
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				name = rs.getString("name");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return name;
+	}
+	
+	public int selectIdx(String name) {
+		int idx = 0;
+		try {
+			pstmt = conn.prepareStatement("SELECT idx FROM gall_list where name=?");
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				idx = rs.getInt("idx");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idx;
+	}
 }

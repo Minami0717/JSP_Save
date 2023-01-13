@@ -41,11 +41,12 @@ public class PostDao {
 		return instance;
 	}
 	
-	public List<Post> selectAll() {
+	public List<Post> selectAll(int idx) {
 		List<Post> list = new ArrayList<Post>();
 		
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM post");
+			pstmt = conn.prepareStatement("SELECT * FROM post where gall_idx=?");
+			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -81,7 +82,6 @@ public class PostDao {
 				post.setHits(rs.getInt("hits"));
 				post.setRecommend(rs.getInt("recommend"));
 				post.setReplyNum(rs.getInt("replyNum"));
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,12 +116,13 @@ public class PostDao {
 	public int insert(Post post) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw) values(?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw,gall_idx) values(?,?,?,?,?,?)");
 			pstmt.setString(1, post.getTitle());
 			pstmt.setString(2, post.getContent());
 			pstmt.setString(3, post.getWriter());
 			pstmt.setString(4, post.getDate());
 			pstmt.setString(5, post.getPw());
+			pstmt.setInt(6, post.getGall_idx());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

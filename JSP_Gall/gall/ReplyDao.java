@@ -41,11 +41,12 @@ public class ReplyDao {
 		return instance;
 	}
 	
-	public List<Reply> selectAll() {
+	public List<Reply> selectAll(int p_idx) {
 		List<Reply> list = new ArrayList<Reply>();
 		
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM reply");
+			pstmt = conn.prepareStatement("SELECT * FROM reply where post_idx=?");
+			pstmt.setInt(1, p_idx);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

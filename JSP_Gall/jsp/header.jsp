@@ -1,3 +1,6 @@
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.Stack"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="gall.GallListDao"%>
 <%@page import="gall.GallList"%>
 <%@page import="java.util.List"%>
@@ -5,6 +8,7 @@
     pageEncoding="UTF-8"%>
 <%
 	List<GallList> gList = GallListDao.getInstance().selectAll();
+	ArrayList<String> viList = (ArrayList)session.getAttribute("visitList");
 %>
 <style>
 	* {margin: 0; padding: 0;}
@@ -61,8 +65,11 @@
         <img src="image/left.png">
         <ul>
         <%
-        	for (GallList g : gList) {
-        		%><li><a href="gallMain.jsp?gallName=<%= g.getName() %>"><%= g.getName() %></a><img src="image/x1.png"></li><%
+        	if (viList != null) {
+        		for (int i = viList.size()-1; i >= 0; i--) {
+        			int index = GallListDao.getInstance().selectIdx(viList.get(i));
+            		%><li><a href="gallMain.jsp?idx=<%=index %>"><%= viList.get(i) %></a><img src="image/x1.png"></li><%
+            	}
         	}
         %>
         </ul>

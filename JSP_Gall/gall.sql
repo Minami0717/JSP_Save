@@ -26,7 +26,7 @@ CREATE TABLE `gall_list` (
   `idx` int NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`idx`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `gall_list` (
 
 LOCK TABLES `gall_list` WRITE;
 /*!40000 ALTER TABLE `gall_list` DISABLE KEYS */;
-INSERT INTO `gall_list` VALUES (1,'프로그래밍'),(2,'야구'),(3,'축구'),(4,'만화'),(5,'리그 오브 레전드');
+INSERT INTO `gall_list` VALUES (1,'실시간 베스트'),(2,'야구'),(3,'축구'),(4,'만화'),(5,'리그 오브 레전드'),(6,'프로그래밍');
 /*!40000 ALTER TABLE `gall_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,8 +56,9 @@ CREATE TABLE `post` (
   `recommend` int NOT NULL DEFAULT '0',
   `pw` varchar(20) NOT NULL,
   `replyNum` int NOT NULL DEFAULT '0',
+  `gall_idx` int NOT NULL,
   PRIMARY KEY (`idx`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +67,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (9,'자바','tset','홍길동','2022-12-27 11:27:22',91,0,'',2),(10,'파이썬','test','홍길동','2022-12-27 11:29:08',67,3,'',0),(11,'안드로이드','hi','a','2022-12-27 11:39:51',17,0,'',0),(12,'아이폰','11','홍길동','2022-12-27 12:25:21',121,0,'',5),(13,'데이터베이스','dd','홍길동','2022-12-27 12:26:01',106,0,'',0),(14,'자바스크립트','ste','홍길동','2022-12-27 12:27:54',6,0,'',0),(16,'HTML','ㅁㅁ','홍길동','2022-12-27 16:54:16',1,0,'',0),(17,'CSS','abce','홍길동','2022-12-28 14:18:48',0,0,'',0),(18,'Oracle','테스트','홍길동','2022-12-28 16:18:29',12,0,'',0),(19,'DB','zz','ㅇㅇ','2022-12-29 15:07:23',1,0,'dddd',0),(20,'JSP','test','ㅇㅇ','2022-12-29 15:30:54',2,0,'1',0);
+INSERT INTO `post` VALUES (9,'자바','tset','홍길동','2022-12-27 11:27:22',96,0,'',0,6),(10,'파이썬','test','홍길동','2022-12-27 11:29:08',81,3,'',0,1),(11,'안드로이드','hi','a','2022-12-27 11:39:51',17,0,'',0,2),(12,'아이폰','11','홍길동','2022-12-27 12:25:21',122,0,'',5,3),(13,'데이터베이스','dd','홍길동','2022-12-27 12:26:01',108,0,'',0,4),(14,'자바스크립트','ste','홍길동','2022-12-27 12:27:54',6,0,'',0,5),(16,'HTML','ㅁㅁ','홍길동','2022-12-27 16:54:16',2,0,'',0,6),(17,'CSS','abce','홍길동','2022-12-28 14:18:48',0,0,'',0,5),(18,'Oracle','테스트','홍길동','2022-12-28 16:18:29',13,0,'',0,4),(19,'DB','zz','ㅇㅇ','2022-12-29 15:07:23',1,0,'dddd',0,3),(20,'JSP','test','ㅇㅇ','2022-12-29 15:30:54',4,0,'1',0,2),(21,'dd','dd','ㅇㅇ','2023-01-13 15:07:13',33,1,'1',0,5);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-09 17:31:08
+-- Dump completed on 2023-01-13 17:30:10

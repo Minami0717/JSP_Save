@@ -7,7 +7,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	List<Post> list = PostDao.getInstance().selectAll();
+	int idx = 1;
+	List<Post> list = PostDao.getInstance().selectAll(idx);
 %>
 <html>
 <head>
@@ -19,6 +20,7 @@
 
     section {margin-left: 25%; width: 35%; height: 700px; float: left;}
 	aside {float: right; margin-right: 25%;}
+	button {cursor: pointer;}
 
 	#login {border: 1px solid #3b4890; padding: 10px; margin: 15px 0; width: 240px;}
 	#login input:not([type=checkbox]) {width: 145px; height: 37px;}
@@ -76,7 +78,7 @@
 			<ul>
 			<%
 				for (Post p : list) {
-					%><li><a href=#><%=p.getTitle() %></a><%
+					%><li><a href="result.jsp?idx=<%= idx %>&p_idx=<%= p.getIdx() %>"><%=p.getTitle() %></a><%
 				}
 			%>
 			</ul>
@@ -90,7 +92,7 @@
 			</div>
 			<div>
 				<input type=password placeholder="비밀번호">
-				<button>로그인</button>
+				<button onclick="location.href='loginForm.jsp'">로그인</button>
 			</div>
 			<div>
 				<b>고정닉 신청</b> | 식별 코드·비밀번호 찾기 |
@@ -109,7 +111,7 @@
 			<ol>
 			<%
 				for (GallList g : gList) {
-					%><li><a href=#><%=g.getName() %></a><%
+					%><li><a href="gallMain.jsp?idx=<%= g.getIdx() %>"><%=g.getName() %></a><%
 				}
 			%>
 			</ol>

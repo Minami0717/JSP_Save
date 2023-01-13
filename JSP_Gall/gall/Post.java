@@ -10,7 +10,14 @@ public class Post {
 	private int recommend;
 	private String pw;
 	private int replyNum;
+	private int gall_idx;
 	
+	public int getGall_idx() {
+		return gall_idx;
+	}
+	public void setGall_idx(int gall_idx) {
+		this.gall_idx = gall_idx;
+	}
 	public int getReplyNum() {
 		return replyNum;
 	}
