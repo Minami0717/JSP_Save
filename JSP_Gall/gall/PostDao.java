@@ -58,6 +58,7 @@ public class PostDao {
 				post.setDate(rs.getString("date"));
 				post.setHits(rs.getInt("hits"));
 				post.setRecommend(rs.getInt("recommend"));
+				post.setDecommend(rs.getInt("decommend"));
 				post.setPw(rs.getString("pw"));
 				list.add(post);
 			}
@@ -81,6 +82,7 @@ public class PostDao {
 				post.setDate(rs.getString("date"));
 				post.setHits(rs.getInt("hits"));
 				post.setRecommend(rs.getInt("recommend"));
+				post.setDecommend(rs.getInt("decommend"));
 				post.setReplyNum(rs.getInt("replyNum"));
 			}
 		} catch (SQLException e) {
@@ -105,6 +107,18 @@ public class PostDao {
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement("update post set recommend=recommend+1 where idx=?");
+			pstmt.setInt(1, idx);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int updateDeco(Integer idx) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("update post set decommend=decommend+1 where idx=?");
 			pstmt.setInt(1, idx);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

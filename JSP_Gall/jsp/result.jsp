@@ -14,40 +14,10 @@
 	Integer idx = Integer.parseInt(request.getParameter("idx"));
 	Integer p_idx = Integer.parseInt(request.getParameter("p_idx"));
 	String name = GallListDao.getInstance().selectGallName(idx);
-	String nick = request.getParameter("nickname");
-	String pw = request.getParameter("pw");
-	String text = request.getParameter("text");
 
 	Post post = PostDao.getInstance().select(p_idx);
 	post.setHits(post.getHits()+1);
 	PostDao.getInstance().update(post);
-	
-	if (nick != null) {
-		if(nick.isEmpty()) {
-			%><script>alert("닉네임을 입력하세요"); history.back()</script><%
-			return;
-		}
-		if(pw.isEmpty()) {
-			%><script>alert("비밀번호를 입력하세요"); history.back()</script><%
-			return;
-		}
-		if(text.isEmpty()) {
-			%><script>alert("댓글을 입력하세요"); history.back()</script><%
-			return;
-		}
-		
-		Reply reply = new Reply();
-		reply.setNickname(nick);
-		reply.setContents(text);
-		reply.setPost_idx(p_idx);
-		String date = LocalDateTime.now().format(
-				DateTimeFormatter.ofPattern("MM.dd HH:mm:ss"));
-		reply.setDate(date);
-		
-		ReplyDao.getInstance().insert(reply);
-		PostDao.getInstance().updateReply(p_idx);
-		post.setReplyNum(post.getReplyNum()+1);
-	}
 	
 	List<Post> list = PostDao.getInstance().selectAll(idx);
 	List<Reply> replies = ReplyDao.getInstance().selectAll(p_idx);
@@ -69,33 +39,31 @@
 	a[href="#reply"]:hover {text-decoration: none;}
 	#sub {font-size: 13px; display: inline-block;}
 	#con {padding: 10px;}
-	
-	table {width: 100%; text-align: center; border-bottom: 1px solid #3b4890; border-spacing: 0; font-size: 13px;
-	border-collapse: collapse;}
-	th {border-bottom: 1px solid #3b4890; border-top: 2px solid #3b4890; height: 37px;}
-	td {height: 25px; vertical-align: middle; border-top: 1px solid gainsboro;}
-	
+
 	a {text-decoration: none; color: black;}
+	
 	#rec {border: 1px solid gainsboro; width: 300px;
 	height: 100px; text-align: center; position: absolute;
 	bottom: 50px; left: 35%;}
-	input[type=button] {margin-top: 20px; border-radius: 100px; width: 50px;
-	height: 50px; border: none; color: white; cursor: pointer;}
-	input[value=추천] {background: #3b4890;}
-	input[value=비추] {background: gray;}
-	input[type=text],input[type=password] {height: 30px;}
+	#rec img {width: 25px;}
+	#rec button {margin-top: 20px; border-radius: 100px; width: 55px; height: 55px; border: none; color: white; cursor: pointer;}
+	#rec p { font-size: 12px;}
+	#rec button:last-child {background: #b5bbbd;}
+	
+	input[type=text],input[type=password] {height: 30px; border: 1px solid gainsboro; padding: 0 5px;}
 	input[type=text] {margin-bottom: 5px;}
 	input[type=submit] {background: #3b4890; color: white; width: 85px; height: 30px;
 	border: none; cursor: pointer; border-radius: 2px; margin-top: 10px;}
-	#comment {border-top: 2px solid #3b4890; padding: 10px; clear: both; background: #fafafa;}
+	
 	#np {display: inline-block;}
-	#np input {width: 120px;}
+	#np input {width: 140px;}
+	
 	.left {text-align: left;}
 	#reply {border-bottom: 2px solid #3b4890;}
-	#text {padding: 10px;}
+	#text {padding: 10px; border-top: 2px solid #3b4890; background: #fafafa; clear: both;}
 	#text div:last-child {clear: both;}
 	#ta {float: right;}
-	textarea {width: 770px; height: 100px;}
+	textarea {width: 770px; height: 100px; border: 1px solid gainsboro;}
 	#nick {width: 150px;}
 	section button {width: 82px; height: 35px; background: #3b4890; color: white;
 	border: 1px solid #29367c; border-bottom-width: 3px; margin-top: 10px;
@@ -105,9 +73,16 @@
 	.right {float: right;}
 	#edit,#delete {background: #666; border-color: #444;}
 	#delete {margin: 10px;}
-	#del {width: 13px; height: 13px; margin: 0; background: url(image/x2.png); background-size: cover; border: none;}
-	#table {border-bottom: 1px solid gainsboro;}
-	#tiv {margin-bottom: 30px;}
+	#del {border: none; background: #c6c8c9; width: 15px; height: 15px; margin: 0;}
+	#del img {width: 10px;}
+	
+	#tiv {margin-bottom: 30px; clear: both; border-top: 2px solid #3b4890;}
+	#tiv li {list-style-type: none; border-bottom: 1px solid gainsboro; padding: 10px;}
+	#tiv span {display: inline-block;}
+	#tiv span:first-child {width: 160px; font-size: 13px; color: #777;}
+	#tiv span:nth-child(2) {width: 660px;}
+	#tiv span:nth-child(3) {font-size: 12px; color: #999;}
+	
 	#left span {color: #d31900;}
 	.reTop {font-size: 14px; font-weight: bold; margin-bottom: 10px;}
 	#right {float: right;}
@@ -118,7 +93,21 @@
     #check {width: 49px; height: 31px;}
     #x {width: 30px; height: 31px;}
     
-    #bot {width: 70%; border: 1px solid black;}
+	#bot {width: 70%; float: left;}
+    #bot table {width: 100%; text-align: center; border-bottom: 1px solid #3b4890; border-spacing: 0; font-size: 13px;
+	border-collapse: collapse;}
+	#bot th {border-bottom: 1px solid #3b4890; border-top: 2px solid #3b4890; height: 37px;}
+	#bot td {height: 25px; vertical-align: middle; border-top: 1px solid gainsboro;}
+    
+    #login {border: 1px solid #3b4890; float: right; width: 270px;}
+	#login img {height: 13px;}
+	#login p {padding: 10px 20px;}
+	#login p a {color: #29367c; font-weight: bold; font-size: 14px;}
+	#login p a:hover {text-decoration: none;}
+	#login div {background: #f3f3f3; padding: 10px; text-align: center;}
+	#login div a {font-size: 12px; font-weight: bold;}
+	#login button {width: 65px; height: 25px; background: #3b4890; color: white; border: none; border: 1px solid #29367c;
+	margin-left: 10px; cursor: pointer; font-weight: bold; float: right;}
 </style>
 </head>
 <body>
@@ -139,8 +128,14 @@
 			</div>
 			<div id=con><%=post.getContent() %></div>
 			<div id=rec>
-				<%=post.getRecommend() %> <input type=button value=추천 onclick="location.href='reco.jsp?idx=<%= idx %>&p_idx=<%=p_idx %>'">
-				<input type=button value=비추> 0
+				<%=post.getRecommend() %>
+				<button onclick="location.href='reco.jsp?reco=re&idx=<%= idx %>&p_idx=<%=p_idx %>'">
+					<img src=image/star2.png><p>추천
+				</button>
+				<button onclick="location.href='reco.jsp?reco=de&idx=<%= idx %>&p_idx=<%=p_idx %>'">
+					<img src=image/down-arrow.png><p>비추
+				</button>
+				<%=post.getDecommend() %>
 			</div>
 		</div>
 		<div id=reply>
@@ -153,85 +148,133 @@
 				</select>
 			</div>
 			<div class=reTop id=right>본문 보기 | 댓글 닫기 | 새로고침</div>
-			<div id=comment>
 			<%
-				for (Reply r : replies) {
-					if (r.getPost_idx() == p_idx) {
-						%>
-						<div id=tiv>
-							<div id=table>
-								<table>
-									<tr>
-										<td class=left id=nick><%=r.getNickname() %>
-										<td class=left><%=r.getContents() %>
-										<td class=right><%=r.getDate() %>
-										<%
-											if (session.getAttribute("nick") != null & session.getAttribute("nick").equals(r.getNickname())) {
-												%><button id=del></button><%
-											}
-										%>
-									</tr>
-								</table>
-							</div>
-							<div id=delCheck>
-								<input id=pc type=password placeholder=비밀번호>
-								<button id=check>확인</button><button id=x>X</button>
-							</div>
+				if (!replies.isEmpty()) {
+					%>
+					<div id=tiv>
+						<ul>
+					<%
+						for (Reply r : replies) {
+							if (r.getPost_idx() == p_idx) {
+								%>
+								<li>
+									<span><%=r.getNickname() %></span>
+									<span><%=r.getContents() %></span>
+									<span><%=r.getDate() %></span>
+									<%
+										if (session.getAttribute("nick") != null && session.getAttribute("nick").equals(r.getNickname())) {
+											%><button id=del><img src=image/close.png></button><%
+										}
+									%>
+								</li>
+								<%
+							}
+						}
+					%>
+						</ul>
+						<div id=delCheck>
+							<input id=pc type=password placeholder=비밀번호>
+							<button id=check>확인</button><button id=x>X</button>
 						</div>
-						<%
-					}
+					</div>
+					<%
 				}
 			%>	
-				<div id=text>
-					<form action="result.jsp" method=post>
-						<div id=np>
-							<input type="hidden" name=idx value=<%=p_idx%>>
-							<input type=text placeholder=닉네임 name=nickname <%-- value=<%=session.getAttribute("nick") %> --%>><br>
-							<input type=password placeholder=비밀번호 name=pw>
-						</div>
-						<div id=ta>
-							<textarea name=text></textarea>
-						</div>
-						<div align=right><input type=submit value=등록></div>
-					</form>
-				</div>
+			<div id=text>
+				<form action="addReply.jsp" method=post>
+					<div id=np>
+						<input type="hidden" name=p_idx value=<%=p_idx%>>
+						<input type="hidden" name=idx value=<%=idx%>>
+						<%
+							if (session.getAttribute("nick") == null) {
+							%>
+								<input type=text placeholder=닉네임 name=nickname><br>
+								<input type=password placeholder=비밀번호 name=pw>
+							<%
+							}
+							else {
+							%>
+								<input type=text placeholder=닉네임 name=nickname value=<%=session.getAttribute("nick") %> readonly><br>
+								<input type=hidden name=pw value=<%=session.getAttribute("pw") %>>
+							<%
+							}
+						%>
+					</div>
+					<div id=ta>
+						<textarea name=reply></textarea>
+					</div>
+					<div align=right><input type=submit value=등록></div>
+				</form>
 			</div>
 		</div>
-		<button>전체글</button><button id=idea>개념글</button>
+		<button onclick="location.href='gallMain.jsp?idx=<%= idx %>'">전체글</button><button id=idea>개념글</button>
 		<button class=right onclick="location.href='write.jsp'">글쓰기</button>
 		<button class=right id=delete>삭제</button>
 		<button class=right id=edit>수정</button>
 		<div id=bot>
 			<table>
-				<tr>
-					<th width=50px>번호
-					<th>제목
-					<th width=50px>글쓴이
-					<th width=100px>작성일
-					<th width=50px>조회
-					<th width=50px>추천
-				</tr>
-			<%
-				for(Post p : list) {
-					String date;
-					if (!p.getDate().substring(0,10).equals(LocalDate.now().toString()))
-						date = p.getDate().substring(5,10);
-					else
-						date = p.getDate().substring(11,16);
-					%><tr>
-						<td><%=p.getIdx() %>
-						<td class=left><a href="result.jsp?idx=<%=p.getIdx() %>"><%=p.getTitle() %></a>
-						<td><%=p.getWriter() %>
-						<td><%=date %>
-						<td><%=p.getHits() %>
-						<td><%=p.getRecommend() %><%
-				}
-			%>
+				<thead>
+					<tr>
+						<th width=50px>번호
+						<th>제목
+						<th width=50px>글쓴이
+						<th width=100px>작성일
+						<th width=50px>조회
+						<th width=50px>추천
+					</tr>
+				</thead>
+				<tbody>
+				<%
+					for(int i = list.size()-1; i >= 0; i--) {
+						String date;
+						if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
+							date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
+								+list.get(i).getDate().substring(8,10);
+						else if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
+							date = list.get(i).getDate().substring(5,7)+"."+list.get(i).getDate().substring(8,10);
+						else
+							date = list.get(i).getDate().substring(11,16);
+						%><tr>
+							<td><%=list.get(i).getIdx() %>
+							<td align=left><a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>"><%=list.get(i).getTitle() %></a>
+							<td><%=list.get(i).getWriter() %>
+							<td><%=date %>
+							<td><%=list.get(i).getHits() %>
+							<td><%=list.get(i).getRecommend() %><%
+					}
+				%>
+				</tbody>
 			</table>
 			<div>
 				<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
 				<button id=idea>개념글</button>
 			</div>
+		</div>
+		<div id=login>
+			<%
+				if (session.getAttribute("code") == null) {
+					%>
+					<p><a href=loginForm.jsp?idx=<%= idx %>>로그인해 주세요.</a>
+					<div>
+						<a href=#>MY갤로그</a> &nbsp;|&nbsp;
+						<a href=#>즐겨찾기</a> &nbsp;|&nbsp;
+						<a href=#><img src=image/bell.png> 알림</a>
+					</div>
+					<%
+				}
+				else {
+					%>
+					<p><a href=#><b><%=session.getAttribute("code") %></b>님<img src=image/right-arrow2.png></a>
+					<button onclick="location.href='logout.jsp?where=gall&idx=<%=idx%>'">로그아웃</button>
+					<div>
+						<a href=#>MY갤로그</a> |
+						<a href=#>즐겨찾기</a> |
+						<a href=#>운영/가입</a> |
+						<a href=#><img src=image/bell.png> 알림</a>
+					</div>
+					<%
+				}
+			%>
 		</div>
 	</section>
 </body>

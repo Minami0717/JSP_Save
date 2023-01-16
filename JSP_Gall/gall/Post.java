@@ -8,10 +8,17 @@ public class Post {
 	private String date;
 	private int hits;
 	private int recommend;
+	private int decommend;
 	private String pw;
 	private int replyNum;
 	private int gall_idx;
 	
+	public int getDecommend() {
+		return decommend;
+	}
+	public void setDecommend(int decommend) {
+		this.decommend = decommend;
+	}
 	public int getGall_idx() {
 		return gall_idx;
 	}

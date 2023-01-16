@@ -15,7 +15,7 @@
 	String inputPw = request.getParameter("pw");
 	
 	if(inputCode.isEmpty()) {
-		%><script>alert("아이디를 입력하세요."); history.go(-1)</script><%
+		%><script>alert("식별 코드를 입력하세요."); history.go(-1)</script><%
 		return;
 	}
 	
@@ -32,15 +32,21 @@
 	String email = user.getEmail();
 	
 	if(inputCode.equals(code) && inputPw.equals(pw)) {
-		session.setAttribute("id", code);
+		session.setAttribute("code", code);
 		session.setAttribute("pw", pw);
 		session.setAttribute("nick", nick);
 		session.setAttribute("email", email);
-		response.sendRedirect("loginSucc.jsp");
 	}
 	else {
 		%><script>alert("아이디나 비밀번호가 틀립니다."); history.go(-1)</script><%
 		return;
+	}
+	
+	if(request.getParameter("where").equals("main"))
+		response.sendRedirect("main.jsp");
+	else if(request.getParameter("where").equals("gall")) {
+		int idx = Integer.parseInt(request.getParameter("idx"));
+		response.sendRedirect("gallMain.jsp?idx="+idx);
 	}
 %>
 </body>

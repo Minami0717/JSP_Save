@@ -68,13 +68,15 @@
 	#issue_box li,#issue_box p {margin-bottom: 5px;}
 	#issue_box img {width: 150px; border: 1px solid #3b4890; margin: 0 10px;}
 	
-	#login {border: 1px solid #3b4890; float: right; margin-top: 20px;}
-	#login img {width: 15px; height: 15px;}
+	#login {border: 1px solid #3b4890; float: right; margin-top: 20px; width: 270px;}
+	#login img {height: 13px;}
 	#login p {padding: 10px 20px;}
 	#login p a {color: #29367c; font-weight: bold; font-size: 14px;}
 	#login p a:hover {text-decoration: none;}
-	#login div {background: #f3f3f3; padding: 10px 30px;}
-	#login div a {font-size: 13px; font-weight: bold;}
+	#login div {background: #f3f3f3; padding: 10px; text-align: center;}
+	#login div a {font-size: 12px; font-weight: bold;}
+	#login button {width: 65px; height: 25px; background: #3b4890; color: white; border: none; border: 1px solid #29367c;
+	margin-left: 10px; cursor: pointer; font-weight: bold; float: right;}
 	
 	.inline {display: inline-block;}
 </style>
@@ -146,19 +148,22 @@
 				</thead>
 				<tbody>
 				<%
-					for(Post p : list) {
+					for(int i = list.size()-1; i >= 0; i--) {
 						String date;
-						if (!p.getDate().substring(0,10).equals(LocalDate.now().toString()))
-							date = p.getDate().substring(5,10);
+						if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
+							date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
+								+list.get(i).getDate().substring(8,10);
+						else if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
+							date = list.get(i).getDate().substring(5,7)+"."+list.get(i).getDate().substring(8,10);
 						else
-							date = p.getDate().substring(11,16);
+							date = list.get(i).getDate().substring(11,16);
 						%><tr>
-							<td><%=p.getIdx() %>
-							<td align=left><a href="result.jsp?idx=<%= idx %>&p_idx=<%=p.getIdx() %>"><%=p.getTitle() %></a>
-							<td><%=p.getWriter() %>
+							<td><%=list.get(i).getIdx() %>
+							<td align=left><a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>"><%=list.get(i).getTitle() %></a>
+							<td><%=list.get(i).getWriter() %>
 							<td><%=date %>
-							<td><%=p.getHits() %>
-							<td><%=p.getRecommend() %><%
+							<td><%=list.get(i).getHits() %>
+							<td><%=list.get(i).getRecommend() %><%
 					}
 				%>
 				</tbody>
@@ -170,12 +175,30 @@
 		</section>
 		<aside>
 			<div id=login>
-				<p><a href=loginForm.jsp>로그인해 주세요.</a>
-				<div>
-					<a href=#>MY갤로그</a> &nbsp;|&nbsp;
-					<a href=#>즐겨찾기</a> &nbsp;|&nbsp;
-					<a href=#><img src=image/bell.png> 알림</a>
-				</div>
+				<%
+					if (session.getAttribute("code") == null) {
+						%>
+						<p><a href=loginForm.jsp?idx=<%= idx %>>로그인해 주세요.</a>
+						<div>
+							<a href=#>MY갤로그</a> &nbsp;|&nbsp;
+							<a href=#>즐겨찾기</a> &nbsp;|&nbsp;
+							<a href=#><img src=image/bell.png> 알림</a>
+						</div>
+						<%
+					}
+					else {
+						%>
+						<p><a href=#><b><%=session.getAttribute("code") %></b>님<img src=image/right-arrow2.png></a>
+						<button onclick="location.href='logout.jsp?where=gall&idx=<%=idx%>'">로그아웃</button>
+						<div>
+							<a href=#>MY갤로그</a> |
+							<a href=#>즐겨찾기</a> |
+							<a href=#>운영/가입</a> |
+							<a href=#><img src=image/bell.png> 알림</a>
+						</div>
+						<%
+					}
+				%>
 			</div>
 		</aside>
 	</main>

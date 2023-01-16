@@ -16,18 +16,31 @@
 <title>minami.com</title>
 <style>
 	h4,h5 {color: #3b4890; display: inline-block;}
-    h5 {margin-left: 10px;}
+	h4 a {color: #3b4890;}
 
     section {margin-left: 25%; width: 35%; height: 700px; float: left;}
 	aside {float: right; margin-right: 25%;}
 	button {cursor: pointer;}
 
-	#login {border: 1px solid #3b4890; padding: 10px; margin: 15px 0; width: 240px;}
-	#login input:not([type=checkbox]) {width: 145px; height: 37px;}
-	#login button {width: 65px; height: 37px; background: #3b4890; color: white; border: none; border: 1px solid #29367c;}
-	#login img {width: 15px; height: 15px;}
+	#login,#user_info {border: 1px solid #3b4890; padding: 10px; margin: 15px 0; width: 240px;}
+	#login input[name=code],#login input[name=pw] {width: 145px; height: 37px; background: #f3f3f3; border: none; padding-left: 5px;}
+	#login input[type=submit],#user_info button {width: 65px; height: 37px; background: #3b4890; color: white; border: none; border: 1px solid #29367c;
+	margin-left: 10px; cursor: pointer;}
+	#login img {width: 15px; height: 15px; cursor: pointer;}
 	#login div:first-child {margin-bottom: 5px; font-size: 12px;}
-	#login div:last-child {border-top: 1px dashed black; margin-top: 10px; font-size: 12px; padding: 5px 0;}
+	#login > div:last-child {border-top: 1px dashed #aaa; margin-top: 15px; font-size: 12px; padding: 10px 0 5px;}
+	#login input[type=checkbox] {margin-left: 10px;}
+	
+	#user_info button {height: 25px; font-weight: bold;}
+	#user_info span {border: 1px #ccc solid; background: #f3f3f3; color: #555; width: 68px; height: 25px; font-size: 13px;
+	display: inline-block; text-align: center; padding-top: 5px; margin-bottom: 5px;}
+	#user_info > div {margin-left: 10px;}
+	#user_info div:first-child a {color: #29367c; font-size: 14px;}
+	#user_info div:first-child a:hover {text-decoration: none;}
+	#user_info div:last-child {margin-top: 10px;}
+	#user_info div:nth-child(2) {font-size: 13px; margin: 10px;}
+	#user_info div:nth-child(2) a {color: #29367c;}
+	#user_info img {height: 13px; cursor: pointer;}
 
 	#hit > img {width: 150px; margin: 10px 5px;}
     #hit div img {width: 10px;}
@@ -58,7 +71,7 @@
 	<section>
 		<div id=hit>
 			<div>
-				<h4>HIT 갤러리</h4>
+				<h4><a href=gallMain.jsp?idx=2>HIT 갤러리</a></h4>
                 <div class="right">
                     1/3
                     <button><img src="image/play-button2.png"></button><button><img src="image/play-button.png"></button>
@@ -73,7 +86,7 @@
 			<div>
 				<h4><a href=#>실시간 베스트<img src=image/check.png></a></h4>
                 <h4><a href=#>실베<span>라이트</span><img src=image/check2.png></a></h4>
-                <h5><a href=#>실갤<img src=image/play.png id="s"></a></h5>
+                <h5><a href=gallMain.jsp?idx=1>실갤<img src=image/play.png id="s"></a></h5>
 			</div>
 			<ul>
 			<%
@@ -85,20 +98,50 @@
 		</div>
 	</section>
 	<aside>
-		<div id=login>
-			<div>
-				<input type=text placeholder="식별 코드">
-				<input type=checkbox> 코드 저장
+		<%
+			if (session.getAttribute("code") == null) {
+			%>
+			<div id=login>
+				<form action=checkID.jsp?where=main method=post>
+					<div>
+						<input type=text placeholder="식별 코드" name=code>
+						<input type=checkbox> 코드 저장
+					</div>
+					<div>
+						<input type=password placeholder="비밀번호" name=pw>
+						<input type=submit value=로그인>
+					</div>
+				</form>
+				<div>
+					<b><a href=joinForm.jsp>고정닉 신청</a></b> |
+					<a href=#>식별 코드</a>·<a href=#>비밀번호 찾기</a> |
+					<img src=image/bell.png>
+				</div>
 			</div>
-			<div>
-				<input type=password placeholder="비밀번호">
-				<button onclick="location.href='loginForm.jsp'">로그인</button>
+			<%
+			}
+			else {
+			%>
+			<div id=user_info>
+				<div>
+					<a href=#><b><%=session.getAttribute("nick") %></b>님<img src=image/right-arrow2.png></a>
+					<button onclick="location.href='logout.jsp?where=main'">로그아웃</button>
+				</div>
+				<div>
+					글 <a href=#>0</a> 댓글 <a href=#>0</a> 방명록 <a href=#>0</a>
+				</div>
+				<div>
+					<span><a href=#>MY갤로그</a></span>
+					<span><a href=#>고정닉정보</a></span>
+					<span><a href=#>상품권</a></span>
+					<span><a href=#>즐겨찾기</a></span>
+					<span><a href=#>운영/가입</a></span>
+					<span><a href=#><img src=image/bell.png>알림</a></span>
+				</div>
 			</div>
-			<div>
-				<b>고정닉 신청</b> | 식별 코드·비밀번호 찾기 |
-				<img src=image/bell.png>
-			</div>
-		</div>
+			<%
+			}
+		%>
 		<div id=silbuk>
 			<div>
 				<h4>실북갤</h4>

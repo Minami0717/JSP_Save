@@ -30,7 +30,7 @@
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
 	String date = LocalDateTime.now().format(
-			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 	
 	Post post = new Post();
 	post.setTitle(title);
