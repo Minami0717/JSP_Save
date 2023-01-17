@@ -113,7 +113,7 @@
 					</div>
 				</form>
 				<div>
-					<b><a href=joinForm.jsp>고정닉 신청</a></b> |
+					<b><a href=joinForm.jsp>회원가입</a></b> |
 					<a href=#>식별 코드</a>·<a href=#>비밀번호 찾기</a> |
 					<img src=image/bell.png>
 				</div>
@@ -160,10 +160,9 @@
 			</ol>
 			<div id=rank>11위 - 20위</div>
 		</div>
-		<div id=ad><img src=image/digital1.jpg></div>
+		<div id=ad><a href=http://www.kcd.or.kr><img src=image/digital1.jpg></a></div>
 	</aside>
 	<footer>
-	
 	</footer>
 </body>
 </html>

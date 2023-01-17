@@ -18,7 +18,7 @@
 	String email = request.getParameter("email1") + "@" + request.getParameter("email2");
 	
 	if(code.isEmpty()) {
-		%><script>alert("아이디를 입력하세요."); history.go(-1)</script><%
+		%><script>alert("개인 식별 코드를 입력하세요."); history.go(-1)</script><%
 		return;
 	}
 	if(pw.isEmpty()) {
@@ -33,7 +33,7 @@
 		%><script>alert("닉네임을 입력하세요."); history.go(-1)</script><%
 		return;
 	}
-	if(email.isEmpty()) {
+	if(request.getParameter("email1").isEmpty() || request.getParameter("email2").isEmpty()) {
 		%><script>alert("이메일을 입력하세요."); history.go(-1)</script><%
 		return;
 	}
@@ -55,8 +55,6 @@
 	int result = UserDao.getInstance().insert(user);
 	if(result != 0)
 		response.sendRedirect("joinSucc.jsp");
-	else
-		response.sendRedirect("joinFail.jsp");
 %>
 </body>
 </html>
