@@ -25,7 +25,7 @@
 	button {display: block; margin-left: 28%;}
 	img {height: 200px; margin-top: 10px;}
 	p {margin: 10px;}
-	#info {background: deeppink; border-radius: 5px; padding : 10px; width: 100px; margin-left: 90px;}
+	#del {background: deeppink; border-radius: 5px; padding : 10px; width: 100px; margin-left: 90px; border: none; color: white; cursor: pointer;}
 </style>
 </head>
 <body>
@@ -39,7 +39,7 @@
 					<img src="image/<%=p.getImage()%>">
 					<p><%=p.getDescription() %>
 					<p><%=p.getPrice() %>원
-					<p id=info><a href=# onclick=del(<%=p.getId() %>)>삭제 >></a>
+					<p><button id=del onclick=del('<%=p.getId() %>')>삭제 >></button>
 				</div><%
 			}
 		%>

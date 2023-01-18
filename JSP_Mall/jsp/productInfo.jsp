@@ -39,8 +39,8 @@
 			<p>분류 : <%=product.getCategory() %>
 			<p>재고 수 : <%=product.getStock() %>
 			<h2><%=product.getPrice() %>원</h2>
-			<p><button onclick=order(<%=session.getAttribute("id") %>)>상품 주문 >></button>
-			<button id=cart onclick=cart(<%=session.getAttribute("id") %>)>장바구니 >></button>
+			<p><button onclick=order('<%=session.getAttribute("id") %>')>상품 주문 >></button>
+			<button id=cart onclick=cart('<%=session.getAttribute("id") %>')>장바구니 >></button>
 			<button id=list onclick="location.href='products.jsp'">상품 목록 >></button>
 		</div>
 	</div>
@@ -48,7 +48,7 @@
 </body>
 <script>
 	function order(id) {
-		if (id == null) {
+		if (id == 'null') {
 			alert("로그인이 필요합니다.");
 			location.href="loginForm.jsp";
 		}
@@ -58,7 +58,7 @@
 		}
 	}
 	function cart(id) {
-		if (id == null) {
+		if (id == 'null') {
 			alert("로그인이 필요합니다.");
 			location.href="loginForm.jsp";
 		}

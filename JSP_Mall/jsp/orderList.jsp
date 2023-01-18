@@ -50,9 +50,9 @@
 	</table>
 </body>
 <script>
-	function cancel(id) {
+	function cancel(idx) {
 		if (confirm("주문을 취소할까요?"))
-			location.href="delOrder.jsp?id="+id
+			location.href="delOrder.jsp?idx="+idx
 	}
 </script>
 </html>

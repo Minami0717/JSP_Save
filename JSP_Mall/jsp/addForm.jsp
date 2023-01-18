@@ -18,7 +18,7 @@
 	input[type=text],input[type=number] {height: 35px;}
 	input[type=file] {border: 1px solid black; padding: 10px;}
 	form div {margin: 10px;}
-	input[type=submit] {height: 35px; width: 55px; background: aqua; border: none; border-radius: 5px;}
+	input[type=submit] {height: 35px; width: 55px; background: aqua; border: none; border-radius: 5px; cursor: pointer;}
 	label {width: 100px; display: inline-block;}
 	#d {width: 300px;}
 </style>

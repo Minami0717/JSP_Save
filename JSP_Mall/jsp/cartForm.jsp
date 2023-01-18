@@ -29,7 +29,7 @@
 <body>
 	<%@include file="menu.jsp" %>
 	<div id=title><h1 class=center>장바구니</h1></div>
-	<button id=del class=btn onclick=del(<%=list.size() %>)>삭제하기</button>
+	<button id=del class=btn onclick=del(<%=list.size() %>)>전체 삭제</button>
 	<button id=order class=btn onclick=order(<%=list.size() %>)>주문하기</button>
 	<table>
 		<tr>
@@ -60,7 +60,7 @@
 		if (n == 0)
 			alert("상품이 존재하지 않습니다.")
 		else {
-			if(confirm("전부 삭제할까요?"))
+			if(confirm("상품을 전부 삭제할까요?"))
 				location.href="deleteAll.jsp";
 		}
 	}

@@ -80,12 +80,11 @@ public class OrderDao {
 		return result;
 	}
 	
-	public int delete(String id, String m_id) {
+	public int delete(int idx) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("delete from order_list where id=? and member_id=?");
-			pstmt.setString(1, id);
-			pstmt.setString(2, m_id);
+			pstmt = conn.prepareStatement("delete from order_list where idx=?");
+			pstmt.setInt(1, idx);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
