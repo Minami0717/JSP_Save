@@ -45,7 +45,40 @@ public class PostDao {
 		List<Post> list = new ArrayList<Post>();
 		
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM post where gall_idx=?");
+			if (idx == 0)
+				pstmt = conn.prepareStatement("SELECT * FROM post");
+			else {
+				pstmt = conn.prepareStatement("SELECT * FROM post where gall_idx=?");
+				pstmt.setInt(1, idx);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Post post = new Post();
+				post.setIdx(rs.getInt("idx"));
+				post.setTitle(rs.getString("title"));
+				post.setContent(rs.getString("content"));
+				post.setWriter(rs.getString("writer"));
+				post.setDate(rs.getString("date"));
+				post.setHits(rs.getInt("hits"));
+				post.setRecommend(rs.getInt("recommend"));
+				post.setDecommend(rs.getInt("decommend"));
+				post.setPw(rs.getString("pw"));
+				post.setMember(rs.getBoolean("isMember"));
+				list.add(post);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Post> selectReco(int idx) {
+		List<Post> list = new ArrayList<Post>();
+		
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM post where gall_idx=? and recommend >= 10");
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			
@@ -84,6 +117,7 @@ public class PostDao {
 				post.setRecommend(rs.getInt("recommend"));
 				post.setDecommend(rs.getInt("decommend"));
 				post.setReplyNum(rs.getInt("replyNum"));
+				post.setMember(rs.getBoolean("isMember"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -130,13 +164,14 @@ public class PostDao {
 	public int insert(Post post) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw,gall_idx) values(?,?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw,gall_idx,isMember) values(?,?,?,?,?,?,?)");
 			pstmt.setString(1, post.getTitle());
 			pstmt.setString(2, post.getContent());
 			pstmt.setString(3, post.getWriter());
 			pstmt.setString(4, post.getDate());
 			pstmt.setString(5, post.getPw());
 			pstmt.setInt(6, post.getGall_idx());
+			pstmt.setBoolean(7, post.isMember());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

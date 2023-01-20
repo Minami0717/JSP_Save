@@ -19,21 +19,22 @@
 	
 	h1 {display: inline-block; margin-left: 25%; margin-right: 5%;}
 	
-	nav {background: #3b4890; width: 100%; padding: 10px; margin-top: 20px;}
+	nav {background: /* #c9b18c */ #d2af8a; width: 100%; padding: 10px; margin-top: 20px; color: white;}
 	nav ul {margin-left: 25%;}
 	nav li {display: inline-block; margin-right: 15px; font-weight: bold;}
 	nav a {color: white;}
 	
-	#search input {width: 315px; height: 35px; float: left;}
-	#search button {width: 40px; height: 40px; background: url(image/search.PNG); border: none; background-size: cover;}
-	#search {display: inline-block; border: 4px solid #3b4890; height: 39px;}
+	#search input {width: 315px; height: 35px; float: left; padding: 3px 9px 0; outline: none; border: none;}
+	#search button {width: 40px; height: 40px; background: #d2af8a; border: none; background-size: cover;}
+	#search {display: inline-block; border: 4px solid #d2af8a; height: 39px;}
+	#search img {width: 25px;}
 
-	#visit {margin-left: 25%; margin-right: 25%; border: 1px solid gainsboro; padding: 10px; font-size: 12px; color: #3b4890; font-weight: bold; background-color: rgb(240, 240, 240);}
+	#visit {margin-left: 25%; margin-right: 25%; border: 1px solid gainsboro; padding: 10px; font-size: 12px; color: #d2af8a; font-weight: bold; background-color: rgb(240, 240, 240);}
     #visit img {height: 8px; cursor: pointer;}
     #visit button {background-color: white; padding: 0 4px; border: 1px solid gainsboro; margin: 0 5px; cursor: pointer;}
     #visit li,#visit ul {display: inline;}
     #visit a {color: black; font-weight: normal;}
-    #visit ul img {margin: 0 15px; height: 7px; cursor: pointer;}
+    #visit ul img {margin: 0 10px; height: 7px; cursor: pointer;}
     #visit ul {margin-left: 5px;}
     
     .right {float: right;}
@@ -42,16 +43,16 @@
 <header>
 	<h1><a href=main.jsp>minami.com</a></h1>
 	<div id=search>
-		<input type=text placeholder=" 갤러리 & 통합검색">
-		<button></button>
+		<input type=text placeholder="게시판 & 통합검색">
+		<button><img src=image/search2.png></button>
 	</div>
 	<nav>
 		<ul>
-			<li><a href=#>갤러리</a>
-			<li><a href=#>마이너갤</a>
-			<li><a href=#>미니갤</a>
+			<li><a href=#>메인</a>
+			<li><a href=#>마이너</a>
+			<li><a href=#>미니</a>
 			<li>|
-			<li><a href=#>갤로그</a>
+			<li><a href=#>블로그</a>
 			<li><a href=#>뉴스</a>
 			<li><a href=#>게임</a>
 			<li><a href=#>위키</a>
@@ -61,14 +62,21 @@
 	</nav>
 	<div id=visit>
 		최근 방문
-        <button><img src="image/drop-down-arrow.png"></button>
+        <button><img src="image/drop-down-arrow2.png"></button>
         <img src="image/left.png">
         <ul>
         <%
         	if (viList != null) {
         		for (int i = viList.size()-1; i >= 0; i--) {
         			int index = GallListDao.getInstance().selectIdx(viList.get(i));
-            		%><li><a href="gallMain.jsp?idx=<%=index %>"><%= viList.get(i) %></a><img src="image/x1.png"></li><%
+            		%><li><a href="gallMain.jsp?idx=<%=index %>"><%= viList.get(i) %></a>
+            		<%
+            			if (request.getQueryString() == null) {
+            				%><img src="image/x1.png" onclick="location.href='delVisit.jsp?gall=<%= viList.get(i) %>&url=<%=request.getRequestURL()%>'"><%
+            			}
+            			else {
+            				%><img src="image/x1.png" onclick="location.href='delVisit.jsp?gall=<%= viList.get(i) %>&url=<%=request.getRequestURL()+"?"+request.getQueryString() %>'"><%
+            			}
             	}
         	}
         %>

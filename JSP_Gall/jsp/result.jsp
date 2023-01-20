@@ -27,11 +27,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	h2 a {color: #29367c}
+	h2 a {color: #d2af8a}
 	section {margin: 0 25%;}
 	#header {padding: 20px 0;}
 	#post {width: 100%; height: 500px;
-	border-top: 2px solid #3b4890; position: relative;}
+	border-top: 2px solid #d2af8a; position: relative;}
 	
 	#head {border-bottom: 1px solid gainsboro; padding: 15px 10px 15px 5px;}
 	#head .right {font-size: 13px;}
@@ -48,35 +48,36 @@
 	#rec img {width: 25px;}
 	#rec button {margin-top: 20px; border-radius: 100px; width: 55px; height: 55px; border: none; color: white; cursor: pointer;}
 	#rec p { font-size: 12px;}
-	#rec button:last-child {background: #b5bbbd;}
+	#rec button:last-child {background: #b2b4b2;}
 	
-	input[type=text],input[type=password] {height: 30px; border: 1px solid gainsboro; padding: 0 5px;}
-	input[type=text] {margin-bottom: 5px;}
-	input[type=submit] {background: #3b4890; color: white; width: 85px; height: 30px;
+	#text input[type=text],input[type=password] {height: 30px; border: 1px solid gainsboro; padding: 0 5px;}
+	
+	input[type=submit] {background: #d2af8a; color: white; width: 85px; height: 30px;
 	border: none; cursor: pointer; border-radius: 2px; margin-top: 10px;}
+	input[readonly] {background: #f3f3f3; color: #999;}
 	
 	#np {display: inline-block;}
 	#np input {width: 140px;}
 	
 	.left {text-align: left;}
-	#reply {border-bottom: 2px solid #3b4890;}
-	#text {padding: 10px; border-top: 2px solid #3b4890; background: #fafafa; clear: both;}
+	#reply {border-bottom: 2px solid #d2af8a;}
+	#text {padding: 10px; border-top: 2px solid #d2af8a; background: #fafafa; clear: both;}
 	#text div:last-child {clear: both;}
 	#ta {float: right;}
 	textarea {width: 770px; height: 100px; border: 1px solid gainsboro;}
 	#nick {width: 150px;}
-	section button {width: 82px; height: 35px; background: #3b4890; color: white;
-	border: 1px solid #29367c; border-bottom-width: 3px; margin-top: 10px;
+	section button {width: 82px; height: 35px; background: #d2af8a; color: white;
+	border: 1px solid #d2af8a; border-bottom-width: 3px; margin-top: 10px;
 	margin-bottom: 40px; font-weight: bold; border-radius: 2px;
 	cursor: pointer;}
-	#idea {margin-left: 10px; background: white; color: #3b4890;}
+	#idea {margin-left: 10px; background: white; color: #d2af8a;}
 	.right {float: right;}
-	#edit,#delete {background: #666; border-color: #444;}
+	#edit,#delete {background: #b2b4b2; border-color: #a0a2a0;}
 	#delete {margin: 10px;}
 	#del {border: none; background: #c6c8c9; width: 15px; height: 15px; margin: 0;}
 	#del img {width: 10px;}
 	
-	#tiv {margin-bottom: 30px; clear: both; border-top: 2px solid #3b4890;}
+	#tiv {margin-bottom: 30px; clear: both; border-top: 2px solid #d2af8a;}
 	#tiv li {list-style-type: none; border-bottom: 1px solid gainsboro; padding: 10px;}
 	#tiv span {display: inline-block;}
 	#tiv span:first-child {width: 160px; font-size: 13px; color: #777;}
@@ -88,33 +89,33 @@
 	#right {float: right;}
 	#left {float: left;}
 	#delCheck {position: absolute; width: 218px; height: 31px;
-    border: 2px solid #29367c; display: none;}
+    border: 2px solid #d2af8a; display: none;}
     #pc {width: 129px; height: 31px; margin: 0; padding: 0;}
     #check {width: 49px; height: 31px;}
     #x {width: 30px; height: 31px;}
     
 	#bot {width: 70%; float: left;}
-    #bot table {width: 100%; text-align: center; border-bottom: 1px solid #3b4890; border-spacing: 0; font-size: 13px;
+    #bot table {width: 100%; text-align: center; border-bottom: 1px solid #d2af8a; border-spacing: 0; font-size: 13px;
 	border-collapse: collapse;}
-	#bot th {border-bottom: 1px solid #3b4890; border-top: 2px solid #3b4890; height: 37px;}
+	#bot th {border-bottom: 1px solid #d2af8a; border-top: 2px solid #d2af8a; height: 37px;}
 	#bot td {height: 25px; vertical-align: middle; border-top: 1px solid gainsboro;}
     
-    #login {border: 1px solid #3b4890; float: right; width: 270px;}
+    #login {border: 1px solid #d2af8a; float: right; width: 270px;}
 	#login img {height: 13px;}
 	#login p {padding: 10px 20px;}
-	#login p a {color: #29367c; font-weight: bold; font-size: 14px;}
+	#login p a {color: #d2af8a; font-weight: bold; font-size: 14px;}
 	#login p a:hover {text-decoration: none;}
 	#login div {background: #f3f3f3; padding: 10px; text-align: center;}
 	#login div a {font-size: 12px; font-weight: bold;}
-	#login button {width: 65px; height: 25px; background: #3b4890; color: white; border: none; border: 1px solid #29367c;
-	margin-left: 10px; cursor: pointer; font-weight: bold; float: right;}
+	#login button {width: 65px; height: 25px; background: #d2af8a; color: white; border: none; border: 1px solid #d2af8a;
+	margin-left: 10px; cursor: pointer; font-weight: bold; float: right; margin: 0;}
 </style>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
 	<section>
 		<div id=header>
-			<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %> 갤러리</a></h2>
+			<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %></a></h2>
 		</div>
 		<div id=post>
 			<div id=head>
@@ -207,10 +208,19 @@
 				</form>
 			</div>
 		</div>
-		<button onclick="location.href='gallMain.jsp?idx=<%= idx %>'">전체글</button><button id=idea>개념글</button>
-		<button class=right onclick="location.href='write.jsp'">글쓰기</button>
-		<button class=right id=delete>삭제</button>
-		<button class=right id=edit>수정</button>
+		<div>
+			<button onclick="location.href='gallMain.jsp?idx=<%= idx %>'">전체글</button>
+			<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+			<button class=right onclick="location.href='write.jsp'">글쓰기</button>
+		<%
+			if(post.getWriter().equals(session.getAttribute("nick")) || !post.isMember()) {
+				%>
+				<button class=right id=delete>삭제</button>
+				<button class=right id=edit>수정</button>
+				<%
+			}
+		%>
+		</div>
 		<div id=bot>
 			<table>
 				<thead>
@@ -247,7 +257,7 @@
 			</table>
 			<div>
 				<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-				<button id=idea>개념글</button>
+				<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
 			</div>
 		</div>
 		<div id=login>
@@ -264,7 +274,7 @@
 				}
 				else {
 					%>
-					<p><a href=#><b><%=session.getAttribute("code") %></b>님<img src=image/right-arrow2.png></a>
+					<p><a href=#><b><%=session.getAttribute("nick") %></b>님<img src=image/right-arrow3.png></a>
 					<button onclick="location.href='logout.jsp?where=gall&idx=<%=idx%>'">로그아웃</button>
 					<div>
 						<a href=#>MY갤로그</a> |

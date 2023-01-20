@@ -10,17 +10,17 @@
 <title>Insert title here</title>
 <style>
 	* {margin: 0; padding: 0;}
-	header {background: #29367c; padding: 20px 25% 10px;}
+	header {background: #d2af8a; padding: 20px 25% 10px;}
 	header a {color: white;}
 	header a:hover {text-decoration: none;}
-	div[align=center] {display: inline-block; border: 2px solid #3b4890; margin: 10%; font-size: 13px;}
+	div[align=center] {display: inline-block; border: 2px solid #d2af8a; margin: 10%; font-size: 13px;}
 	div[align=center] > div {float: right; background: #f3f3f3; padding: 50px 30px;}
 	form {float: left; padding: 40px;}
 	form div {border-top: 1px dashed #aaa; padding: 10px 0; font-size: 14px;}
 	body {text-align: center;}
 	input {margin: 3px;}
 	.input {width: 270px; height: 40px; background: #f3f3f3; border: none; padding: 0 5px;}
-	#login {width: 280px; height: 40px; background-color: #3b4890;
+	#login {width: 280px; height: 40px; background-color: #d2af8a;
 	color: white; border: none; cursor: pointer;}
 	.button {height: 30px;}
 	a {text-decoration: none; color: black;}

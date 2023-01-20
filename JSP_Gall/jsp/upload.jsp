@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <%
 	request.setCharacterEncoding("utf-8");
+
 	if (request.getParameter("nick").isEmpty()) {
 		%><script>alert("닉네임을 입력하세요."); history.go(-1)</script><%
 		return;
@@ -39,6 +40,11 @@
 	post.setDate(date);
 	post.setPw(pw);
 	post.setGall_idx(idx);
+	
+	if(session.getAttribute("code") == null)
+		post.setMember(false);
+	else
+		post.setMember(true);
 	
 	int result = PostDao.getInstance().insert(post);
 	if (result != 0)

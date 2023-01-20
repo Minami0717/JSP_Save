@@ -11,19 +11,21 @@
 <title>Insert title here</title>
 <style>
 	/* body {width: 60%;  margin-left: 20%;} */
-	h2 a {color: #29367c}
+	h2 a {color: #d2af8a}
 	section {margin: 0 25%;}
-	#outside {border: 2px solid #d5d5d5; height: 580px; border-top-color: #3b4890;
+	#outside {border: 2px solid #d5d5d5; height: 580px; border-top-color: #d2af8a;
 	padding: 33px 68px 5px;}
 	
-	input[name=nick],input[name=pw] {width: 230px; line-height: 35px;}
-	input[name=title] {width: 730px; height: 35px; margin: 10px 0 20px;}
+	input[name=nick],input[name=pw] {width: 200px; line-height: 35px; border: 1px solid #b2b4b2; padding: 0 10px;}
+	input[name=title] {width: 700px; height: 35px; margin: 10px 0 20px; border: 1px solid #b2b4b2; padding: 0 10px;}
 	input[type=submit],#outside button {float: right; width: 85px; height: 40px;
-	background: #3b4890; color: white; border: 1px solid #29367c;
+	background: #d2af8a; color: white; border: 1px solid #d2af8a;
 	border-bottom-width: 3px; margin-top: 10px; font-weight: bold;
 	border-radius: 2px; cursor: pointer; margin-left: 10px;}
 	
-	#outside button {background: #666; border-color: #444; }
+	textarea {border: 1px solid #b2b4b2; padding: 10px; width: 800px; height: 400px; outline: none;}
+	
+	#outside button {background: #b2b4b2; border-color: #a0a2a0;}
 	#header {padding: 20px 0;}
 </style>
 </head>
@@ -31,16 +33,28 @@
 	<%@ include file="header.jsp" %>
 	<section>
 		<div id=header>
-			<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %> 갤러리</a></h2>
+			<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %></a></h2>
 		</div>
 		<div id=outside>
 			<form action="upload.jsp?idx=<%=idx%>" method=post>
 				<div>
-					<input type=text placeholder=닉네임 name=nick>
-					<input type=password placeholder=비밀번호 name=pw>
+					<%
+						if(session.getAttribute("code") == null) {
+							%>
+							<input type=text placeholder=닉네임 name=nick>
+							<input type=password placeholder=비밀번호 name=pw>
+							<%
+						}
+						else {
+							%>
+							<input type=hidden value=<%=session.getAttribute("nick") %> name=nick>
+							<input type=hidden value=<%=session.getAttribute("pw") %> name=pw>
+							<%
+						}
+					%>
 				</div>
 				<div><input type=text placeholder="제목을 입력해 주세요." name=title></div>
-				<textarea rows="25" cols="114" name=content></textarea><br>
+				<textarea name=content></textarea><br>
 				<input type=submit value=등록>
 			</form>
 			<button onclick=history.back()>취소</button>

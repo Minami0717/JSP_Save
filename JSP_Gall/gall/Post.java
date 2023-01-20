@@ -12,7 +12,14 @@ public class Post {
 	private String pw;
 	private int replyNum;
 	private int gall_idx;
+	private boolean isMember;
 	
+	public boolean isMember() {
+		return isMember;
+	}
+	public void setMember(boolean isMember) {
+		this.isMember = isMember;
+	}
 	public int getDecommend() {
 		return decommend;
 	}

@@ -10,7 +10,7 @@
 	a {text-decoration: none;}
 	li,ul,h1 {display: inline-block;}
 	
-	header {background: #29367c; position: relative; height: 85px;}
+	header {background: #d2af8a; position: relative; height: 85px;}
 	header a {color: white;}
 	header li {font-size: 11px; color: #ccc; margin-left: 5px;}
 	header li a:hover {text-decoration: underline;}
@@ -18,8 +18,8 @@
 	header h1 {position: absolute; left: 30%; top: 30px;}
 	
 	section {width: 40%; margin: 0 30%;}
-	section div:first-child {border-bottom: 2px solid #29367c; padding: 10px 0; margin-top: 50px;}
-	section div:first-child h4 {color: #29367c}
+	section div:first-child {border-bottom: 2px solid #d2af8a; padding: 10px 0; margin-top: 50px;}
+	section div:first-child h4 {color: #d2af8a}
 	section div:nth-child(2) {border: 1px #cecdce solid; border-radius: 5px; margin: 25px 0; padding: 30px 50px;}
 	
 	table label {font-weight: bold; font-size: 14px; display: inline-block; width: 180px;}
@@ -27,7 +27,7 @@
 	
 	input {margin: 3px;}
 	.input {width: 450px; height: 30px;}
-	#join {width: 635px; height: 40px; border: none; background: #29367c; color: white; cursor: pointer; margin-top: 10px;}
+	#join {width: 635px; height: 40px; border: none; background: #d2af8a; color: white; cursor: pointer; margin-top: 10px;}
 	.button {width: 110px; height: 30px;}
 	
 	input[name=nick] {width: 363px;}
