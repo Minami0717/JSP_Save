@@ -15,7 +15,7 @@
 	String inputPw = request.getParameter("pw");
 	
 	if(inputCode.isEmpty()) {
-		%><script>alert("식별 코드를 입력하세요."); history.go(-1)</script><%
+		%><script>alert("아이디를 입력하세요."); history.go(-1)</script><%
 		return;
 	}
 	

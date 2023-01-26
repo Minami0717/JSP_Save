@@ -16,6 +16,7 @@
 	String pwCheck = request.getParameter("pwCheck");
 	String nick = request.getParameter("nick");
 	String email = request.getParameter("email1") + "@" + request.getParameter("email2");
+	boolean isFixed = Boolean.parseBoolean(request.getParameter("fixed"));
 	
 	if(code.isEmpty()) {
 		%><script>alert("개인 식별 코드를 입력하세요."); history.go(-1)</script><%
@@ -51,6 +52,7 @@
 	user.setPw(pw);
 	user.setNick(nick);
 	user.setEmail(email);
+	user.setFixed(isFixed);
 	
 	int result = UserDao.getInstance().insert(user);
 	if(result != 0)

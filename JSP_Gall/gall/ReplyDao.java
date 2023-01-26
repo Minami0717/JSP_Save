@@ -56,6 +56,7 @@ public class ReplyDao {
 				reply.setContents(rs.getString("contents"));
 				reply.setPost_idx(rs.getInt("post_idx"));
 				reply.setDate(rs.getString("date"));
+				reply.setMember_id(rs.getString("member_id"));
 				list.add(reply);
 			}
 		} catch (SQLException e) {
@@ -67,11 +68,12 @@ public class ReplyDao {
 	public int insert(Reply reply) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into reply(nickname,contents,post_idx,date) values(?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into reply(nickname,contents,post_idx,date,member_id) values(?,?,?,?,?)");
 			pstmt.setString(1, reply.getNickname());
 			pstmt.setString(2, reply.getContents());
 			pstmt.setInt(3, reply.getPost_idx());
 			pstmt.setString(4, reply.getDate());
+			pstmt.setString(5, reply.getMember_id());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

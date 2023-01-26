@@ -6,7 +6,14 @@ public class Reply {
 	private String contents;
 	private int post_idx;
 	private String date;
+	private String member_id;
 	
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
 	public String getDate() {
 		return date;
 	}

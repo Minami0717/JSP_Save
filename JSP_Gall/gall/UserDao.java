@@ -83,11 +83,12 @@ public class UserDao {
 	public int insert(User user) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into user values(?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into user values(?,?,?,?,?)");
 			pstmt.setString(1, user.getCode());
 			pstmt.setString(2, user.getPw());
 			pstmt.setString(3, user.getNick());
 			pstmt.setString(4, user.getEmail());
+			pstmt.setBoolean(5, user.isFixed());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,5 +134,21 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return useable;
+	}
+	
+	public boolean isFixed(String code) {
+		boolean isFixed = false;
+		try {
+			pstmt = conn.prepareStatement("SELECT isFixed FROM user where code=?");
+			pstmt.setString(1, code);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				isFixed = rs.getBoolean("isFixed");
+				return isFixed;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isFixed;
 	}
 }

@@ -37,7 +37,7 @@
 		<form action="checkID.jsp?where=gall&idx=<%= idx %>" method=post>
 			<table>
 				<tr>
-					<td><input type=text placeholder="식별 코드" class=input name=code></td>
+					<td><input type=text placeholder="아이디" class=input name=code></td>
 				</tr>
 				<tr>
 					<td><input type=password placeholder="비밀번호" class=input name=pw></td>
@@ -46,11 +46,11 @@
 					<td><input type=submit value=로그인 id=login></td>
 				</tr>
 				<tr>
-					<td><input type="checkbox">식별 코드 저장</td>
+					<td><input type="checkbox"> 아이디 저장</td>
 				</tr>
 			</table>
 			<div>
-				<a href=#>식별 코드 찾기</a> | <a href=#>비밀번호 찾기</a> | <a href=joinForm.jsp>고정닉 신청</a>
+				<a href=#>아이디 찾기</a> | <a href=#>비밀번호 찾기</a> | <a href=joinForm.jsp>회원가입</a>
 			</div>
 		</form>
 		<div>

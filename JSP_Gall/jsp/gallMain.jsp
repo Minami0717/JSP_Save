@@ -1,3 +1,4 @@
+<%@page import="gall.UserDao"%>
 <%@page import="java.net.InetAddress"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.Random"%>
@@ -51,10 +52,13 @@
 	table {width: 100%; text-align: center; border-bottom: 1px solid #d2af8a; border-spacing: 0; font-size: 13px;
 	border-collapse: collapse;}
 	table span {font-size: 11px; color: #999;}
-	table img {height: 13px; margin-right: 5px;}
+	table img {height: 13px; margin-right: 10px;}
 	
 	th {border-bottom: 1px solid #d2af8a; border-top: 2px solid #d2af8a; height: 37px;}
 	td {height: 25px; vertical-align: middle; border-top: 1px solid gainsboro;}
+	td[align=left] a:last-of-type {color: #999;}
+	
+	#w {cursor: pointer;}
 	
 	#mid button {width: 82px; height: 32px; background: #d2af8a; color: white; border: 1px solid #d2af8a; margin: 15px 0 5px;
 	font-weight: bold; border-radius: 2px; cursor: pointer;}
@@ -140,21 +144,21 @@
 					if (post == null) {
 						%>
 						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=notice'">공지</button>
 						<%
 					}
 					else if (post.equals("reco")) {
 						%>
 						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=notice'">공지</button>
 						<%
 					}
 					else if (post.equals("notice")) {
 						%>
 						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+						<button class=white onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=notice'">공지</button>
 						<%
 					}
@@ -185,6 +189,7 @@
 				<%
 					if (post == null) {
 						for(int i = list.size()-1; i >= 0; i--) {
+							Boolean isFixed = UserDao.getInstance().isFixed(list.get(i).getMember_id());
 							String date;
 							if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
 								date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
@@ -197,18 +202,20 @@
 								<td><%=i+1 %>
 								<td align=left>
 									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>">
-									<img src=image/chat.png> <%=list.get(i).getTitle() %></a>
-								<td><%=list.get(i).getWriter() %>
+									<img src=image/chat.png><%=list.get(i).getTitle() %></a>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>#reply">[<%=list.get(i).getReplyNum() %>]</a>
+								<td id=w><%=list.get(i).getWriter() %>
 									<%
-									if(list.get(i).isMember()) {%><img src=image/fix_nik.gif><%}
-									else {
-										String ipAddress=request.getRemoteAddr();
-										if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
-										    InetAddress inetAddress=InetAddress.getLocalHost();
-										    ipAddress=inetAddress.getHostAddress();
+										if(list.get(i).getMember_id() == null) {
+											String ipAddress = request.getRemoteAddr();
+											if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+											    InetAddress inetAddress = InetAddress.getLocalHost();
+											    ipAddress = inetAddress.getHostAddress();
+											}
+											%><span>(<%=ipAddress.substring(0,7)%>)</span><%
 										}
-										%><span>(<%=ipAddress.substring(0,7)%>)</span><%
-									}
+										else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
+										else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
 									%>
 								<td><%=date %>
 								<td><%=list.get(i).getHits() %>
@@ -217,6 +224,7 @@
 					}
 					else if (post.equals("reco")) {
 						for(int i = recoList.size()-1; i >= 0; i--) {
+							Boolean isFixed = UserDao.getInstance().isFixed(recoList.get(i).getMember_id());
 							String date;
 							if (!recoList.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
 								date = recoList.get(i).getDate().substring(2,4)+"."+recoList.get(i).getDate().substring(5,7)+"."
@@ -230,17 +238,19 @@
 								<td align=left>
 									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>">
 									<img src=image/chat.png> <%=recoList.get(i).getTitle() %></a>
-								<td><%=recoList.get(i).getWriter() %>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>#reply">[<%=recoList.get(i).getReplyNum() %>]</a>
+								<td id=w><%=recoList.get(i).getWriter() %>
 									<%
-									if(list.get(i).isMember()) {%><img src=image/fix_nik.gif><%}
-									else {
-										String ipAddress=request.getRemoteAddr();
+									if(list.get(i).getMember_id() == null) {
+										String ipAddress = request.getRemoteAddr();
 										if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
-										    InetAddress inetAddress=InetAddress.getLocalHost();
-										    ipAddress=inetAddress.getHostAddress();
+										    InetAddress inetAddress = InetAddress.getLocalHost();
+										    ipAddress = inetAddress.getHostAddress();
 										}
 										%><span>(<%=ipAddress.substring(0,7)%>)</span><%
 									}
+									else if(isFixed) {%><img src=image/fix_nik.gif><%}
+									else if(!isFixed) {%><img src=image/nik.gif><%}
 									%>
 								<td><%=date %>
 								<td><%=recoList.get(i).getHits() %>
@@ -255,22 +265,23 @@
 					if (post == null) {
 						%>
 						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<%
 					}
 					else if (post.equals("reco")) {
 						%>
 						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<%
 					}
 					else if (post.equals("notice")) {
 						%>
 						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<%
 					}
 				%>
+				<button class=right onclick="location.href='write.jsp?idx=<%=idx%>'">글쓰기</button>
 			</div>
 		</section>
 		<aside>

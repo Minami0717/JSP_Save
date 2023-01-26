@@ -13,7 +13,7 @@
 	/* body {width: 60%;  margin-left: 20%;} */
 	h2 a {color: #d2af8a}
 	section {margin: 0 25%;}
-	#outside {border: 2px solid #d5d5d5; height: 580px; border-top-color: #d2af8a;
+	#outside {border: 2px solid #d5d5d5; height: 600px; border-top-color: #d2af8a;
 	padding: 33px 68px 5px;}
 	
 	input[name=nick],input[name=pw] {width: 200px; line-height: 35px; border: 1px solid #b2b4b2; padding: 0 10px;}
@@ -23,7 +23,7 @@
 	border-bottom-width: 3px; margin-top: 10px; font-weight: bold;
 	border-radius: 2px; cursor: pointer; margin-left: 10px;}
 	
-	textarea {border: 1px solid #b2b4b2; padding: 10px; width: 800px; height: 400px; outline: none;}
+	textarea {border: 1px solid #b2b4b2; padding: 10px; width: 800px; height: 400px; outline: none; font-size: 15px;}
 	
 	#outside button {background: #b2b4b2; border-color: #a0a2a0;}
 	#header {padding: 20px 0;}

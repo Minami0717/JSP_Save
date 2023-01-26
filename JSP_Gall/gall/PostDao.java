@@ -65,7 +65,8 @@ public class PostDao {
 				post.setRecommend(rs.getInt("recommend"));
 				post.setDecommend(rs.getInt("decommend"));
 				post.setPw(rs.getString("pw"));
-				post.setMember(rs.getBoolean("isMember"));
+				post.setMember_id(rs.getString("member_id"));
+				post.setReplyNum(rs.getInt("replyNum"));
 				list.add(post);
 			}
 		} catch (SQLException e) {
@@ -117,7 +118,7 @@ public class PostDao {
 				post.setRecommend(rs.getInt("recommend"));
 				post.setDecommend(rs.getInt("decommend"));
 				post.setReplyNum(rs.getInt("replyNum"));
-				post.setMember(rs.getBoolean("isMember"));
+				post.setMember_id(rs.getString("member_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,14 +165,14 @@ public class PostDao {
 	public int insert(Post post) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw,gall_idx,isMember) values(?,?,?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw,gall_idx,member_id) values(?,?,?,?,?,?,?)");
 			pstmt.setString(1, post.getTitle());
 			pstmt.setString(2, post.getContent());
 			pstmt.setString(3, post.getWriter());
 			pstmt.setString(4, post.getDate());
 			pstmt.setString(5, post.getPw());
 			pstmt.setInt(6, post.getGall_idx());
-			pstmt.setBoolean(7, post.isMember());
+			pstmt.setString(7, post.getMember_id());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

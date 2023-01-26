@@ -26,10 +26,11 @@
 	#login input[name=code],#login input[name=pw] {width: 145px; height: 37px; background: #f3f3f3; border: none; padding-left: 5px;}
 	#login input[type=submit],#user_info button {width: 65px; height: 37px; background: #d2af8a; color: white; border: none; border: 1px solid #d2af8a;
 	margin-left: 10px; cursor: pointer;}
-	#login img {width: 15px; height: 15px; cursor: pointer;}
+	#login img {height: 13px; cursor: pointer;}
 	#login div:first-child {margin-bottom: 5px; font-size: 12px;}
-	#login > div:last-child {border-top: 1px dashed #aaa; margin-top: 15px; font-size: 12px; padding: 10px 0 5px;}
+	#login > div:last-child {border-top: 1px dashed #aaa; margin-top: 15px; font-size: 12px; padding: 10px 0 5px; text-align: center;}
 	#login input[type=checkbox] {margin-left: 10px;}
+	#login span {font-size: 11px;}
 	
 	#user_info button {height: 25px; font-weight: bold;}
 	#user_info span {border: 1px #ccc solid; background: #f3f3f3; color: #555; width: 68px; height: 25px; font-size: 13px;
@@ -110,8 +111,8 @@
 				<div id=login>
 					<form action=checkID.jsp?where=main method=post>
 						<div>
-							<input type=text placeholder="식별 코드" name=code>
-							<input type=checkbox> 코드 저장
+							<input type=text placeholder="아이디" name=code>
+							<span><input type=checkbox> 아이디 저장</span>
 						</div>
 						<div>
 							<input type=password placeholder="비밀번호" name=pw>
@@ -120,7 +121,7 @@
 					</form>
 					<div>
 						<b><a href=joinForm.jsp>회원가입</a></b> |
-						<a href=#>식별 코드</a>·<a href=#>비밀번호 찾기</a> |
+						<a href=#>아이디</a> · <a href=#>비밀번호 찾기</a> |
 						<img src=image/bell.png>
 					</div>
 				</div>
@@ -150,7 +151,7 @@
 			%>
 			<div id=silbuk>
 				<div>
-					<h5>게시판 순위</h5>
+					<h5>실시간 순위</h5>
 					<div id=inline>
 						<a href=#>메인 |</a>
 	                    <a href=#><span style="color: red;">마이너</span> |</a>

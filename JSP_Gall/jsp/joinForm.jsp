@@ -70,9 +70,9 @@
 					<tr>
 						<td>
 							<label>닉네임 만들기</label><input type=text placeholder="닉네임을 입력해 주세요." class=input name=nick>
-							<select>
-								<option>비고정닉
-								<option>고정닉
+							<select name=fixed>
+								<option value=false>비고정닉
+								<option value=true>고정닉
 							</select>
 						</td>
 					</tr>

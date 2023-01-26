@@ -1,3 +1,5 @@
+<%@page import="gall.UserDao"%>
+<%@page import="java.net.InetAddress"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
@@ -21,6 +23,8 @@
 	
 	List<Post> list = PostDao.getInstance().selectAll(idx);
 	List<Reply> replies = ReplyDao.getInstance().selectAll(p_idx);
+	
+	Boolean isFixed = UserDao.getInstance().isFixed(post.getMember_id());
 %>
 <html>
 <head>
@@ -29,48 +33,54 @@
 <style>
 	h2 a {color: #d2af8a}
 	section {margin: 0 25%;}
+	
 	#header {padding: 20px 0;}
 	#post {width: 100%; height: 500px;
 	border-top: 2px solid #d2af8a; position: relative;}
 	
 	#head {border-bottom: 1px solid gainsboro; padding: 15px 10px 15px 5px;}
 	#head .right {font-size: 13px;}
-	a[href="#reply"] {padding: 2px 10px; background: #eee; border: 1px #ccc solid; border-radius: 50px;}
-	a[href="#reply"]:hover {text-decoration: none;}
+	
+	p a[href="#reply"] {padding: 2px 10px; background: #eee; border: 1px #ccc solid; border-radius: 50px;}
+	p a[href="#reply"]:hover {text-decoration: none;}
+	
 	#sub {font-size: 13px; display: inline-block;}
 	#con {padding: 10px;}
 
 	a {text-decoration: none; color: black;}
 	
-	#rec {border: 1px solid gainsboro; width: 300px;
-	height: 100px; text-align: center; position: absolute;
-	bottom: 50px; left: 35%;}
+	#rec {border: 1px solid gainsboro; width: 300px; height: 100px; text-align: center; position: absolute; bottom: 50px; left: 35%;}
 	#rec img {width: 25px;}
 	#rec button {margin-top: 20px; border-radius: 100px; width: 55px; height: 55px; border: none; color: white; cursor: pointer;}
 	#rec p { font-size: 12px;}
-	#rec button:last-child {background: #b2b4b2;}
+	#rec button:nth-of-type(2) {background: #b2b4b2;}
+	#rec span {font-weight: bold; margin: 25px;}
+	#rec span:first-of-type {color: #d31900;}
+	#rec span:last-of-type {color: #555;}
 	
-	#text input[type=text],input[type=password] {height: 30px; border: 1px solid gainsboro; padding: 0 5px;}
+	#text {padding: 10px; border-top: 2px solid #d2af8a; background: #fafafa; clear: both;}
+	#text div:last-child {clear: both;}
+	#text input[type=text], #text input[type=password] {height: 30px; border: 1px solid gainsboro; padding: 0 5px; margin-bottom: 5px;}
 	
-	input[type=submit] {background: #d2af8a; color: white; width: 85px; height: 30px;
-	border: none; cursor: pointer; border-radius: 2px; margin-top: 10px;}
-	input[readonly] {background: #f3f3f3; color: #999;}
+	input[type=submit] {background: #d2af8a; color: white; width: 85px; height: 30px; border: none; cursor: pointer; border-radius: 2px; margin-top: 10px;}
+	input[readonly] {background: #f3f3f3; color: #999; outline: none; cursor: default;}
 	
 	#np {display: inline-block;}
 	#np input {width: 140px;}
 	
 	.left {text-align: left;}
 	#reply {border-bottom: 2px solid #d2af8a;}
-	#text {padding: 10px; border-top: 2px solid #d2af8a; background: #fafafa; clear: both;}
-	#text div:last-child {clear: both;}
+	
 	#ta {float: right;}
-	textarea {width: 770px; height: 100px; border: 1px solid gainsboro;}
+	textarea {width: 740px; height: 78px; border: 1px solid gainsboro; resize: none; padding: 13px; font-size: 13px; line-height: 18px;}
 	#nick {width: 150px;}
+	
 	section button {width: 82px; height: 35px; background: #d2af8a; color: white;
 	border: 1px solid #d2af8a; border-bottom-width: 3px; margin-top: 10px;
 	margin-bottom: 40px; font-weight: bold; border-radius: 2px;
 	cursor: pointer;}
-	#idea {margin-left: 10px; background: white; color: #d2af8a;}
+	
+	#idea {background: white; color: #d2af8a;}
 	.right {float: right;}
 	#edit,#delete {background: #b2b4b2; border-color: #a0a2a0;}
 	#delete {margin: 10px;}
@@ -85,20 +95,29 @@
 	#tiv span:nth-child(3) {font-size: 12px; color: #999;}
 	
 	#left span {color: #d31900;}
-	.reTop {font-size: 14px; font-weight: bold; margin-bottom: 10px;}
+	.reTop {font-size: 13px; margin-bottom: 10px;}
+	
 	#right {float: right;}
-	#left {float: left;}
+	#right img {height: 10px;}
+	#right a {text-decoration: none;}
+	
+	#left {float: left; font-weight: bold;}
 	#delCheck {position: absolute; width: 218px; height: 31px;
     border: 2px solid #d2af8a; display: none;}
     #pc {width: 129px; height: 31px; margin: 0; padding: 0;}
     #check {width: 49px; height: 31px;}
     #x {width: 30px; height: 31px;}
+    #ip {color: #999;}
+    #w {cursor: pointer;}
     
 	#bot {width: 70%; float: left;}
     #bot table {width: 100%; text-align: center; border-bottom: 1px solid #d2af8a; border-spacing: 0; font-size: 13px;
 	border-collapse: collapse;}
 	#bot th {border-bottom: 1px solid #d2af8a; border-top: 2px solid #d2af8a; height: 37px;}
 	#bot td {height: 25px; vertical-align: middle; border-top: 1px solid gainsboro;}
+	#bot table img {height: 13px; margin-right: 10px;}
+	#bot table span {font-size: 11px; color: #999;}
+	#bot td[align=left] a:last-of-type {color: #999;}
     
     #login {border: 1px solid #d2af8a; float: right; width: 270px;}
 	#login img {height: 13px;}
@@ -109,6 +128,8 @@
 	#login div a {font-size: 12px; font-weight: bold;}
 	#login button {width: 65px; height: 25px; background: #d2af8a; color: white; border: none; border: 1px solid #d2af8a;
 	margin-left: 10px; cursor: pointer; font-weight: bold; float: right; margin: 0;}
+	
+	.click {cursor: pointer;}
 </style>
 </head>
 <body>
@@ -120,7 +141,20 @@
 		<div id=post>
 			<div id=head>
 				<b><%=post.getTitle() %></b><br>
-				<p id=sub><a href=#><%=post.getWriter() %></a>&nbsp;&nbsp;|&nbsp;&nbsp;<%=post.getDate() %></p>
+				<p id=sub><span class=click><%=post.getWriter() %></span>
+				<%
+					if(post.getMember_id() == null) {
+						String ipAddress = request.getRemoteAddr();
+						if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+						    InetAddress inetAddress = InetAddress.getLocalHost();
+						    ipAddress = inetAddress.getHostAddress();
+						}
+						%><span id=ip class=click>(<%=ipAddress.substring(0,7)%>)</span><%
+					}
+					else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
+					else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
+				%>
+				&nbsp;&nbsp;|&nbsp;&nbsp;<%=post.getDate() %></p>
 				<p class="right">
 					조회 <%=post.getHits() %> |
 					추천 <%=post.getRecommend() %> |
@@ -129,14 +163,27 @@
 			</div>
 			<div id=con><%=post.getContent() %></div>
 			<div id=rec>
-				<%=post.getRecommend() %>
-				<button onclick="location.href='reco.jsp?reco=re&idx=<%= idx %>&p_idx=<%=p_idx %>'">
-					<img src=image/star2.png><p>추천
-				</button>
+				<span><%=post.getRecommend() %></span>
+				<%
+					if(post.getRecommend() >= 10) {
+						%>
+						<button onclick="location.href='reco.jsp?reco=re&idx=<%= idx %>&p_idx=<%=p_idx %>'">
+							<img src=image/star3.png><p>추천
+						</button>
+						<%
+					}
+					else {
+						%>
+						<button onclick="location.href='reco.jsp?reco=re&idx=<%= idx %>&p_idx=<%=p_idx %>'">
+							<img src=image/star2.png><p>추천
+						</button>
+						<%
+					}
+				%>
 				<button onclick="location.href='reco.jsp?reco=de&idx=<%= idx %>&p_idx=<%=p_idx %>'">
 					<img src=image/down-arrow.png><p>비추
 				</button>
-				<%=post.getDecommend() %>
+				<span><%=post.getDecommend() %></span>
 			</div>
 		</div>
 		<div id=reply>
@@ -148,7 +195,11 @@
 					<option>답글순
 				</select>
 			</div>
-			<div class=reTop id=right>본문 보기 | 댓글 닫기 | 새로고침</div>
+			<div class=reTop id=right>
+				<a href=#header><b>본문 보기</b></a>&nbsp; |&nbsp;
+				<b>댓글닫기</b> <img src=image/arrow-up.png> &nbsp;|&nbsp;
+				<a href=#reply><b>새로고침</b></a>
+			</div>
 			<%
 				if (!replies.isEmpty()) {
 					%>
@@ -178,9 +229,14 @@
 							<button id=check>확인</button><button id=x>X</button>
 						</div>
 					</div>
+					<div class=reTop id=right>
+						<a href=#header><b>본문 보기</b></a>&nbsp; |&nbsp;
+						<b>댓글닫기</b> <img src=image/arrow-up.png> &nbsp;|&nbsp;
+						<a href=#reply><b>새로고침</b></a>
+					</div>
 					<%
 				}
-			%>	
+			%>
 			<div id=text>
 				<form action="addReply.jsp" method=post>
 					<div id=np>
@@ -210,10 +266,10 @@
 		</div>
 		<div>
 			<button onclick="location.href='gallMain.jsp?idx=<%= idx %>'">전체글</button>
-			<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
-			<button class=right onclick="location.href='write.jsp'">글쓰기</button>
+			<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+			<button class=right onclick="location.href='write.jsp?idx=<%=idx%>'">글쓰기</button>
 		<%
-			if(post.getWriter().equals(session.getAttribute("nick")) || !post.isMember()) {
+			if(post.getMember_id() == null || post.getMember_id().equals(session.getAttribute("code"))) {
 				%>
 				<button class=right id=delete>삭제</button>
 				<button class=right id=edit>수정</button>
@@ -227,8 +283,8 @@
 					<tr>
 						<th width=50px>번호
 						<th>제목
-						<th width=50px>글쓴이
-						<th width=100px>작성일
+						<th width=100px>글쓴이
+						<th width=80px>작성일
 						<th width=50px>조회
 						<th width=50px>추천
 					</tr>
@@ -236,6 +292,7 @@
 				<tbody>
 				<%
 					for(int i = list.size()-1; i >= 0; i--) {
+						isFixed = UserDao.getInstance().isFixed(list.get(i).getMember_id());
 						String date;
 						if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
 							date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
@@ -245,9 +302,24 @@
 						else
 							date = list.get(i).getDate().substring(11,16);
 						%><tr>
-							<td><%=list.get(i).getIdx() %>
-							<td align=left><a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>"><%=list.get(i).getTitle() %></a>
-							<td><%=list.get(i).getWriter() %>
+							<td><%=i+1 %>
+							<td align=left>
+								<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>">
+								<img src=image/chat.png><%=list.get(i).getTitle() %></a>
+								<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>#reply">[<%=list.get(i).getReplyNum() %>]</a>
+							<td id=w><%=list.get(i).getWriter() %>
+								<%
+									if(list.get(i).getMember_id() == null) {
+										String ipAddress = request.getRemoteAddr();
+										if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+										    InetAddress inetAddress = InetAddress.getLocalHost();
+										    ipAddress = inetAddress.getHostAddress();
+										}
+										%><span>(<%=ipAddress.substring(0,7)%>)</span><%
+									}
+									else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
+									else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
+								%>
 							<td><%=date %>
 							<td><%=list.get(i).getHits() %>
 							<td><%=list.get(i).getRecommend() %><%
@@ -257,7 +329,8 @@
 			</table>
 			<div>
 				<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-				<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">개념글</button>
+				<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+				<button class=right onclick="location.href='write.jsp?idx=<%=idx%>'">글쓰기</button>
 			</div>
 		</div>
 		<div id=login>
@@ -266,7 +339,7 @@
 					%>
 					<p><a href=loginForm.jsp?idx=<%= idx %>>로그인해 주세요.</a>
 					<div>
-						<a href=#>MY갤로그</a> &nbsp;|&nbsp;
+						<a href=#>MY블로그</a> &nbsp;|&nbsp;
 						<a href=#>즐겨찾기</a> &nbsp;|&nbsp;
 						<a href=#><img src=image/bell.png> 알림</a>
 					</div>
@@ -277,7 +350,7 @@
 					<p><a href=#><b><%=session.getAttribute("nick") %></b>님<img src=image/right-arrow3.png></a>
 					<button onclick="location.href='logout.jsp?where=gall&idx=<%=idx%>'">로그아웃</button>
 					<div>
-						<a href=#>MY갤로그</a> |
+						<a href=#>MY블로그</a> |
 						<a href=#>즐겨찾기</a> |
 						<a href=#>운영/가입</a> |
 						<a href=#><img src=image/bell.png> 알림</a>

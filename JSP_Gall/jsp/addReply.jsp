@@ -1,3 +1,4 @@
+<%@page import="gall.Post"%>
 <%@page import="gall.PostDao"%>
 <%@page import="gall.ReplyDao"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
@@ -35,9 +36,18 @@
 			DateTimeFormatter.ofPattern("MM.dd HH:mm:ss"));
 	reply.setDate(date);
 	
+	if(session.getAttribute("code") == null)
+		reply.setMember_id(null);
+	else
+		reply.setMember_id(session.getAttribute("code").toString());
+	
+	Post post = PostDao.getInstance().select(p_idx);
+	post.setHits(post.getHits()-1);
+	
 	int result = ReplyDao.getInstance().insert(reply);
 	if (result != 0) {
 		PostDao.getInstance().updateReply(p_idx);
+		PostDao.getInstance().update(post);
 		response.sendRedirect("result.jsp?idx="+idx+"&p_idx="+p_idx);
 	}
 %>

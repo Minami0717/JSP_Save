@@ -42,9 +42,9 @@
 	post.setGall_idx(idx);
 	
 	if(session.getAttribute("code") == null)
-		post.setMember(false);
+		post.setMember_id(null);
 	else
-		post.setMember(true);
+		post.setMember_id(session.getAttribute("code").toString());
 	
 	int result = PostDao.getInstance().insert(post);
 	if (result != 0)

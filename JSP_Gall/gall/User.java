@@ -5,7 +5,14 @@ public class User {
 	private String pw;
 	private String nick;
 	private String email;
+	private boolean isFixed;
 	
+	public boolean isFixed() {
+		return isFixed;
+	}
+	public void setFixed(boolean isFixed) {
+		this.isFixed = isFixed;
+	}
 	public String getCode() {
 		return code;
 	}
