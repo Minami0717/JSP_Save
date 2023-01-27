@@ -81,7 +81,6 @@
 	cursor: pointer;}
 	
 	#idea {background: white; color: #d2af8a;}
-	.right {float: right;}
 	#edit,#delete {background: #b2b4b2; border-color: #a0a2a0;}
 	#delete {margin: 10px;}
 	#del {border: none; background: #c6c8c9; width: 15px; height: 15px; margin: 0;}
@@ -93,13 +92,15 @@
 	#tiv span:first-child {width: 160px; font-size: 13px; color: #777;}
 	#tiv span:nth-child(2) {width: 660px;}
 	#tiv span:nth-child(3) {font-size: 12px; color: #999;}
+	#tiv div:last-of-type {margin: 20px 0;}
 	
 	#left span {color: #d31900;}
 	.reTop {font-size: 13px; margin-bottom: 10px;}
 	
-	#right {float: right;}
-	#right img {height: 10px;}
-	#right a {text-decoration: none;}
+	.right {float: right;}
+	.right img {height: 10px;}
+	.right a {text-decoration: none;}
+	.right button {background: none; color: black; border: none; margin: 0; height: auto; width: auto;}
 	
 	#left {float: left; font-weight: bold;}
 	#delCheck {position: absolute; width: 218px; height: 31px;
@@ -131,6 +132,23 @@
 	
 	.click {cursor: pointer;}
 </style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+	$(function() {
+	    $(".right button").on("click", function() {
+	    	$("#tiv").toggle();
+	    	
+	        if ($(".right button b").text() == "댓글닫기") {
+	        	$(".right button b").text("댓글열기")
+		        $(".right button img").attr("src","image/down.png")
+	        }
+	        else {
+	        	$(".right button b").text("댓글닫기")
+		        $(".right button img").attr("src","image/arrow-up.png")
+	        }
+	    });
+	});
+</script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
@@ -187,7 +205,7 @@
 			</div>
 		</div>
 		<div id=reply>
-			<div class=reTop id=left>
+			<div class="reTop" id=left>
 				전체 댓글 <span><%=post.getReplyNum() %></span>개
 				<select>
 					<option>등록순
@@ -195,9 +213,9 @@
 					<option>답글순
 				</select>
 			</div>
-			<div class=reTop id=right>
-				<a href=#header><b>본문 보기</b></a>&nbsp; |&nbsp;
-				<b>댓글닫기</b> <img src=image/arrow-up.png> &nbsp;|&nbsp;
+			<div class="reTop right">
+				<a href=#header><b>본문 보기</b></a> &nbsp;|&nbsp;
+				<button><b>댓글닫기</b> <img src=image/arrow-up.png></button> &nbsp;|&nbsp;
 				<a href=#reply><b>새로고침</b></a>
 			</div>
 			<%
@@ -228,11 +246,11 @@
 							<input id=pc type=password placeholder=비밀번호>
 							<button id=check>확인</button><button id=x>X</button>
 						</div>
-					</div>
-					<div class=reTop id=right>
-						<a href=#header><b>본문 보기</b></a>&nbsp; |&nbsp;
-						<b>댓글닫기</b> <img src=image/arrow-up.png> &nbsp;|&nbsp;
-						<a href=#reply><b>새로고침</b></a>
+						<div class="reTop right">
+							<a href=#header><b>본문 보기</b></a>&nbsp; |&nbsp;
+							<b>댓글닫기</b> <img src=image/arrow-up.png> &nbsp;|&nbsp;
+							<a href=#reply><b>새로고침</b></a>
+						</div>
 					</div>
 					<%
 				}
@@ -272,7 +290,7 @@
 			if(post.getMember_id() == null || post.getMember_id().equals(session.getAttribute("code"))) {
 				%>
 				<button class=right id=delete>삭제</button>
-				<button class=right id=edit>수정</button>
+				<button class=right id=edit onclick="location.href='modifyForm.jsp?idx=<%=idx%>'">수정</button>
 				<%
 			}
 		%>
