@@ -119,6 +119,7 @@ public class PostDao {
 				post.setDecommend(rs.getInt("decommend"));
 				post.setReplyNum(rs.getInt("replyNum"));
 				post.setMember_id(rs.getString("member_id"));
+				post.setPw(rs.getString("pw"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -186,7 +187,38 @@ public class PostDao {
 			pstmt = conn.prepareStatement("update post set hits = ? where idx = ?");
 			pstmt.setInt(1, post.getHits());
 			pstmt.setInt(2, post.getIdx());
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String getPw(int p_idx) {
+		String pw = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT pw FROM post where idx=?");
+			pstmt.setInt(1, p_idx);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				pw = rs.getString(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pw;
+	}
+	
+	public int modify(Post post) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("update post set title = ?,content = ?,writer = ?,pw = ? where idx = ?");
+			pstmt.setString(1, post.getTitle());
+			pstmt.setString(2, post.getContent());
+			pstmt.setString(3, post.getWriter());
+			pstmt.setString(4, post.getPw());
+			pstmt.setInt(5, post.getIdx());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

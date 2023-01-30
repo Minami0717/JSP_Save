@@ -95,11 +95,11 @@
 	#tiv div:last-of-type {margin: 20px 0;}
 	
 	#left span {color: #d31900;}
-	.reTop {font-size: 13px; margin-bottom: 10px;}
+	.reTop,.reBot {font-size: 13px; margin-bottom: 10px;}
 	
 	.right {float: right;}
 	.right img {height: 10px;}
-	.right a {text-decoration: none;}
+	.right a:hover {text-decoration: none;}
 	.right button {background: none; color: black; border: none; margin: 0; height: auto; width: auto;}
 	
 	#left {float: left; font-weight: bold;}
@@ -135,16 +135,25 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 	$(function() {
-	    $(".right button").on("click", function() {
+	    $(".reTop button").on("click", function() {
 	    	$("#tiv").toggle();
 	    	
-	        if ($(".right button b").text() == "댓글닫기") {
-	        	$(".right button b").text("댓글열기")
-		        $(".right button img").attr("src","image/down.png")
+	        if ($(".reTop button b").text() == "댓글닫기") {
+	        	$(".reTop button b").text("댓글열기")
+		        $(".reTop button img").attr("src","image/down.png")
 	        }
 	        else {
-	        	$(".right button b").text("댓글닫기")
-		        $(".right button img").attr("src","image/arrow-up.png")
+	        	$(".reTop button b").text("댓글닫기")
+		        $(".reTop button img").attr("src","image/arrow-up.png")
+	        }
+	    });
+	    
+	    $(".reBot button").on("click", function() {
+	    	$("#tiv").toggle();
+	    	
+	    	if ($(".reTop button b").text() == "댓글닫기") {
+	        	$(".reTop button b").text("댓글열기")
+		        $(".reTop button img").attr("src","image/down.png")
 	        }
 	    });
 	});
@@ -246,9 +255,9 @@
 							<input id=pc type=password placeholder=비밀번호>
 							<button id=check>확인</button><button id=x>X</button>
 						</div>
-						<div class="reTop right">
-							<a href=#header><b>본문 보기</b></a>&nbsp; |&nbsp;
-							<b>댓글닫기</b> <img src=image/arrow-up.png> &nbsp;|&nbsp;
+						<div class="reBot right">
+							<a href=#header><b>본문 보기</b></a> &nbsp;|&nbsp;
+							<button><b>댓글닫기</b> <img src=image/arrow-up.png></button> &nbsp;|&nbsp;
 							<a href=#reply><b>새로고침</b></a>
 						</div>
 					</div>
@@ -290,7 +299,7 @@
 			if(post.getMember_id() == null || post.getMember_id().equals(session.getAttribute("code"))) {
 				%>
 				<button class=right id=delete>삭제</button>
-				<button class=right id=edit onclick="location.href='modifyForm.jsp?idx=<%=idx%>'">수정</button>
+				<button class=right id=edit onclick="location.href='pwCheckForm.jsp?idx=<%=idx%>&p_idx=<%= p_idx %>'">수정</button>
 				<%
 			}
 		%>
