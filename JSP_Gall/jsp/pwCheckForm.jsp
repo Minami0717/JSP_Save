@@ -6,6 +6,7 @@
 	Integer idx = Integer.parseInt(request.getParameter("idx"));
 	Integer p_idx = Integer.parseInt(request.getParameter("p_idx"));
 	String name = GallListDao.getInstance().selectGallName(idx);
+	String type = request.getParameter("type");
 %>
 <html>
 <head>
@@ -25,6 +26,18 @@
 	
 	#header {padding: 20px 0; border-bottom: 2px solid #d2af8a;}
 </style>
+<script>
+	function check() {
+		if(inputPw.pw.value == "") {
+			alert("비밀번호를 입력하세요.")
+			inputPw.pw.focus()
+			return
+		}
+		
+		if(confirm("게시글을 삭제하면 복구할 수 없습니다.\n정말 삭제하시겠습니까?"))
+			location.href = "delPost.jsp?idx=<%=idx%>&p_idx=<%=p_idx%>"
+	}
+</script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
@@ -32,7 +45,7 @@
 		<div id=header>
 			<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %></a></h2>
 		</div>
-		<form action="pwCheck.jsp?idx=<%= idx %>&p_idx=<%= p_idx %>" method="post">
+		<form name=inputPw action="pwCheck.jsp?idx=<%= idx %>&p_idx=<%= p_idx %>&type=<%=type %>" method="post">
 			<b>비밀번호를 입력하세요.</b>
 			<input type=password name=pw>
 			<div>

@@ -224,4 +224,16 @@ public class PostDao {
 		}
 		return result;
 	}
+	
+	public int delete(int idx) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("delete from post where idx = ?");
+			pstmt.setInt(1, idx);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

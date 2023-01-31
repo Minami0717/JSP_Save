@@ -80,4 +80,16 @@ public class ReplyDao {
 		}
 		return result;
 	}
+	
+	public int delete(int idx) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("delete from reply where post_idx = ?");
+			pstmt.setInt(1, idx);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

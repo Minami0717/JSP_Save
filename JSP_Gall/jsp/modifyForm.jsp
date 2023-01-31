@@ -52,8 +52,8 @@
 						}
 						else {
 							%>
-							<input type=hidden value=<%=session.getAttribute("nick") %> name=nick>
-							<input type=hidden value=<%=session.getAttribute("pw") %> name=pw>
+							<input type=hidden value=<%=post.getWriter() %> name=nick>
+							<input type=hidden value=<%=post.getPw() %> name=pw>
 							<%
 						}
 					%>

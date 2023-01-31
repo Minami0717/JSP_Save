@@ -234,14 +234,14 @@
 							else
 								date = recoList.get(i).getDate().substring(11,16);
 							%><tr>
-								<td><%=recoList.get(i).getIdx() %>
+								<td><%=i+1 %>
 								<td align=left>
 									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>">
 									<img src=image/chat.png> <%=recoList.get(i).getTitle() %></a>
 									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>#reply">[<%=recoList.get(i).getReplyNum() %>]</a>
 								<td id=w><%=recoList.get(i).getWriter() %>
 									<%
-									if(list.get(i).getMember_id() == null) {
+									if(recoList.get(i).getMember_id() == null) {
 										String ipAddress = request.getRemoteAddr();
 										if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
 										    InetAddress inetAddress = InetAddress.getLocalHost();

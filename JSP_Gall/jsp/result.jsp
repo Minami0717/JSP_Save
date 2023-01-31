@@ -296,10 +296,16 @@
 			<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 			<button class=right onclick="location.href='write.jsp?idx=<%=idx%>'">글쓰기</button>
 		<%
-			if(post.getMember_id() == null || post.getMember_id().equals(session.getAttribute("code"))) {
+			if(post.getMember_id() == null) {
 				%>
-				<button class=right id=delete>삭제</button>
-				<button class=right id=edit onclick="location.href='pwCheckForm.jsp?idx=<%=idx%>&p_idx=<%= p_idx %>'">수정</button>
+				<button class=right id=delete onclick="location.href='pwCheckForm.jsp?idx=<%=idx%>&p_idx=<%= p_idx %>&type=del'">삭제</button>
+				<button class=right id=edit onclick="location.href='pwCheckForm.jsp?idx=<%=idx%>&p_idx=<%= p_idx %>&type=mod'">수정</button>
+				<%
+			}
+			else if(post.getMember_id().equals(session.getAttribute("code"))) {
+				%>
+				<button class=right id=delete onclick="location.href='delCheckForm.jsp?idx=<%=idx%>&p_idx=<%= p_idx %>'">삭제</button>
+				<button class=right id=edit onclick="location.href='modifyForm.jsp?idx=<%=idx%>&p_idx=<%= p_idx %>'">수정</button>
 				<%
 			}
 		%>

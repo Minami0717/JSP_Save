@@ -15,12 +15,3 @@
 		%><script>alert("탈퇴실패"); history.back();</script><%
 	}
 %>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	
-</body>
-</html>
