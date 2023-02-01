@@ -94,6 +94,8 @@ public class PostDao {
 				post.setRecommend(rs.getInt("recommend"));
 				post.setDecommend(rs.getInt("decommend"));
 				post.setPw(rs.getString("pw"));
+				post.setMember_id(rs.getString("member_id"));
+				post.setReplyNum(rs.getInt("replyNum"));
 				list.add(post);
 			}
 		} catch (SQLException e) {

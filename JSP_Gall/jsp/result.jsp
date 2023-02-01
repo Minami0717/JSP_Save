@@ -16,12 +16,14 @@
 	Integer idx = Integer.parseInt(request.getParameter("idx"));
 	Integer p_idx = Integer.parseInt(request.getParameter("p_idx"));
 	String name = GallListDao.getInstance().selectGallName(idx);
+	String p = request.getParameter("post");
 
 	Post post = PostDao.getInstance().select(p_idx);
 	post.setHits(post.getHits()+1);
 	PostDao.getInstance().update(post);
 	
 	List<Post> list = PostDao.getInstance().selectAll(idx);
+	List<Post> recoList = PostDao.getInstance().selectReco(idx);
 	List<Reply> replies = ReplyDao.getInstance().selectAll(p_idx);
 	
 	Boolean isFixed = UserDao.getInstance().isFixed(post.getMember_id());
@@ -80,7 +82,7 @@
 	margin-bottom: 40px; font-weight: bold; border-radius: 2px;
 	cursor: pointer;}
 	
-	#idea {background: white; color: #d2af8a;}
+	#ns {background: white; color: #d2af8a;}
 	#edit,#delete {background: #b2b4b2; border-color: #a0a2a0;}
 	#delete {margin: 10px;}
 	#del {border: none; background: #c6c8c9; width: 15px; height: 15px; margin: 0;}
@@ -324,25 +326,61 @@
 				</thead>
 				<tbody>
 				<%
-					for(int i = list.size()-1; i >= 0; i--) {
-						isFixed = UserDao.getInstance().isFixed(list.get(i).getMember_id());
-						String date;
-						if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
-							date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
-								+list.get(i).getDate().substring(8,10);
-						else if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
-							date = list.get(i).getDate().substring(5,7)+"."+list.get(i).getDate().substring(8,10);
-						else
-							date = list.get(i).getDate().substring(11,16);
-						%><tr>
-							<td><%=i+1 %>
-							<td align=left>
-								<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>">
-								<img src=image/chat.png><%=list.get(i).getTitle() %></a>
-								<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>#reply">[<%=list.get(i).getReplyNum() %>]</a>
-							<td id=w><%=list.get(i).getWriter() %>
-								<%
-									if(list.get(i).getMember_id() == null) {
+					if (p == null) {
+						for(int i = list.size()-1; i >= 0; i--) {
+							isFixed = UserDao.getInstance().isFixed(list.get(i).getMember_id());
+							String date;
+							if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
+								date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
+									+list.get(i).getDate().substring(8,10);
+							else if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
+								date = list.get(i).getDate().substring(5,7)+"."+list.get(i).getDate().substring(8,10);
+							else
+								date = list.get(i).getDate().substring(11,16);
+							%><tr>
+								<td><%=i+1 %>
+								<td align=left>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>">
+									<img src=image/chat.png><%=list.get(i).getTitle() %></a>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>#reply">[<%=list.get(i).getReplyNum() %>]</a>
+								<td id=w><%=list.get(i).getWriter() %>
+									<%
+										if(list.get(i).getMember_id() == null) {
+											String ipAddress = request.getRemoteAddr();
+											if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+											    InetAddress inetAddress = InetAddress.getLocalHost();
+											    ipAddress = inetAddress.getHostAddress();
+											}
+											%><span>(<%=ipAddress.substring(0,7)%>)</span><%
+										}
+										else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
+										else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
+									%>
+								<td><%=date %>
+								<td><%=list.get(i).getHits() %>
+								<td><%=list.get(i).getRecommend() %><%
+						}
+					}
+					else if (p.equals("reco")) {
+						for(int i = recoList.size()-1; i >= 0; i--) {
+							isFixed = UserDao.getInstance().isFixed(recoList.get(i).getMember_id());
+							String date;
+							if (!recoList.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
+								date = recoList.get(i).getDate().substring(2,4)+"."+recoList.get(i).getDate().substring(5,7)+"."
+									+recoList.get(i).getDate().substring(8,10);
+							else if (!recoList.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
+								date = recoList.get(i).getDate().substring(5,7)+"."+recoList.get(i).getDate().substring(8,10);
+							else
+								date = recoList.get(i).getDate().substring(11,16);
+							%><tr>
+								<td><%=i+1 %>
+								<td align=left>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>">
+									<img src=image/chat.png> <%=recoList.get(i).getTitle() %></a>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>#reply">[<%=recoList.get(i).getReplyNum() %>]</a>
+								<td id=w><%=recoList.get(i).getWriter() %>
+									<%
+									if(recoList.get(i).getMember_id() == null) {
 										String ipAddress = request.getRemoteAddr();
 										if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
 										    InetAddress inetAddress = InetAddress.getLocalHost();
@@ -350,19 +388,38 @@
 										}
 										%><span>(<%=ipAddress.substring(0,7)%>)</span><%
 									}
-									else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
-									else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
-								%>
-							<td><%=date %>
-							<td><%=list.get(i).getHits() %>
-							<td><%=list.get(i).getRecommend() %><%
+									else if(isFixed) {%><img src=image/fix_nik.gif><%}
+									else if(!isFixed) {%><img src=image/nik.gif><%}
+									%>
+								<td><%=date %>
+								<td><%=recoList.get(i).getHits() %>
+								<td><%=recoList.get(i).getRecommend() %><%
+						}
 					}
 				%>
 				</tbody>
 			</table>
 			<div>
-				<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-				<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+				<%
+					if (p == null) {
+						%>
+						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
+						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+						<%
+					}
+					else if (p.equals("reco")) {
+						%>
+						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
+						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+						<%
+					}
+					else if (p.equals("notice")) {
+						%>
+						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
+						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+						<%
+					}
+				%>
 				<button class=right onclick="location.href='write.jsp?idx=<%=idx%>'">글쓰기</button>
 			</div>
 		</div>
