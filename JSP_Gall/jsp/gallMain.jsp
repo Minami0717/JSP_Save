@@ -236,9 +236,9 @@
 							%><tr>
 								<td><%=i+1 %>
 								<td align=left>
-									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>">
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>&post=reco">
 									<img src=image/chat.png> <%=recoList.get(i).getTitle() %></a>
-									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>#reply">[<%=recoList.get(i).getReplyNum() %>]</a>
+									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>&post=reco#reply">[<%=recoList.get(i).getReplyNum() %>]</a>
 								<td id=w><%=recoList.get(i).getWriter() %>
 									<%
 									if(recoList.get(i).getMember_id() == null) {

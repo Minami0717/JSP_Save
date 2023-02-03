@@ -1,3 +1,6 @@
+<%@page import="gall.Search"%>
+<%@page import="java.net.InetAddress"%>
+<%@page import="gall.SearchDao"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Stack"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,15 +10,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	String word = "";
+	if(request.getParameter("word") != null)
+		word = request.getParameter("word");
+	
+	String ip = request.getRemoteAddr();
+	if(ip.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+	    InetAddress inetAddress = InetAddress.getLocalHost();
+	    ip = inetAddress.getHostAddress();
+	}
+	
 	List<GallList> gList = GallListDao.getInstance().selectAll();
 	ArrayList<String> viList = (ArrayList)session.getAttribute("visitList");
+	ArrayList<Search> sList = SearchDao.getInstance().select(ip);
+	
+	String save = session.getAttribute("save").toString();
 %>
 <style>
 	* {margin: 0; padding: 0;}
 	a {text-decoration: none; color: black;}
 	a:not(h1 a,h4 a,h5 a,h2 a):hover {text-decoration: underline;}
 	
-	header {margin-top: 30px;}
+	header {margin-top: 30px; position: relative; }
 	
 	h1 {display: inline-block; margin-left: 25%; margin-right: 5%;}
 	
@@ -24,10 +40,26 @@
 	nav li {display: inline-block; margin-right: 15px; font-weight: bold;}
 	nav a {color: white;}
 	
-	#search input {width: 315px; height: 35px; float: left; padding: 3px 9px 0; outline: none; border: none;}
-	#search button {width: 40px; height: 40px; background: #d2af8a; border: none; background-size: cover;}
 	#search {display: inline-block; border: 4px solid #d2af8a; height: 39px;}
+	#search input[type=text] {width: 315px; height: 35px; float: left; padding: 2px 9px 0; outline: none; border: none; font-weight: bold; color: #333; font-size: 14px;}
+	#search input::placeholder {color: #b2b4b2;}
+	#search form button {width: 40px; height: 40px; background: #d2af8a; border: none;}
 	#search img {width: 25px;}
+	#search h5 {background: #f3f3f3; padding: 10px 12px; display: block;}
+	#search h5 button {position: absolute; top: 5px; right: 4px; color: #999; text-decoration: underline; border: none; font-size: 12px; padding: 5px;}
+	#search > div {position: absolute; border: 2px solid #d2af8a; background: #fff; width: 377px; left: 40.1%; display: none;}
+	#search ul {list-style: none; padding: 8px 0;}
+	#search ul img {width: 8px;}
+	#search ul a {display: block; color: #555; text-decoration: none; height: 27px;}
+	#search ul button {position: absolute; right: 12px; top: 5px; border: none; background: none;}
+	#search li {position: relative; padding: 0 25px 0 12px;}
+	#search li:hover {background: #f3f3f3;}
+	
+	#save {border-top: 1px #d2af8a solid; color: #d2af8a; font-size: 13px; padding: 10px;}
+	#save img {position: absolute;}
+	#save button {border: none; background: none; color: #d2af8a; font-size: 13px; }
+	#save button img {width: 36px; bottom: 1px; left: 85px;}
+	#save > img {width: 15px; right: 10px; cursor: pointer;}
 
 	#visit {margin-left: 25%; margin-right: 25%; border: 1px solid gainsboro; padding: 10px; font-size: 12px; color: #d2af8a; font-weight: bold; background-color: rgb(240, 240, 240);}
     #visit img {height: 8px; cursor: pointer;}
@@ -40,11 +72,89 @@
     .right {float: right;}
 	.left {float: left;}
 </style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+	if(sessionStorage.getItem("save") == "on") {
+		$("#save button img").attr("src","image/switch.png")
+	}
+	else if(sessionStorage.getItem("save") == "off") {
+		$("#save button img").attr("src","image/switch3.png")
+	}
+		
+	$(function() {
+		$("#search input").on("click", function() {
+			if($("#save button img").attr("src") === "image/switch.png")
+	    		$("#search > div").show()
+	    });
+	    
+	    $("#save > img").on("click", function() {
+	    	$("#search > div").hide()
+	    });
+	    
+	    $("#search input").on("keyup", function() {
+	    	if($("#search input").val())
+	    		$("#search > div").show()
+	    	else
+		    	$("#search > div").hide()
+	    });
+	});
+	
+	function check() {
+		if($("#save button img").attr("src") === "image/switch.png") {
+			if(confirm("검색어 저장 기능을 중지하시겠습니까?")) {
+				$("#search > div").hide()
+				$("#save button img").attr("src","image/switch3.png")
+				$("#search input[name=save]").attr("value","off")
+				location.href="searchSave.jsp?save=off"
+			}
+		}
+		else {
+			if(confirm("검색어 저장 기능을 사용하시겠습니까?")) {
+				$("#search > div").show()
+				$("#save button img").attr("src","image/switch.png")
+				location.href="searchSave.jsp?save=on"
+			}
+		}
+	}
+	
+	function delCheck() {
+		if(confirm("검색 목록을 모두 삭제하시겠습니까?"))
+			location.href='delSearch.jsp?del=all'
+	}
+</script>
 <header>
 	<h1><a href=main.jsp>minami.com</a></h1>
 	<div id=search>
-		<input type=text placeholder="게시판 & 통합검색">
-		<button><img src=image/search2.png></button>
+		<form action="search.jsp" autocomplete="off">
+			<input type=text placeholder="게시판 & 통합검색" name="word" value=<%= word %>>
+			<input type=hidden value=<%=save%> name=save>
+			<button><img src="image/search2.png"></button>
+		</form>
+		<div>
+			<div>
+				<h5>최근 검색어<button onclick=delCheck()>전체 삭제</button></h5>
+				<ul>
+					<%
+						for(int i = sList.size()-1; i >= 0; i--) {
+							%><li><a href="search.jsp?word=<%= sList.get(i).getWord() %>&save=<%=save%>"><%=sList.get(i).getWord() %></a>
+								<button onclick="location.href='delSearch.jsp?idx=<%=sList.get(i).getIdx()%>'"><img src=image/x1.png></button><%
+						}
+					%>
+				</ul>
+			</div>
+			<div id=save>
+				<button onclick=check()><b>검색어 저장</b>
+				<%
+					if(session.getAttribute("save").equals("on")) {
+						%><img src=image/switch.png><%
+					}
+					else {
+						%><img src=image/switch3.png><%
+					}
+				%></button>
+				<img src=image/close2.png>
+			</div>
+		</div>
 	</div>
 	<nav>
 		<ul>

@@ -294,8 +294,20 @@
 			</div>
 		</div>
 		<div>
-			<button onclick="location.href='gallMain.jsp?idx=<%= idx %>'">전체글</button>
-			<button id=idea onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+			<%
+				if (p == null) {
+					%>
+					<button onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
+					<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+					<%
+				}
+				else if (p.equals("reco")) {
+					%>
+					<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
+					<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
+					<%
+				}
+			%>
 			<button class=right onclick="location.href='write.jsp?idx=<%=idx%>'">글쓰기</button>
 		<%
 			if(post.getMember_id() == null) {
@@ -411,12 +423,6 @@
 						%>
 						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
 						<button onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
-						<%
-					}
-					else if (p.equals("notice")) {
-						%>
-						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>'">전체글</button>
-						<button id=ns onclick="location.href='gallMain.jsp?idx=<%=idx%>&post=reco'">추천글</button>
 						<%
 					}
 				%>
