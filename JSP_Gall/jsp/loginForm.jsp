@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	int idx = Integer.parseInt(request.getParameter("idx"));
+	String url = request.getParameter("url");
 %>
 <html>
 <head>
@@ -34,7 +34,7 @@
 		<h1 align=left><a href=main.jsp>minami.com</a> <a href=>로그인</a></h1>
 	</header>
 	<div align=center>
-		<form action="checkID.jsp?where=gall&idx=<%= idx %>" method=post>
+		<form action="checkID.jsp?url=<%= url %>" method=post>
 			<table>
 				<tr>
 					<td><input type=text placeholder="아이디" class=input name=code></td>

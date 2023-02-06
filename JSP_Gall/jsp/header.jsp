@@ -24,7 +24,9 @@
 	ArrayList<String> viList = (ArrayList)session.getAttribute("visitList");
 	ArrayList<Search> sList = SearchDao.getInstance().select(ip);
 	
-	String save = session.getAttribute("save").toString();
+	String save = (String)session.getAttribute("save");
+	if(save == null)
+		save = "on";
 %>
 <style>
 	* {margin: 0; padding: 0;}
@@ -45,9 +47,9 @@
 	#search input::placeholder {color: #b2b4b2;}
 	#search form button {width: 40px; height: 40px; background: #d2af8a; border: none;}
 	#search img {width: 25px;}
-	#search h5 {background: #f3f3f3; padding: 10px 12px; display: block;}
+	#search h5 {background: #f3f3f3; padding: 10px 12px; display: block; color: #d2af8a;}
 	#search h5 button {position: absolute; top: 5px; right: 4px; color: #999; text-decoration: underline; border: none; font-size: 12px; padding: 5px;}
-	#search > div {position: absolute; border: 2px solid #d2af8a; background: #fff; width: 377px; left: 40.1%; display: none;}
+	#search > div {position: absolute; border: 2px solid #d2af8a; background: #fff; width: 377px; left: 40%; display: none;}
 	#search ul {list-style: none; padding: 8px 0;}
 	#search ul img {width: 8px;}
 	#search ul a {display: block; color: #555; text-decoration: none; height: 27px;}
@@ -68,6 +70,8 @@
     #visit a {color: black; font-weight: normal;}
     #visit ul img {margin: 0 10px; height: 7px; cursor: pointer;}
     #visit ul {margin-left: 5px;}
+    
+    #empty {font-size: 12px; color: #999; text-align: center; padding: 100px 0;}
     
     .right {float: right;}
 	.left {float: left;}
@@ -112,6 +116,7 @@
 			if(confirm("검색어 저장 기능을 사용하시겠습니까?")) {
 				$("#search > div").show()
 				$("#save button img").attr("src","image/switch.png")
+				$("#search input[name=save]").attr("value","on")
 				location.href="searchSave.jsp?save=on"
 			}
 		}
@@ -133,19 +138,24 @@
 		<div>
 			<div>
 				<h5>최근 검색어<button onclick=delCheck()>전체 삭제</button></h5>
-				<ul>
-					<%
+				<%
+					if(sList.size() == 0) {
+						%><div id=empty>최근 검색어가 없습니다.</div><%
+					}
+					else {
+						%><ul><%
 						for(int i = sList.size()-1; i >= 0; i--) {
 							%><li><a href="search.jsp?word=<%= sList.get(i).getWord() %>&save=<%=save%>"><%=sList.get(i).getWord() %></a>
 								<button onclick="location.href='delSearch.jsp?idx=<%=sList.get(i).getIdx()%>'"><img src=image/x1.png></button><%
 						}
-					%>
-				</ul>
+						%></ul><%
+					}
+				%>
 			</div>
 			<div id=save>
 				<button onclick=check()><b>검색어 저장</b>
 				<%
-					if(session.getAttribute("save").equals("on")) {
+					if(save.equals("on")) {
 						%><img src=image/switch.png><%
 					}
 					else {
@@ -159,7 +169,7 @@
 	<nav>
 		<ul>
 			<li><a href=#>메인</a>
-			<li><a href=#>마이너</a>
+			<li><a href=minor.jsp>마이너</a>
 			<li><a href=#>미니</a>
 			<li>|
 			<li><a href=#>블로그</a>

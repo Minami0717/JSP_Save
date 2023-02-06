@@ -42,12 +42,8 @@
 		return;
 	}
 	
-	if(request.getParameter("where").equals("main"))
-		response.sendRedirect("main.jsp");
-	else if(request.getParameter("where").equals("gall")) {
-		int idx = Integer.parseInt(request.getParameter("idx"));
-		response.sendRedirect("gallMain.jsp?idx="+idx);
-	}
+	String url = request.getParameter("url");
+	response.sendRedirect(url);
 %>
 </body>
 </html>

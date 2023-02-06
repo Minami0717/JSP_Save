@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="gall.GallListDao"%>
 <%@page import="gall.GallList"%>
 <%@page import="gall.PostDao"%>
@@ -8,7 +9,7 @@
 <!DOCTYPE html>
 <%
 	int idx = 1;
-	List<Post> list = PostDao.getInstance().selectAll(0);
+	List<Post> list = PostDao.getInstance().selectBest();
 %>
 <html>
 <head>
@@ -21,11 +22,11 @@
     section {margin-left: 25%; width: 35%; height: 700px; float: left;}
 	aside {float: right; margin-right: 25%;}
 	button {cursor: pointer;}
+	ol a {color: black;}
 
 	#login,#user_info {border: 1px solid #d2af8a; padding: 10px; margin: 15px 0; width: 240px;}
 	#login input[name=code],#login input[name=pw] {width: 145px; height: 37px; background: #f3f3f3; border: none; padding-left: 5px;}
-	#login input[type=submit],#user_info button {width: 65px; height: 37px; background: #d2af8a; color: white; border: none; border: 1px solid #d2af8a;
-	margin-left: 10px; cursor: pointer;}
+	#login input[type=submit],#user_info button {width: 65px; height: 37px; background: #d2af8a; color: white; border: none; border: 1px solid #d2af8a; margin-left: 10px; cursor: pointer;}
 	#login img {height: 13px; cursor: pointer;}
 	#login div:first-child {margin-bottom: 5px; font-size: 12px;}
 	#login > div:last-child {border-top: 1px dashed #aaa; margin-top: 15px; font-size: 12px; padding: 10px 0 5px; text-align: center;}
@@ -33,8 +34,7 @@
 	#login span {font-size: 11px;}
 	
 	#user_info button {height: 25px; font-weight: bold;}
-	#user_info span {border: 1px #ccc solid; background: #f3f3f3; color: #555; width: 68px; height: 25px; font-size: 13px;
-	display: inline-block; text-align: center; padding-top: 5px; margin-bottom: 5px;}
+	#user_info span {border: 1px #ccc solid; background: #f3f3f3; color: #555; width: 68px; height: 25px; font-size: 13px; display: inline-block; text-align: center; padding-top: 5px; margin-bottom: 5px;}
 	#user_info > div {margin-left: 10px;}
 	#user_info div:first-child a {color: #d2af8a; font-size: 14px;}
 	#user_info div:first-child a:hover {text-decoration: none;}
@@ -46,15 +46,20 @@
 	#hit > img {width: 150px; margin: 10px 5px;}
     #hit div img {width: 10px;}
     #hit button {background-color: #d2af8a; border: 1px solid #d2af8a; padding: 2px 4px; margin: 0;}
-	#hit > div, #best div {border-bottom: 2px solid #d2af8a; padding: 10px 0;}
+	#hit > div, #best > div {border-bottom: 2px solid #d2af8a; padding: 10px 0;}
 	#hit span {font-size: 12px;}
 
 	#best img {height: 20px; padding: 0 5px;}
     #best img:last-child {height: 10px;}
 	#best h4 a,#best h5 a {color: #d2af8a;}
-	#best li {list-style-type: none; border-bottom: 1px solid gainsboro; padding: 10px 0;}
-    #best span {color: coral;}
+	#best li {list-style-type: none; border-bottom: 1px solid gainsboro; padding: 10px 0; cursor: pointer;}
+	#best li a {font-weight: bold; font-size: 14px;}
+	#best li div:first-of-type {width: 520px;}
+	#best li div:last-of-type {text-align: right;}
+    #best h4 span {color: coral;}
     #best ul {border-bottom: 1px solid  #d2af8a;}
+    #best ul div {display: inline-block;}
+    #best li:hover a {text-decoration: underline;}
 
 	#silbuk {border: 1px solid #ccc; width: 260px;}
 	#silbuk h5 {color: black; font-size: 14px;}
@@ -65,11 +70,14 @@
 	#silbuk ol span:last-child:hover {text-decoration: underline;}
 	#silbuk li {list-style-type: none; margin: 5px 5px;}
 	#silbuk li a:hover {text-decoration: none;}
-
-	ol a {color: black;}
+	
 	#rank {background: gainsboro; padding: 10px; font-size: 12px; text-align: right; margin-top: 10px; text-decoration: underline; cursor: pointer;}
 	#ad img {width: 260px; margin: 15px 0;}
 	#inline {display: inline-block; margin-left: 40px;}
+	#name, #date {font-size: 12px; color: #555;}
+	#name {width: 100px; display: inline-block;}
+	#date::before {content: ""; display: inline-block; width: 1px; height: 9px; background: #aaa; margin: 0 6px;}
+	#rn {color: #d31900; font-size: 14px;}
 </style>
 </head>
 <body>
@@ -97,8 +105,21 @@
 				</div>
 				<ul>
 				<%
-					for (Post p : list) {
-						%><li><a href="result.jsp?idx=<%= idx %>&p_idx=<%= p.getIdx() %>"><%=p.getTitle() %></a><%
+					for (int i = list.size()-1; i >= 0; i--) {
+						String name = GallListDao.getInstance().selectGallName(list.get(i).getGall_idx());
+						String date;
+						if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
+							date = list.get(i).getDate().substring(5,7)+"-"+list.get(i).getDate().substring(8,10);
+						else
+							date = list.get(i).getDate().substring(11,16);
+						
+						%><li onclick="location.href='result.jsp?idx=<%= idx %>&p_idx=<%= list.get(i).getIdx() %>'">
+							<div>
+								<a href="result.jsp?idx=<%= idx %>&p_idx=<%= list.get(i).getIdx() %>"><%=list.get(i).getTitle() %></a>
+								<span id=rn>[<%=list.get(i).getReplyNum() %>]</span>
+							</div>
+							<div><span id=name><%=name %></span><span id=date><%=date %></span></div>
+						<%
 					}
 				%>
 				</ul>
@@ -109,7 +130,7 @@
 				if (session.getAttribute("code") == null) {
 				%>
 				<div id=login>
-					<form action=checkID.jsp?where=main method=post>
+					<form action=checkID.jsp?url=<%= request.getRequestURL() %> method=post>
 						<div>
 							<input type=text placeholder="아이디" name=code>
 							<span><input type=checkbox> 아이디 저장</span>

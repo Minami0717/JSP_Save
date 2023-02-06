@@ -104,6 +104,35 @@ public class PostDao {
 		return list;
 	}
 	
+	public List<Post> selectBest() {
+		List<Post> list = new ArrayList<Post>();
+		
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM post where recommend >= 10");
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Post post = new Post();
+				post.setIdx(rs.getInt("idx"));
+				post.setTitle(rs.getString("title"));
+				post.setContent(rs.getString("content"));
+				post.setWriter(rs.getString("writer"));
+				post.setDate(rs.getString("date"));
+				post.setHits(rs.getInt("hits"));
+				post.setRecommend(rs.getInt("recommend"));
+				post.setDecommend(rs.getInt("decommend"));
+				post.setPw(rs.getString("pw"));
+				post.setMember_id(rs.getString("member_id"));
+				post.setReplyNum(rs.getInt("replyNum"));
+				post.setGall_idx(rs.getInt("gall_idx"));
+				list.add(post);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public Post select(Integer idx) {
 		Post post = new Post();
 		try {

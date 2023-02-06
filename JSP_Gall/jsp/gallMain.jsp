@@ -28,8 +28,13 @@
 		vList.add(name);
 	}
 	
-	List<Post> list = PostDao.getInstance().selectAll(idx);
-	List<Post> recoList = PostDao.getInstance().selectReco(idx);
+	List<Post> list = null;
+	if(idx == 1)
+		list = PostDao.getInstance().selectBest();
+	else if(post == null)
+		list = PostDao.getInstance().selectAll(idx);
+	else if(post.equals("reco"))
+		list = PostDao.getInstance().selectReco(idx);
 %>
 <%!
 	boolean exists(int n[], int num) {
@@ -108,7 +113,7 @@
 				<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %></a></h2>
 			</div>
 				<%
-					if (recoList.size() >= 6) {
+					if (list.size() >= 6) {
 					%><div id=issue_box>
 						<ul><%
 						int n[] = new int[5];
@@ -187,61 +192,25 @@
 				</thead>
 				<tbody>
 				<%
-					if (post == null) {
-						for(int i = list.size()-1; i >= 0; i--) {
-							Boolean isFixed = UserDao.getInstance().isFixed(list.get(i).getMember_id());
-							String date;
-							if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
-								date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
-									+list.get(i).getDate().substring(8,10);
-							else if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
-								date = list.get(i).getDate().substring(5,7)+"."+list.get(i).getDate().substring(8,10);
-							else
-								date = list.get(i).getDate().substring(11,16);
-							%><tr>
-								<td><%=i+1 %>
-								<td align=left>
-									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>">
-									<img src=image/chat.png><%=list.get(i).getTitle() %></a>
-									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>#reply">[<%=list.get(i).getReplyNum() %>]</a>
-								<td id=w><%=list.get(i).getWriter() %>
-									<%
-										if(list.get(i).getMember_id() == null) {
-											String ipAddress = request.getRemoteAddr();
-											if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
-											    InetAddress inetAddress = InetAddress.getLocalHost();
-											    ipAddress = inetAddress.getHostAddress();
-											}
-											%><span>(<%=ipAddress.substring(0,7)%>)</span><%
-										}
-										else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
-										else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
-									%>
-								<td><%=date %>
-								<td><%=list.get(i).getHits() %>
-								<td><%=list.get(i).getRecommend() %><%
-						}
-					}
-					else if (post.equals("reco")) {
-						for(int i = recoList.size()-1; i >= 0; i--) {
-							Boolean isFixed = UserDao.getInstance().isFixed(recoList.get(i).getMember_id());
-							String date;
-							if (!recoList.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
-								date = recoList.get(i).getDate().substring(2,4)+"."+recoList.get(i).getDate().substring(5,7)+"."
-									+recoList.get(i).getDate().substring(8,10);
-							else if (!recoList.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
-								date = recoList.get(i).getDate().substring(5,7)+"."+recoList.get(i).getDate().substring(8,10);
-							else
-								date = recoList.get(i).getDate().substring(11,16);
-							%><tr>
-								<td><%=i+1 %>
-								<td align=left>
-									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>&post=reco">
-									<img src=image/chat.png> <%=recoList.get(i).getTitle() %></a>
-									<a href="result.jsp?idx=<%= idx %>&p_idx=<%=recoList.get(i).getIdx() %>&post=reco#reply">[<%=recoList.get(i).getReplyNum() %>]</a>
-								<td id=w><%=recoList.get(i).getWriter() %>
-									<%
-									if(recoList.get(i).getMember_id() == null) {
+					for(int i = list.size()-1; i >= 0; i--) {
+						Boolean isFixed = UserDao.getInstance().isFixed(list.get(i).getMember_id());
+						String date;
+						if (!list.get(i).getDate().substring(0,4).equals(String.valueOf(LocalDate.now().getYear())))
+							date = list.get(i).getDate().substring(2,4)+"."+list.get(i).getDate().substring(5,7)+"."
+								+list.get(i).getDate().substring(8,10);
+						else if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
+							date = list.get(i).getDate().substring(5,7)+"."+list.get(i).getDate().substring(8,10);
+						else
+							date = list.get(i).getDate().substring(11,16);
+						%><tr>
+							<td><%=i+1 %>
+							<td align=left>
+								<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>">
+								<img src=image/chat.png><%=list.get(i).getTitle() %></a>
+								<a href="result.jsp?idx=<%= idx %>&p_idx=<%=list.get(i).getIdx() %>#reply">[<%=list.get(i).getReplyNum() %>]</a>
+							<td id=w><%=list.get(i).getWriter() %>
+								<%
+									if(list.get(i).getMember_id() == null) {
 										String ipAddress = request.getRemoteAddr();
 										if(ipAddress.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
 										    InetAddress inetAddress = InetAddress.getLocalHost();
@@ -249,13 +218,13 @@
 										}
 										%><span>(<%=ipAddress.substring(0,7)%>)</span><%
 									}
-									else if(isFixed) {%><img src=image/fix_nik.gif><%}
-									else if(!isFixed) {%><img src=image/nik.gif><%}
-									%>
-								<td><%=date %>
-								<td><%=recoList.get(i).getHits() %>
-								<td><%=recoList.get(i).getRecommend() %><%
-						}
+									else if(isFixed) {%><a href=#><img src=image/fix_nik.gif></a><%}
+									else if(!isFixed) {%><a href=#><img src=image/nik.gif></a><%}
+								%>
+							<td><%=date %>
+							<td><%=list.get(i).getHits() %>
+							<td><%=list.get(i).getRecommend() %>
+						<%
 					}
 				%>
 				</tbody>
@@ -289,7 +258,7 @@
 				<%
 					if (session.getAttribute("code") == null) {
 						%>
-						<p><a href=loginForm.jsp?idx=<%= idx %>>로그인해 주세요.</a>
+						<p><a href=loginForm.jsp?url=<%= request.getRequestURL()+"?"+request.getQueryString() %>>로그인해 주세요.</a>
 						<div>
 							<a href=#>MY갤로그</a> &nbsp;|&nbsp;
 							<a href=#>즐겨찾기</a> &nbsp;|&nbsp;
