@@ -269,7 +269,7 @@
 					else {
 						%>
 						<p><a href=#><b><%=session.getAttribute("nick") %></b>님<img src=image/right-arrow3.png></a>
-						<button onclick="location.href='logout.jsp?where=gall&idx=<%=idx%>'">로그아웃</button>
+						<button onclick="location.href='logout.jsp?url=<%= request.getRequestURL()+"?"+request.getQueryString() %>'">로그아웃</button>
 						<div>
 							<a href=#>MY갤로그</a> |
 							<a href=#>즐겨찾기</a> |

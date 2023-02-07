@@ -3,11 +3,5 @@
 <!DOCTYPE html>
 <%
 	session.invalidate();
-	
-	if (request.getParameter("where").equals("main"))
-		response.sendRedirect("main.jsp");
-	else if (request.getParameter("where").equals("gall")) {
-		int idx = Integer.parseInt(request.getParameter("idx"));
-		response.sendRedirect("gallMain.jsp?idx="+idx);
-	}
+	response.sendRedirect(request.getParameter("url"));
 %>

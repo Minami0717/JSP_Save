@@ -169,7 +169,7 @@
 	<nav>
 		<ul>
 			<li><a href=#>메인</a>
-			<li><a href=minor.jsp>마이너</a>
+			<li><a href=minor.jsp id=minor>마이너</a>
 			<li><a href=#>미니</a>
 			<li>|
 			<li><a href=#>블로그</a>
@@ -204,3 +204,7 @@
         <div class="right"><img src="image/right-arrow.png"><a href="#">전체</a></div>
 	 </div>
 </header>
+<script>
+	if(document.location.href.indexOf("minor.jsp") != -1)
+		$("#minor").css("color", "#ffed44")
+</script>

@@ -32,9 +32,14 @@
 	.minor_make:hover {text-decoration: none;}
 </style>
 <script>
-	function loginCheck() {
-		if(confirm("마이너 게시판을 만들기 위해서는 로그인이 필요합니다.\n로그인 하시겠습니까?"))
-			location.href="loginForm.jsp"
+	function loginCheck(code) {
+		if(code == null) {
+			if(confirm("마이너 게시판을 만들기 위해서는 로그인이 필요합니다.\n로그인 하시겠습니까?"))
+				location.href="loginForm.jsp?url=<%= request.getRequestURL() %>"
+		}
+		else {
+			location.href="createMinor.jsp"
+		}
 	}
 </script>
 </head>
@@ -45,7 +50,7 @@
 			<section class=left_content>
 				<div>
 					<p class=txt>누구나 개설할 수 있는 <span class=main_color>마이너 게시판</span><button><img src=image/question-mark.png></button>를 만들어보세요.</p>
-					<a class=minor_make onclick=loginCheck()>마이너 게시판 만들기</a>
+					<a class=minor_make onclick=loginCheck(<%=session.getAttribute("code") %>)>마이너 게시판 만들기</a>
 				</div>
 			</section>
 			<section class=right_content>
@@ -53,7 +58,7 @@
 					<%
 						if (session.getAttribute("code") == null) {
 							%>
-							<p><a href=loginForm.jsp>로그인해 주세요.</a>
+							<p><a href=loginForm.jsp?url=<%= request.getRequestURL() %>>로그인해 주세요.</a>
 							<div>
 								<a href=#>MY갤로그</a> &nbsp;|&nbsp;
 								<a href=#>즐겨찾기</a> &nbsp;|&nbsp;
@@ -64,7 +69,7 @@
 						else {
 							%>
 							<p><a href=#><b><%=session.getAttribute("nick") %></b>님<img src=image/right-arrow3.png></a>
-							<button onclick="location.href='logout.jsp?where=gall'">로그아웃</button>
+							<button onclick="location.href='logout.jsp?url=<%= request.getRequestURL() %>'">로그아웃</button>
 							<div>
 								<a href=#>MY갤로그</a> |
 								<a href=#>즐겨찾기</a> |

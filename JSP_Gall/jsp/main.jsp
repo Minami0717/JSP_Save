@@ -153,7 +153,7 @@
 				<div id=user_info>
 					<div>
 						<a href=#><b><%=session.getAttribute("nick") %></b>님<img src=image/right-arrow3.png></a>
-						<button onclick="location.href='logout.jsp?where=main'">로그아웃</button>
+						<button onclick="location.href='logout.jsp?url=<%=request.getRequestURL()%>'">로그아웃</button>
 					</div>
 					<div>
 						글 <a href=#>0</a> 댓글 <a href=#>0</a> 방명록 <a href=#>0</a>
