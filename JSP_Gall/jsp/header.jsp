@@ -34,7 +34,7 @@
 	a:not(h1 a,h4 a,h5 a,h2 a):hover {text-decoration: underline;}
 	
 	header {margin-top: 30px; position: relative; }
-	
+	button {cursor: pointer;}
 	h1 {display: inline-block; margin-left: 25%; margin-right: 5%;}
 	
 	nav {background: /* #c9b18c */ #d2af8a; width: 100%; padding: 10px; margin-top: 20px; color: white;}

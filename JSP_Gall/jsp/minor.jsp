@@ -38,7 +38,7 @@
 				location.href="loginForm.jsp?url=<%= request.getRequestURL() %>"
 		}
 		else {
-			location.href="createMinor.jsp"
+			location.href="createMinorForm.jsp"
 		}
 	}
 </script>
