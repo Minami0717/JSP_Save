@@ -8,7 +8,40 @@
 <style>
 	main {width: 960px; margin: 20px auto 0;}
 	main > h2 { margin-bottom: 10px;}
+	
 	h2 a {cursor: pointer;}
+	
+	footer {
+		padding-bottom: 50px;
+		font-size: 12px;
+	}
+	footer > div:first-of-type {
+		width: 1050px;
+	    margin: 0px auto 0;
+	    padding-top: 28px;
+	    text-align: center;
+	}
+	footer > div a:before {
+	    content: "";
+	    display: inline-block;
+	    width: 1px;
+	    height: 11px;
+	    margin: 0 10px;
+	    vertical-align: -1px;
+	    background: #d7d7d7;
+	}
+	footer > div a:first-child:before {
+		display: none;
+	}
+	footer > div:last-of-type {
+	    width: 1050px;
+	    margin: 10px auto 0;
+	    text-align: center;
+	    letter-spacing: 0;
+	    font-size: 12px;
+	    font-family: tahoma,sans-serif;
+	    color: #333;
+	}
 	
 	.main_color {color: #d2af8a;}
 	.sub_color {color: #585857;}
@@ -148,7 +181,7 @@
 	    content: "";
     }
     #left > div:first-of-type {border: none; padding-top: 2px;}
-    #left input {
+    #left input:not([type=file]) {
 	    color: #555;
 	    height: 22px;
 	    line-height: 20px;
@@ -248,6 +281,30 @@
 			}
 	    });
 	});
+	
+	function input_check() {
+		let name = document.getElementById("name")
+		let cate = document.getElementById("cate")
+		let why = document.getElementById("why")
+		
+		if (!name.value) {
+		    alert("이름을 입력하세요.")
+		    name.focus()
+		    return false
+		}
+		if (cate.value == 'null') {
+		    alert("카테고리를 선택하세요.")
+		    cate.focus()
+		    return false
+		}
+		if (!why.value) {
+		    alert("개설이유를 입력하세요.")
+		    why.focus()
+		    return false
+		}
+		
+		document.create.submit()
+	}
 </script>
 </head>
 <body>
@@ -272,7 +329,7 @@
 					</p>
 				</div>
 			</div>
-			<form action=createMinor.jsp method=post>
+			<form action=createMinor.jsp method=post id=create name=create enctype="multipart/form-data">
 				<div class=border>
 					<div id=left>
 						<div>
@@ -295,18 +352,16 @@
 							</div>
 						</div>
 						<div>
-							<div class=label><label for=addr>주소<span>*</span></label></div>
+							<div class=label><label for=image>대표 이미지</label></div>
 							<div class=fl>
-								<span>http://localhost:9010/JSP_Gall/jsp/gallMain.jsp?idx=</span>
-								<input id=addr type=text name=addr> <span id=an>0</span>/<b>20</b>
-								<p>※ 주소는 만들기 후 수정이 불가능합니다. 신중히 입력해주세요.</p>
+								<input id=image type=file name=image>
 							</div>
 						</div>
 						<div>
 							<div class=label><label for=cate>카테고리<span>*</span></label></div>
 							<div class=fl>
-								<select id=cate>
-									<option>카테고리를 선택해주세요.
+								<select id=cate name=cate>
+									<option value=null>카테고리를 선택해주세요.
 									<option>게임
 									<option>취미
 									<option>스포츠
@@ -344,9 +399,21 @@
 			</div>
 			<div class="btnbox">
 				<button type="button" id="cancel" onclick="history.back()">취소</button>
-				<button type="button" id="make" onclick="$('#frmCreate').submit()">만들기</button>
+				<button type="button" id="make" onclick=input_check()>만들기</button>
 			</div>
 		</div>
 	</main>
+	<footer>
+	    <div>
+	      <a href=>회사소개</a>
+	      <a href=>제휴안내</a>
+	      <a href=>광고안내</a>
+	      <a href=>이용약관</a>
+	      <a href=><b>개인정보처리방침</b></a>
+	      <a href=>청소년보호정책</a>
+	      <a href=>마이너 게시판 운영원칙</a>
+	    </div>
+	    <div>Copyright ⓒ 1999 - 2023 minami. All rights reserved.</div>
+    </footer>
 </body>
 </html>

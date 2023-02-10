@@ -106,7 +106,7 @@
 				<ul>
 				<%
 					for (int i = list.size()-1; i >= 0; i--) {
-						String name = GallListDao.getInstance().selectGallName(list.get(i).getGall_idx());
+						GallList gall = GallListDao.getInstance().selectOne(list.get(i).getGall_idx());
 						String date;
 						if (!list.get(i).getDate().substring(0,10).equals(LocalDate.now().toString()))
 							date = list.get(i).getDate().substring(5,7)+"-"+list.get(i).getDate().substring(8,10);
@@ -118,7 +118,7 @@
 								<a href="result.jsp?idx=<%= idx %>&p_idx=<%= list.get(i).getIdx() %>"><%=list.get(i).getTitle() %></a>
 								<span id=rn>[<%=list.get(i).getReplyNum() %>]</span>
 							</div>
-							<div><span id=name><%=name %></span><span id=date><%=date %></span></div>
+							<div><span id=name><%=gall.getName() %></span><span id=date><%=date %></span></div>
 						<%
 					}
 				%>

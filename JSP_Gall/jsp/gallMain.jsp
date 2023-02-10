@@ -1,3 +1,4 @@
+<%@page import="gall.User"%>
 <%@page import="gall.UserDao"%>
 <%@page import="java.net.InetAddress"%>
 <%@page import="java.time.LocalDate"%>
@@ -12,20 +13,20 @@
 	Random random = new Random();
 
 	int idx = Integer.parseInt(request.getParameter("idx"));
-	String name = GallListDao.getInstance().selectGallName(idx);
+	GallList gall = GallListDao.getInstance().selectOne(idx);
 	String post = request.getParameter("post");
 	
 	ArrayList<String> vList = (ArrayList)session.getAttribute("visitList");
 	if (vList == null) {
 		vList = new ArrayList<String>();
-		vList.add(name);
+		vList.add(gall.getName());
 		session.setAttribute("visitList", vList);
 	}
 	else {
-		if (vList.contains(name))
-			vList.remove(name);
+		if (vList.contains(gall.getName()))
+			vList.remove(gall.getName());
 		
-		vList.add(name);
+		vList.add(gall.getName());
 	}
 	
 	List<Post> list = null;
@@ -51,7 +52,7 @@
 <title>Insert title here</title>
 <style>
 	main {margin-left: 25%; width: 50%;}
-	section {width: 70%; float: left;}
+	section {width: 670px; float: left;}
 	h2 a {color: #d2af8a}
 	
 	table {width: 100%; text-align: center; border-bottom: 1px solid #d2af8a; border-spacing: 0; font-size: 13px;
@@ -79,10 +80,38 @@
 	#bot #ns {background: white; color: #d2af8a;}	
 	#header {padding: 20px 0;}
 	
-	#issue_box {border-top: 2px solid #d2af8a; border-bottom: 1px solid gainsboro; padding: 20px; font-size: 13px;}
 	#issue_box ul {float: left; width: 300px;}
 	#issue_box li,#issue_box p {margin-bottom: 5px;}
 	#issue_box img {width: 150px; border: 1px solid #d2af8a; margin: 0 10px;}
+	
+	#intro_box img {width: 156px; float: left;}
+	#intro_box p {margin-left: 12px; float: left;}
+	#intro_box > div:first-child {
+		width: 56%;
+		float: left;
+	}
+	#intro_box > div:last-child > div {
+		line-height: 22px;
+	}
+	#intro_box:after {
+		clear: both;
+		display: block;
+	    visibility: hidden;
+	    content: "";
+    }
+    #intro_box strong {
+    	width: 73px;
+    	display: inline-block;
+    }
+    #intro_box strong:before {
+	    content: "";
+	    display: inline-block;
+	    width: 2px;
+	    height: 2px;
+	    background: #333;
+	    margin: 0 7px 0 1px;
+	    vertical-align: 4px;
+    }
 	
 	#login {border: 1px solid #d2af8a; float: right; margin-top: 20px; width: 270px;}
 	#login img {height: 13px;}
@@ -95,26 +124,48 @@
 	margin-left: 10px; cursor: pointer; font-weight: bold; float: right;}
 	
 	.inline {display: inline-block;}
+	.top_box {border-top: 2px solid #d2af8a; border-bottom: 1px solid gainsboro; padding: 20px; font-size: 13px;}
 </style>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 <script>
-	$(function() {
-		$("#mid button").on("click", function() {
-			$("#mid button").css("color", "red");
-		});
-	});
-</script> -->
+	let sub = document.getElementsByTagName("#intro_box span")
+	console.log(sub.value)
+	if(sub.value == "없음")
+		sub.style.color = "#999"
+</script>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
 	<main>
 		<section>
 			<div id=header>
-				<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %></a></h2>
+				<h2><a href=gallMain.jsp?idx=<%=idx%>><%=gall.getName() %></a></h2>
 			</div>
 				<%
-					if (list.size() >= 6) {
-					%><div id=issue_box>
+					if(gall.getType().equals("minor")) {
+						User admin = UserDao.getInstance().select(gall.getAdmin());
+						String sub = "없음";
+						User sub_admin;
+						if(gall.getSub_admin() != null) {
+							sub_admin = UserDao.getInstance().select(gall.getSub_admin());
+							sub = sub_admin.getNick();
+						}
+						%>
+						<div id=intro_box class=top_box>
+							<div>
+								<img src="image/<%=gall.getImage() %>">
+								<p><%=gall.getDesc() %>
+							</div>
+							<div>
+								<div><strong>매니저</strong><%=admin.getNick() %>(<%=gall.getAdmin() %>)</div>
+								<div><strong>부매니저</strong><span><%=sub %></span><%if(!sub.equals("없음")) {%>(<%=gall.getSub_admin() %>)<%}%></div>
+								<div><strong>개설일</strong><%=gall.getDate() %></div>
+							</div>
+						</div>
+						<%
+					}
+					else if (list.size() >= 6) {
+					%><div id=issue_box class=top_box>
 						<ul><%
 						int n[] = new int[5];
 			        	int num = 0;

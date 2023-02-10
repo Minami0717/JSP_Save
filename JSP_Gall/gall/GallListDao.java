@@ -60,18 +60,26 @@ public class GallListDao {
 		return list;
 	}
 	
-	public String selectGallName(Integer idx) {
-		String name = "";
+	public GallList selectOne(Integer idx) {
+		GallList gall = new GallList();
 		try {
-			pstmt = conn.prepareStatement("SELECT name FROM gall_list where idx=?");
+			pstmt = conn.prepareStatement("SELECT * FROM gall_list where idx=?");
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
-			if (rs.next())
-				name = rs.getString("name");
+			if (rs.next()) {
+				gall.setName(rs.getString("name"));
+				gall.setType(rs.getString("type"));
+				gall.setDesc(rs.getString("desc"));
+				gall.setCategory(rs.getString("category"));
+				gall.setAdmin(rs.getString("admin"));
+				gall.setSub_admin(rs.getString("sub_admin"));
+				gall.setDate(rs.getString("date"));
+				gall.setImage(rs.getString("image"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return name;
+		return gall;
 	}
 	
 	public int selectIdx(String name) {
@@ -86,5 +94,23 @@ public class GallListDao {
 			e.printStackTrace();
 		}
 		return idx;
+	}
+	
+	public int insert(GallList gall) {
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("insert into gall_list(name,type,`desc`,category,admin,date,image) values(?,?,?,?,?,?,?)");
+			pstmt.setString(1, gall.getName());
+			pstmt.setString(2, gall.getType());
+			pstmt.setString(3, gall.getDesc());
+			pstmt.setString(4, gall.getCategory());
+			pstmt.setString(5, gall.getAdmin());
+			pstmt.setString(6, gall.getDate());
+			pstmt.setString(7, gall.getImage());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
