@@ -35,10 +35,10 @@
 	
 	header {margin-top: 30px; position: relative; }
 	button {cursor: pointer;}
-	h1 {display: inline-block; margin-left: 25%; margin-right: 5%;}
+	h1 {display: inline-block; margin-right: 5%;}
 	
 	nav {background: /* #c9b18c */ #d2af8a; width: 100%; padding: 10px; margin-top: 20px; color: white;}
-	nav ul {margin-left: 25%;}
+	nav ul {margin: 0 auto; width: 950px;}
 	nav li {display: inline-block; margin-right: 15px; font-weight: bold;}
 	nav a {color: white;}
 	
@@ -63,7 +63,7 @@
 	#save button img {width: 36px; bottom: 1px; left: 85px;}
 	#save > img {width: 15px; right: 10px; cursor: pointer;}
 
-	#visit {margin-left: 25%; margin-right: 25%; border: 1px solid gainsboro; padding: 10px; font-size: 12px; color: #d2af8a; font-weight: bold; background-color: rgb(240, 240, 240);}
+	#visit {margin: 0 auto; width: 930px; border: 1px solid gainsboro; padding: 10px; font-size: 12px; color: #d2af8a; font-weight: bold; background-color: rgb(240, 240, 240);}
     #visit img {height: 8px; cursor: pointer;}
     #visit button {background-color: white; padding: 0 4px; border: 1px solid gainsboro; margin: 0 5px; cursor: pointer;}
     #visit li,#visit ul {display: inline;}
@@ -72,9 +72,14 @@
     #visit ul {margin-left: 5px;}
     
     #empty {font-size: 12px; color: #999; text-align: center; padding: 100px 0;}
+    #top {
+	    width: 950px;
+	    margin: 0 auto;
+    }
     
     .right {float: right;}
 	.left {float: left;}
+	.main_color {color: #d2af8a;}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
@@ -128,41 +133,43 @@
 	}
 </script>
 <header>
-	<h1><a href=main.jsp>minami.com</a></h1>
-	<div id=search>
-		<form action="search.jsp" autocomplete="off">
-			<input type=text placeholder="게시판 & 통합검색" name="word" value=<%= word %>>
-			<input type=hidden value=<%=save%> name=save>
-			<button><img src="image/search2.png"></button>
-		</form>
-		<div>
+	<div id=top>
+		<h1><a href=main.jsp>minami.com</a></h1>
+		<div id=search>
+			<form action="search.jsp" autocomplete="off">
+				<input type=text placeholder="게시판 & 통합검색" name="word" value=<%= word %>>
+				<input type=hidden value=<%=save%> name=save>
+				<button><img src="image/search2.png"></button>
+			</form>
 			<div>
-				<h5>최근 검색어<button onclick=delCheck()>전체 삭제</button></h5>
-				<%
-					if(sList.size() == 0) {
-						%><div id=empty>최근 검색어가 없습니다.</div><%
-					}
-					else {
-						%><ul><%
-						for(int i = sList.size()-1; i >= 0; i--) {
-							%><li><a href="search.jsp?word=<%= sList.get(i).getWord() %>&save=<%=save%>"><%=sList.get(i).getWord() %></a>
-								<button onclick="location.href='delSearch.jsp?idx=<%=sList.get(i).getIdx()%>'"><img src=image/x1.png></button><%
+				<div>
+					<h5>최근 검색어<button onclick=delCheck()>전체 삭제</button></h5>
+					<%
+						if(sList.size() == 0) {
+							%><div id=empty>최근 검색어가 없습니다.</div><%
 						}
-						%></ul><%
-					}
-				%>
-			</div>
-			<div id=save>
-				<button onclick=check()><b>검색어 저장</b>
-				<%
-					if(save.equals("on")) {
-						%><img src=image/switch.png><%
-					}
-					else {
-						%><img src=image/switch3.png><%
-					}
-				%></button>
-				<img src=image/close2.png>
+						else {
+							%><ul><%
+							for(int i = sList.size()-1; i >= 0; i--) {
+								%><li><a href="search.jsp?word=<%= sList.get(i).getWord() %>&save=<%=save%>"><%=sList.get(i).getWord() %></a>
+									<button onclick="location.href='delSearch.jsp?idx=<%=sList.get(i).getIdx()%>'"><img src=image/x1.png></button><%
+							}
+							%></ul><%
+						}
+					%>
+				</div>
+				<div id=save>
+					<button onclick=check()><b>검색어 저장</b>
+					<%
+						if(save.equals("on")) {
+							%><img src=image/switch.png><%
+						}
+						else {
+							%><img src=image/switch3.png><%
+						}
+					%></button>
+					<img src=image/close2.png>
+				</div>
 			</div>
 		</div>
 	</div>

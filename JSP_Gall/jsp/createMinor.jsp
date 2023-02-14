@@ -35,6 +35,7 @@
 	gall.setImage(image);
 	
 	int result = GallListDao.getInstance().insert(gall);
-	if(result != 0)
-		response.sendRedirect("createSucc.jsp");
+	if(result != 0) {
+		%><script>alert("개설이 완료되었습니다."); location.href="main.jsp"</script><%
+	}
 %>

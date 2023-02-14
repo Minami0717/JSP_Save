@@ -15,7 +15,7 @@
 	request.setCharacterEncoding("utf-8");
 	Integer idx = Integer.parseInt(request.getParameter("idx"));
 	Integer p_idx = Integer.parseInt(request.getParameter("p_idx"));
-	String name = GallListDao.getInstance().selectGallName(idx);
+	String name = GallListDao.getInstance().selectOne(idx).getName();
 	String p = request.getParameter("post");
 
 	Post post = PostDao.getInstance().select(p_idx);
@@ -34,7 +34,10 @@
 <title>Insert title here</title>
 <style>
 	h2 a {color: #d2af8a}
-	section {margin: 0 25%;}
+	main {
+		width: 950px;
+		margin: 0 auto;
+	}
 	
 	#header {padding: 20px 0;}
 	#post {width: 100%; height: 500px;
@@ -77,7 +80,7 @@
 	textarea {width: 740px; height: 78px; border: 1px solid gainsboro; resize: none; padding: 13px; font-size: 13px; line-height: 18px;}
 	#nick {width: 150px;}
 	
-	section button {width: 82px; height: 35px; background: #d2af8a; color: white;
+	main button {width: 82px; height: 35px; background: #d2af8a; color: white;
 	border: 1px solid #d2af8a; border-bottom-width: 3px; margin-top: 10px;
 	margin-bottom: 40px; font-weight: bold; border-radius: 2px;
 	cursor: pointer;}
@@ -163,7 +166,7 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
-	<section>
+	<main>
 		<div id=header>
 			<h2><a href=gallMain.jsp?idx=<%=idx%>><%=name %></a></h2>
 		</div>
@@ -455,6 +458,6 @@
 				}
 			%>
 		</div>
-	</section>
+	</main>
 </body>
 </html>

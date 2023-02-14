@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 	Integer idx = Integer.parseInt(request.getParameter("idx"));
 	Integer p_idx = Integer.parseInt(request.getParameter("p_idx"));
-	String name = GallListDao.getInstance().selectGallName(idx);
+	String name = GallListDao.getInstance().selectOne(idx).getName();
 	String type = request.getParameter("type");
 %>
 <html>

@@ -8,7 +8,7 @@
 	int p_idx = Integer.parseInt(request.getParameter("p_idx"));
 	
 	Post post = PostDao.getInstance().select(p_idx);
-	String name = GallListDao.getInstance().selectGallName(idx);
+	String name = GallListDao.getInstance().selectOne(idx).getName();
 %>
 <html>
 <head>

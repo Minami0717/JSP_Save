@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <%
 	int idx = Integer.parseInt(request.getParameter("idx"));
-	String name = GallListDao.getInstance().selectGallName(idx);
+	String name = GallListDao.getInstance().selectOne(idx).getName();
 %>
 <html>
 <head>
@@ -13,7 +13,7 @@
 	/* body {width: 60%;  margin-left: 20%;} */
 	h2 a {color: #d2af8a}
 	section {margin: 0 25%;}
-	#outside {border: 2px solid #d5d5d5; height: 600px; border-top-color: #d2af8a;
+	#outside {border: 2px solid #d5d5d5; width: 820px; height: 600px; border-top-color: #d2af8a;
 	padding: 33px 68px 5px;}
 	
 	input[name=nick],input[name=pw] {width: 200px; line-height: 35px; border: 1px solid #b2b4b2; padding: 0 10px;}

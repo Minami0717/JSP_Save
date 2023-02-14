@@ -51,8 +51,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	main {margin-left: 25%; width: 50%;}
-	section {width: 670px; float: left;}
+	main {
+		margin: 20px auto 0;
+		width: 950px;
+	}
+	main:after {
+		clear: both;
+	    display: block;
+	    visibility: hidden;
+	    content: "";
+	}
+	
+	section {width: 660px; float: left;}
+	aside {
+		float: right;
+		width: 270px;
+	}
 	h2 a {color: #d2af8a}
 	
 	table {width: 100%; text-align: center; border-bottom: 1px solid #d2af8a; border-spacing: 0; font-size: 13px;
@@ -78,13 +92,13 @@
 	#bot button {width: 82px; height: 35px; background: #d2af8a; color: white; border: 1px solid #d2af8a; border-bottom-width: 3px;
 	margin-top: 10px; margin-bottom: 40px; font-weight: bold; border-radius: 2px; cursor: pointer;}	
 	#bot #ns {background: white; color: #d2af8a;}	
-	#header {padding: 20px 0;}
+	#header {padding-bottom: 20px;}
 	
 	#issue_box ul {float: left; width: 300px;}
 	#issue_box li,#issue_box p {margin-bottom: 5px;}
 	#issue_box img {width: 150px; border: 1px solid #d2af8a; margin: 0 10px;}
 	
-	#intro_box img {width: 156px; float: left;}
+	#intro_box img {height: 100px;}
 	#intro_box p {margin-left: 12px; float: left;}
 	#intro_box > div:first-child {
 		width: 56%;
@@ -113,7 +127,7 @@
 	    vertical-align: 4px;
     }
 	
-	#login {border: 1px solid #d2af8a; float: right; margin-top: 20px; width: 270px;}
+	#login {border: 1px solid #d2af8a; width: 270px;}
 	#login img {height: 13px;}
 	#login p {padding: 10px 20px;}
 	#login p a {color: #d2af8a; font-weight: bold; font-size: 14px;}
@@ -122,6 +136,24 @@
 	#login div a {font-size: 12px; font-weight: bold;}
 	#login button {width: 65px; height: 25px; background: #d2af8a; color: white; border: none; border: 1px solid #d2af8a;
 	margin-left: 10px; cursor: pointer; font-weight: bold; float: right;}
+	
+	#report {
+		margin-top: 5px;
+	    text-decoration: underline;
+	    background: none;
+	    border: none;
+	}
+	
+	#no_img {
+		width: 156px;
+		height: 104px;
+		background: rgb(240, 240, 240);
+		position: relative;
+	}
+	#null {
+		position: absolute;
+		left: 30px;
+	}
 	
 	.inline {display: inline-block;}
 	.top_box {border-top: 2px solid #d2af8a; border-bottom: 1px solid gainsboro; padding: 20px; font-size: 13px;}
@@ -153,13 +185,21 @@
 						%>
 						<div id=intro_box class=top_box>
 							<div>
-								<img src="image/<%=gall.getImage() %>">
+								<%
+									if(gall.getImage() == null) {
+										%><div id=no_img><img src="image/no-pictures.png" id=null></div><%
+									}
+									else {
+										%><img src="image/<%=gall.getImage() %>" class=left><%
+									}
+								%>
 								<p><%=gall.getDesc() %>
 							</div>
 							<div>
 								<div><strong>매니저</strong><%=admin.getNick() %>(<%=gall.getAdmin() %>)</div>
 								<div><strong>부매니저</strong><span><%=sub %></span><%if(!sub.equals("없음")) {%>(<%=gall.getSub_admin() %>)<%}%></div>
 								<div><strong>개설일</strong><%=gall.getDate() %></div>
+								<div><button id=report class=main_color>갤러리 관리 내역</button></div>
 							</div>
 						</div>
 						<%
