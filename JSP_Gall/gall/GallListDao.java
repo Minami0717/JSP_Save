@@ -41,11 +41,26 @@ public class GallListDao {
 		return instance;
 	}
 	
-	public List<GallList> selectAll() {
+	public List<GallList> selectAll(int n) {
 		List<GallList> list = new ArrayList<GallList>();
+		String query = "";
+		
+		switch (n) {
+		case 0:
+			query = "select * from gall_list where type='main'";
+			break;
+		case 1:
+			query = "select * from gall_list where type='minor'";
+			break;
+		case 2:
+			query = "select * from gall_list where type='mini'";
+			break;
+		default:
+			break;
+		}
 		
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM gall_list");
+			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

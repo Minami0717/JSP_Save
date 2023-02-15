@@ -10,10 +10,11 @@
 <title>Insert title here</title>
 <style>
 	* {margin: 0; padding: 0;}
-	header {background: #d2af8a; padding: 20px 25% 10px;}
+	header {background: #d2af8a; height: 85px;}
 	header a {color: white;}
 	header a:hover {text-decoration: none;}
-	div[align=center] {display: inline-block; border: 2px solid #d2af8a; margin: 10%; font-size: 13px;}
+	h1 {position: absolute; top: 25px; left: 25%; width: 500px;}
+	div[align=center] {display: inline-block; border: 2px solid #d2af8a; margin: 200px auto; font-size: 13px; width: 684px;}
 	div[align=center] > div {float: right; background: #f3f3f3; padding: 50px 30px;}
 	form {float: left; padding: 40px;}
 	form div {border-top: 1px dashed #aaa; padding: 10px 0; font-size: 14px;}
@@ -54,7 +55,7 @@
 			</div>
 		</form>
 		<div>
-			<img src=image/banner1.png>
+			<a href=http://www.kcd.or.kr><img src=image/banner1.png></a>
 		</div>
 	</div>
 </body>

@@ -10,14 +10,15 @@
 	a {text-decoration: none;}
 	li,ul,h1 {display: inline-block;}
 	
-	header {background: #d2af8a; position: relative; height: 85px;}
+	header {background: #d2af8a;}
+	header > div {width: 770px; position: relative; margin: 0 auto; height: 85px;}
 	header a {color: white;}
 	header li {font-size: 11px; color: #ccc; margin-left: 5px;}
 	header li a:hover {text-decoration: underline;}
-	header ul {position: absolute; right: 30%; top: 50px;}
-	header h1 {position: absolute; left: 30%; top: 30px;}
+	header ul {position: absolute; right: 0; top: 45px;}
+	header h1 {position: absolute; left: 0; top: 25px;}
 	
-	section {width: 40%; margin: 0 30%;}
+	section {width: 770px; margin: 0 auto;}
 	section div:first-child {border-bottom: 2px solid #d2af8a; padding: 10px 0; margin-top: 50px;}
 	section div:first-child h4 {color: #d2af8a}
 	section div:nth-child(2) {border: 1px #cecdce solid; border-radius: 5px; margin: 25px 0; padding: 30px 50px;}
@@ -38,18 +39,20 @@
 </head>
 <body>
 	<header>
-		<h1><a href=main.jsp>minami.com</a></h1>
-		<ul>
-			<li><a href=>갤러리</a> |
-			<li><a href=>마이너갤</a> |
-			<li><a href=>미니갤</a> |
-			<li><a href=>갤로그</a> |
-			<li><a href=>뉴스</a> |
-			<li><a href=>게임</a> |
-			<li><a href=>위키</a> |
-			<li><a href=>이벤트</a> |
-			<li><a href=>이모티콘</a>
-		</ul>
+		<div>
+			<h1><a href=main.jsp>minami.com</a></h1>
+			<ul>
+				<li><a href=>갤러리</a> |
+				<li><a href=>마이너갤</a> |
+				<li><a href=>미니갤</a> |
+				<li><a href=>갤로그</a> |
+				<li><a href=>뉴스</a> |
+				<li><a href=>게임</a> |
+				<li><a href=>위키</a> |
+				<li><a href=>이벤트</a> |
+				<li><a href=>이모티콘</a>
+			</ul>
+		</div>
 	</header>
 	<section>
 		<div>

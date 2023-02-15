@@ -161,7 +161,6 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 <script>
 	let sub = document.getElementsByTagName("#intro_box span")
-	console.log(sub.value)
 	if(sub.value == "없음")
 		sub.style.color = "#999"
 </script>

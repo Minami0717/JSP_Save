@@ -20,7 +20,6 @@
 	    ip = inetAddress.getHostAddress();
 	}
 	
-	List<GallList> gList = GallListDao.getInstance().selectAll();
 	ArrayList<String> viList = (ArrayList)session.getAttribute("visitList");
 	ArrayList<Search> sList = SearchDao.getInstance().select(ip);
 	
@@ -33,7 +32,7 @@
 	a {text-decoration: none; color: black;}
 	a:not(h1 a,h4 a,h5 a,h2 a):hover {text-decoration: underline;}
 	
-	header {margin-top: 30px; position: relative; }
+	header {margin-top: 30px;}
 	button {cursor: pointer;}
 	h1 {display: inline-block; margin-right: 5%;}
 	
@@ -42,14 +41,14 @@
 	nav li {display: inline-block; margin-right: 15px; font-weight: bold;}
 	nav a {color: white;}
 	
-	#search {display: inline-block; border: 4px solid #d2af8a; height: 39px;}
+	#search {display: inline-block; border: 4px solid #d2af8a; height: 39px; position: relative;}
 	#search input[type=text] {width: 315px; height: 35px; float: left; padding: 2px 9px 0; outline: none; border: none; font-weight: bold; color: #333; font-size: 14px;}
 	#search input::placeholder {color: #b2b4b2;}
 	#search form button {width: 40px; height: 40px; background: #d2af8a; border: none;}
 	#search img {width: 25px;}
 	#search h5 {background: #f3f3f3; padding: 10px 12px; display: block; color: #d2af8a;}
 	#search h5 button {position: absolute; top: 5px; right: 4px; color: #999; text-decoration: underline; border: none; font-size: 12px; padding: 5px;}
-	#search > div {position: absolute; border: 2px solid #d2af8a; background: #fff; width: 377px; left: 40%; display: none;}
+	#search > div {left: -4px; position: absolute; border: 2px solid #d2af8a; background: #fff; width: 377px; display: none;}
 	#search ul {list-style: none; padding: 8px 0;}
 	#search ul img {width: 8px;}
 	#search ul a {display: block; color: #555; text-decoration: none; height: 27px;}
@@ -176,7 +175,7 @@
 	<nav>
 		<ul>
 			<li><a href=#>메인</a>
-			<li><a href=minor.jsp id=minor>마이너</a>
+			<li><a href=minor.jsp id=a_minor>마이너</a>
 			<li><a href=#>미니</a>
 			<li>|
 			<li><a href=#>블로그</a>
@@ -213,5 +212,5 @@
 </header>
 <script>
 	if(document.location.href.indexOf("minor.jsp") != -1)
-		$("#minor").css("color", "#ffed44")
+		$("#a_minor").css("color", "#ffed44")
 </script>
